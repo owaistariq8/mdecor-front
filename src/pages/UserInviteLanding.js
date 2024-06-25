@@ -21,7 +21,7 @@ import { PATH_AUTH, PATH_PAGE } from '../routes/paths';
 import {
   updateInvitedUser,
   verifyUserInvite,
-} from '../redux/slices/securityUser/securityUser';
+} from '../redux/slices/user/user';
 
 // ----------------------------------------------------------------------
 

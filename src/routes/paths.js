@@ -7,7 +7,7 @@ function path(root, sublink) {
 const ROOTS_AUTH = '/auth';
 const ROOTS_DASHBOARD = '/dashboard';
 const ROOTS_CRM = '/crm';
-const ROOTS_SECURITY = '/security';
+const ROOTS_USER = '/user';
 const ROOTS_SETTING = '/settings';
 
 // ----------------------------------------------------------------------
@@ -81,7 +81,6 @@ export const PATH_CRM = {
 export const PATH_SETTING = {
   permissionDenied: path(ROOTS_SETTING, '/permission-denied'),
   root: ROOTS_SETTING,
-  // ------------------------ SECURITY USER ROLE ----------------------------------------
   role: {
     new: path(ROOTS_SETTING, '/role/new'),
     list: path(ROOTS_SETTING, '/role/list'),
@@ -90,18 +89,18 @@ export const PATH_SETTING = {
   },
 };
 
-export const PATH_SECURITY = {
-  root: ROOTS_SECURITY,
-  permissionDenied: path(ROOTS_SECURITY, '/permission-denied'),
+export const PATH_USER = {
+  root: ROOTS_USER,
+  permissionDenied: path(ROOTS_USER, '/permission-denied'),
   // ------------------------ SECURITY USERS ----------------------------------------
   users: {
-    new: path(ROOTS_SECURITY, `/users/new/`),
-    profile: path(ROOTS_SECURITY, '/users/profile'),
-    editProfile: path(ROOTS_SECURITY, '/users/editProfile'),
-    password: path(ROOTS_SECURITY, '/users/password'),
-    userPassword: path(ROOTS_SECURITY, '/users/changePassword'),
-    account: path(ROOTS_SECURITY, '/users/account'),
-    view: (id) => path(ROOTS_SECURITY, `/users/${id}/view`),
-    edit: (id) => path(ROOTS_SECURITY, `/users/${id}/edit`),
+    new: path(ROOTS_USER, `/users/new/`),
+    profile: path(ROOTS_USER, '/users/profile'),
+    editProfile: path(ROOTS_USER, '/users/editProfile'),
+    password: path(ROOTS_USER, '/users/password'),
+    userPassword: path(ROOTS_USER, '/users/changePassword'),
+    account: path(ROOTS_USER, '/users/account'),
+    view: (id) => path(ROOTS_USER, `/users/${id}/view`),
+    edit: (id) => path(ROOTS_USER, `/users/${id}/edit`),
   },
 };

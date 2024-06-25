@@ -21,15 +21,14 @@ export default function AuthLoginForm() {
   const navigate = useNavigate();
   const { login } = useAuthContext();
   const inputRef = useRef(null);
-  const regEx = /^[4][0-9][0-9]$/
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
     .transform((value, originalValue) => originalValue ? originalValue.toLowerCase() : value)
     .email()
-    .label('Login/Email Address')
+    .label('Email Address')
     .trim()
-    .required('Login/Email address is Required!')
+    .required('Email address is Required!')
     .max(200),
     password: Yup.string().label("Password").required('Password is Required!'),
   });
@@ -37,7 +36,6 @@ export default function AuthLoginForm() {
   const defaultValues = {
     email: '',
     password: '',
-    isRemember: false,
   };
 
   const methods = useForm({
@@ -54,52 +52,24 @@ export default function AuthLoginForm() {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const { isRemember, email, password } = watch()
+  const { email, password } = watch()
 
   useEffect(() => {
-    const storedEmail =       localStorage.getItem("HowickUserEmail");
-    const storedPassword =    localStorage.getItem("HowickUserPassword");
-    const storedRemember =    localStorage.getItem("isRemember");
-    if (storedEmail && storedPassword && storedRemember) {
-      setValue('email',storedEmail);
-      setValue('password',storedPassword);
-      setValue('isRemember',true);
-    }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   
   const onSubmit = async (data) => {
     try {
-      if (isRemember) {
-        localStorage.setItem("HowickUserEmail", email);
-        localStorage.setItem("HowickUserPassword", password);
-        localStorage.setItem("isRemember", isRemember);
-      } else {
-        localStorage.removeItem("HowickUserEmail");
-        localStorage.removeItem("HowickUserPassword");
-        localStorage.removeItem("isRemember");
-      }
       await login(data.email, data.password);
-      if(localStorage.getItem("MFA")) {
-        navigate(PATH_AUTH.authenticate);
-        localStorage.removeItem("MFA");
-      }
       reset();
     } catch (error) {
-      if(regEx.test(error.MessageCode)){
-        console.error("error : ",error?.Message || '');
-        setError('afterSubmit', {
-          ...error,
-          message: error.Message,
-        });
-      }else{
-        console.error("error : ",error || '');
-        setError('afterSubmit', {
-          ...error,
-          message: error,
-        });
-      }
+      console.error("error : ",error || '');
+      setError('afterSubmit', {
+        ...error,
+        message: error,
+      });
     }
   };
 
@@ -110,8 +80,8 @@ export default function AuthLoginForm() {
         <RHFTextField 
           type="email" 
           name="email"
-          label="Login/Email address*" 
-          autoComplete="username" 
+          label="Email address*" 
+          autoComplete="email" 
           inputRef={inputRef}
           inputProps={{ style: { textTransform: 'lowercase' } }}
         />
@@ -122,8 +92,6 @@ export default function AuthLoginForm() {
           autoComplete="current-password"
         />
       </Stack>
-
-      <RHFCheckbox name="isRemember" label="Remember Me"  variant="soft"/>
 
       <LoadingButton
         fullWidth

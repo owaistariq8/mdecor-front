@@ -32,12 +32,7 @@ export default function Header({ onOpenNav }) {
   const isNavMini = themeLayout === 'mini';
   const isDesktop = useResponsive('up', 'lg');
   const isOffset = useOffSetTop(HEADER.H_DASHBOARD_DESKTOP) && !isNavHorizontal;
-  const { sendJsonMessage } = useWebSocketContext();
-  
-  useEffect(()=>{
-    sendJsonMessage({eventName:'getNotifications'});
-  },[sendJsonMessage])
-  
+
   const renderContent = (
     <>
       {isDesktop && isNavHorizontal && <Logo sx={{ mr: 2.5 }} />}

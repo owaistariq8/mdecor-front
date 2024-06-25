@@ -39,7 +39,7 @@ import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
 import { TITLES } from '../../../constants/default-constants';
 import { OPTIONS } from './util/OptionsListItems';
-import { setChangePasswordDialog } from '../../../redux/slices/securityUser/securityUser';
+import { setChangePasswordDialog } from '../../../redux/slices/user/user';
 import ChangePasswordDialog from '../../../components/Dialog/ChangePasswordDialog';
 
 // ----------------------------------------------------------------------

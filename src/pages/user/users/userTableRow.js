@@ -19,7 +19,7 @@ import { StyledTooltip } from '../../../theme/styles/default-styles';
 
 // ----------------------------------------------------------------------
 
-SecurityUserTableRow.propTypes = {
+UserTableRow.propTypes = {
   row: PropTypes.object,
   selected: PropTypes.bool,
   onEditRow: PropTypes.func,
@@ -28,7 +28,7 @@ SecurityUserTableRow.propTypes = {
   onViewRow: PropTypes.func,
 };
 
-export default function SecurityUserTableRow({
+export default function UserTableRow({
   row,
   selected,
   onEditRow,

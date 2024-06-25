@@ -20,9 +20,9 @@ import {
   // ----------------------------------------------------------------
 
   // AUTH SECURITY USER 
-  SecurityUserProfile,
-  SecurityUserProfileEdit,
-  SecurityUserChangePassword,
+  UserProfile,
+  UserProfileEdit,
+  UserChangePassword,
 
   // ----------------------------------------------------------------
 
@@ -54,11 +54,11 @@ import {
   // ----------------------------------------------------------------
 
   // SECURITY USER
-  SecurityUserList,
-  SecurityUserAdd,
-  SecurityUserEdit,
-  SecurityUserView,
-  SecurityUserChangePasswordByAdmin,
+  UserList,
+  UserAdd,
+  UserEdit,
+  UserView,
+  UserChangePasswordByAdmin,
 
   // SECURITY SETTIGS ROLES
   RoleList,
@@ -194,25 +194,25 @@ export default function Router() {
     
     // SECURITY
     {
-      path: 'security',
+      path: 'user',
       element: (
         <AuthGuard>
           <DashboardLayout />
         </AuthGuard>
       ),
       children: [
-        { element: <SecurityUserList />, index: true },
+        { element: <UserList />, index: true },
         {
           path: 'users',
           children: [
-            { path: 'profile', element: <SecurityUserProfile/> },
-            { path: 'editProfile', element: <SecurityUserProfileEdit/> },
-            { path: 'password', element: <SecurityUserChangePassword/> },
-            { path: 'changePassword', element: <SecurityUserChangePasswordByAdmin/> },
-            { path: 'new', element: <SecurityUserAdd /> },
-            { path: 'invite', element: <SecurityUserAdd isInvite /> },
-            { path: ':id/edit', element: <SecurityUserEdit /> },
-            { path: ':id/view', element: <SecurityUserView /> },
+            { path: 'profile', element: <UserProfile/> },
+            { path: 'editProfile', element: <UserProfileEdit/> },
+            { path: 'password', element: <UserChangePassword/> },
+            { path: 'changePassword', element: <UserChangePasswordByAdmin/> },
+            { path: 'new', element: <UserAdd /> },
+            { path: 'invite', element: <UserAdd isInvite /> },
+            { path: ':id/edit', element: <UserEdit /> },
+            { path: ':id/view', element: <UserView /> },
           ],
         },
         { path: 'permission-denied', element: <PermissionDeniedPage /> },

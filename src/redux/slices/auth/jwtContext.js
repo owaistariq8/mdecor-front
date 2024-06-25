@@ -100,14 +100,14 @@ export function AuthProvider({ children }) {
       localStorage.removeItem('accessToken');
 
       const response = await axios.post(`${CONFIG.SERVER_URL}users/login`, credentials);
-
+      console.log("response",response);
       const { accessToken, user, userId } = response.data;
 
-      const rolesArrayString = JSON.stringify(user.roles);
+      // const rolesArrayString = JSON.stringify(user.roles);
       localStorage.setItem('email', user.email);
       localStorage.setItem('name', user.displayName);
       localStorage.setItem('userId', userId);
-      localStorage.setItem('userRoles', rolesArrayString);
+      // localStorage.setItem('userRoles', rolesArrayString);
       setSession(accessToken);
 
       dispatch(login({ user, userId }));
@@ -128,7 +128,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(
     createAsyncThunk('auth/logout', async () => {
       const userId = localStorage.getItem('userId');
-      await axios.post(`${CONFIG.SERVER_URL}security/logout/${userId}`);
+      await axios.post(`${CONFIG.SERVER_URL}users/logout/${userId}`);
 
       setSession(null);
       localStorage.removeItem('userId');

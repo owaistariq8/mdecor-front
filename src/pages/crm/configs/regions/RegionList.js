@@ -6,7 +6,7 @@ import { Card, Table, Button, TableBody, Container, TableContainer } from '@mui/
 // redux
 import { useDispatch, useSelector } from '../../../../redux/store';
 // routes
-import { PATH_SECURITY, PATH_SETTING } from '../../../../routes/paths';
+import { PATH_USER, PATH_SETTING } from '../../../../routes/paths';
 // components
 import { useSnackbar } from '../../../../components/snackbar';
 import Scrollbar from '../../../../components/scrollbar';
@@ -183,7 +183,7 @@ export default function RegionList() {
 
   const handleEditRow = (id) => {
     dispatch(setRegionEditFormVisibility(true));
-    navigate(PATH_SECURITY.users.edit(id));
+    navigate(PATH_USER.users.edit(id));
   };
   const handleViewRow = (id) => {
     navigate(PATH_SETTING.regions.view(id));
@@ -311,7 +311,7 @@ function applyFilter({ inputData, comparator, filterName, filterStatus, filterRo
           .join(', ')
           .toLowerCase()
           .indexOf(filterName.toLowerCase()) >= 0 ||
-        // (securityUser?.isActive ? "Active" : "Deactive")?.toLowerCase().indexOf(filterName.toLowerCase())  >= 0 ||
+        // (user?.isActive ? "Active" : "Deactive")?.toLowerCase().indexOf(filterName.toLowerCase())  >= 0 ||
         fDate(region?.createdAt)?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0
     );
   }

@@ -13,7 +13,7 @@ import { PATH_SETTING } from '../../../../routes/paths';
 import { useSnackbar } from '../../../../components/snackbar';
 import FormProvider, { RHFSwitch, RHFTextField, RHFAutocomplete } from '../../../../components/hook-form';
 // slice
-import { getRoles } from '../../../../redux/slices/securityUser/role';
+import { getRoles } from '../../../../redux/slices/user/role';
 import { addRegion, getCountries } from '../../../../redux/slices/region/region';
 // current user
 import AddFormButtons from '../../../../components/DocumentForms/AddFormButtons';

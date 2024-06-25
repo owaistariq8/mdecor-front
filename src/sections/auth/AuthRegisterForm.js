@@ -47,11 +47,7 @@ export default function AuthRegisterForm() {
 
   const onSubmit = async (data) => {
     try {
-        console.log('Register',register);
       if (register) {
-        
-        console.log('Register inside');
-
         await register(data.name, data.email, data.password, data.phone);
       }
     } catch (error) {

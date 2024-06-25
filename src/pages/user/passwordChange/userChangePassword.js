@@ -13,14 +13,14 @@ import Iconify from '../../../components/iconify';
 import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFTextField } from '../../../components/hook-form';
 import { Cover } from '../../../components/Defaults/Cover';
-import { SecurityUserPasswordUpdate } from '../../../redux/slices/securityUser/securityUser';
+import { UserPasswordUpdate } from '../../../redux/slices/user/user';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
-import { PATH_DASHBOARD, PATH_SECURITY } from '../../../routes/paths';
+import { PATH_DASHBOARD, PATH_USER } from '../../../routes/paths';
 import { StyledCardContainer } from '../../../theme/styles/default-styles';
 
 // ----------------------------------------------------------------------
 
-export default function SecurityUserChangePassword() {
+export default function UserChangePassword() {
   const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -60,10 +60,10 @@ export default function SecurityUserChangePassword() {
   const onSubmit = async (data) => {
     if (userId) {
       try {
-        await dispatch(SecurityUserPasswordUpdate(data, userId));
+        await dispatch(UserPasswordUpdate(data, userId));
         enqueueSnackbar('Password has been updated Successfully!');
         reset();
-        navigate(PATH_SECURITY.users.view(userId));
+        navigate(PATH_USER.users.view(userId));
       } catch (error) {
         if (error.Message) {
           enqueueSnackbar(error.Message, { variant: `error` });

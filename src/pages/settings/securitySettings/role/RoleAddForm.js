@@ -11,7 +11,7 @@ import { Card, Grid, Stack, Container } from '@mui/material';
 // ROUTES
 import { PATH_SETTING } from '../../../../routes/paths';
 // slice
-import { addRole } from '../../../../redux/slices/securityUser/role';
+import { addRole } from '../../../../redux/slices/user/role';
 // components
 import { useSnackbar } from '../../../../components/snackbar';
 // assets

@@ -11,7 +11,7 @@ import { createTheme } from '@mui/material/styles';
 import { StyledStack } from '../../theme/styles/default-styles';
 import ConfirmDialog from '../confirm-dialog';
 import useResponsive from '../../hooks/useResponsive';
-import { getActiveCustomers } from '../../redux/slices/customer/customer';
+import { getCustomers } from '../../redux/slices/customer/customer';
 import IconPopover from '../Icons/IconPopover';
 import IconTooltip from '../Icons/IconTooltip';
 import ViewFormMenuPopover from './ViewFormMenuPopover';
@@ -39,7 +39,7 @@ function ViewFormEditDeleteButtons({
   currentEmp,
   machineSettingPage,
   settingPage,
-  securityUserPage,
+  userPage,
   transferredHistory,
   // Handlers
   handleVerification,
@@ -153,12 +153,12 @@ function ViewFormEditDeleteButtons({
   };
 
   useLayoutEffect(()=>{
-    if(( settingPage || securityUserPage ) && ( !isSettingAccessAllowed || !isSecurityUserAccessAllowed   )){
+    if(( settingPage || userPage ) && ( !isSettingAccessAllowed || !isSecurityUserAccessAllowed   )){
       navigate(PATH_DASHBOARD.root)
     }
   },[ 
     settingPage, 
-    securityUserPage, 
+    userPage, 
     isSettingAccessAllowed,
     isSecurityUserAccessAllowed, 
     customerPage, 
@@ -414,11 +414,11 @@ function ViewFormEditDeleteButtons({
         {handleUpdatePassword && (
           <IconTooltip
             title="Change Password"
-            disabled={( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly )}
+            disabled={( machineSettingPage || settingPage || userPage ) && ( isSettingReadOnly || isSecurityReadOnly )}
             onClick={() => {
               handleUpdatePassword();
             }}
-            color={(disablePasswordButton || ( ( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly ) ))?"#c3c3c3":theme.palette.secondary.main}
+            color={(disablePasswordButton || ( ( machineSettingPage || settingPage || userPage ) && ( isSettingReadOnly || isSecurityReadOnly ) ))?"#c3c3c3":theme.palette.secondary.main}
             icon="solar:key-broken"
           />
         )}
@@ -426,11 +426,11 @@ function ViewFormEditDeleteButtons({
         {/* edit button */}
         {handleEdit && <IconTooltip
           title="Edit"
-          disabled={disableEditButton || (( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly ))}
+          disabled={disableEditButton || (( machineSettingPage || settingPage || userPage ) && ( isSettingReadOnly || isSecurityReadOnly ))}
           onClick={() => {
             handleEdit();
           }}
-          color={disableEditButton || (( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly )) ?"#c3c3c3":theme.palette.primary.main}
+          color={disableEditButton || (( machineSettingPage || settingPage || userPage ) && ( isSettingReadOnly || isSecurityReadOnly )) ?"#c3c3c3":theme.palette.primary.main}
           icon="mdi:pencil-outline"
         />}
 
@@ -540,7 +540,7 @@ ViewFormEditDeleteButtons.propTypes = {
   isConectable: PropTypes.bool,
   machineSettingPage: PropTypes.bool,
   settingPage: PropTypes.bool,
-  securityUserPage: PropTypes.bool,
+  userPage: PropTypes.bool,
   hanldeViewGallery: PropTypes.func,
   customerPage: PropTypes.bool, 
   machinePage: PropTypes.bool, 

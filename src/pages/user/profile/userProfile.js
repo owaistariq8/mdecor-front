@@ -9,13 +9,13 @@ import {
   Link,
 } from '@mui/material';
 // routes
-import { PATH_SECURITY } from '../../../routes/paths';
+import { PATH_USER } from '../../../routes/paths';
 // auth
 import { useAuthContext } from '../../../auth/useAuthContext';
 // _mock_
 import {
-  getSecurityUser
-} from '../../../redux/slices/securityUser/securityUser';
+  getUser
+} from '../../../redux/slices/user/user';
 // components
 import ViewFormField from '../../../components/ViewForms/ViewFormField';
 import ViewFormAudit from '../../../components/ViewForms/ViewFormAudit';
@@ -30,17 +30,17 @@ import ContactDialog from '../../../components/Dialog/ContactDialog';
 
 // ----------------------------------------------------------------------
 
-export default function SecurityUserProfile() {
+export default function UserProfile() {
   // const { customer } = useSelector((state) => state.customer);
   // const { contact } = useSelector((state) => state.contact);
-  const { securityUser, initial } = useSelector((state) => state.user);
+  const { user, initial } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, userId } = useAuthContext();
+  const { userId } = useAuthContext();
 
   useEffect(() => {
     if (userId) {
-      dispatch(getSecurityUser(userId));
+      dispatch(getUser(userId));
     }
   }, [dispatch, userId, initial]);
 
@@ -52,69 +52,43 @@ export default function SecurityUserProfile() {
   const handleCustomerDialog = (event) =>{
     event.preventDefault();
     dispatch(setCustomerDialog(true))
-    if ( securityUser?.customer?._id) {
-      dispatch(getCustomer(securityUser?.customer?._id));
+    if ( user?.customer?._id) {
+      dispatch(getCustomer(user?.customer?._id));
     }
   }
 
   const handleContactDialog = (event) =>{
     event.preventDefault();
     dispatch(setContactDialog(true))
-    if ( securityUser?.contact?._id) {
-      dispatch(getContact(securityUser?.customer?._id, securityUser?.contact?._id));
+    if ( user?.contact?._id) {
+      dispatch(getContact(user?.customer?._id, user?.contact?._id));
     }
   }
 
   const handleEdit = () => {
-    // dispatch(setSecurityUserEditFormVisibility(true));
-    navigate(PATH_SECURITY.users.editProfile);
+    navigate(PATH_USER.users.editProfile);
   };
 
   const defaultValues = useMemo(
     () => ({
-      customer: securityUser?.customer?.name || '',
-      contact: `${securityUser?.contact?.firstName || '' } ${securityUser?.contact?.lastName || '' }` || '',
-      name: securityUser?.name || '',
-      phone: securityUser?.phone || '',
-      email: securityUser?.email || '',
-      login: securityUser?.login || '',
-      roles: securityUser?.roles || [],
-      regions: securityUser?.regions || [],
-      countries: securityUser?.regions ? securityUser.regions.flatMap(region => region.countries) : [],
-      customers: securityUser?.customers || [],
-      machines: securityUser?.machines || [],
-      isActive: securityUser?.isActive || false,
-      currentEmployee: securityUser?.currentEmployee || false,
-      multiFactorAuthentication: securityUser?.multiFactorAuthentication,
-      createdByFullName: securityUser?.createdBy?.name || '',
-      createdAt: securityUser?.createdAt || '',
-      createdIP: securityUser?.createdIP || '',
-      updatedByFullName: securityUser?.updatedBy?.name || '',
-      updatedAt: securityUser?.updatedAt || '',
-      updatedIP: securityUser?.updatedIP || '',
+      customer: user?.customer?.name || '',
+      contact: `${user?.contact?.firstName || '' } ${user?.contact?.lastName || '' }` || '',
+      name: user?.name || '',
+      phone: user?.phone || '',
+      email: user?.email || '',
+      roles: user?.roles || [],
+      status: user?.status || 'inactive',
+      createdAt: user?.createdAt || '',
+      updatedAt: user?.updatedAt || '',
     }),
-    [securityUser]
+    [user]
   );
   return (
     <>
       <Container maxWidth={false}>
-        <Card
-          sx={{
-            mb: 3, height: 160,
-            position: 'relative',
-          }}
-        >
-          <Cover
-            name={defaultValues?.name}
-            photoURL={user.name === 'HOWICK LTD.' ? <LogoAvatar /> : <CustomAvatar />}
-            icon="ph:users-light"
-          />
-        </Card>
         <Card sx={{ p: 3 }}>
           <ViewFormEditDeleteButtons 
-              isActive={defaultValues.isActive}
-              multiAuth={defaultValues?.multiFactorAuthentication} 
-              currentEmp={defaultValues?.currentEmployee}
+              status={defaultValues.status}
               handleEdit={handleEdit} 
             />
           <Grid container>
@@ -143,32 +117,10 @@ export default function SecurityUserProfile() {
             <ViewFormField sm={6} heading="Full Name" param={defaultValues?.name} />
             <ViewFormField sm={6} heading="Phone" param={defaultValues?.phone} />
             <ViewFormField sm={12} heading="email" param={defaultValues?.email} />
-            <ViewFormField sm={6} heading="Login" param={defaultValues?.login} />
             <ViewFormField
               sm={6}
               heading="Roles"
               userRolesChips={defaultValues?.roles}
-            />
-            <ViewFormField
-              sm={12}
-              heading="Regions"
-              arrayParam={defaultValues?.regions}
-            />
-            <ViewFormField
-              sm={12}
-              heading="Countries"
-              chipLabel='country_name'
-              arrayParam={defaultValues?.countries}
-            />
-            <ViewFormField
-              sm={12}
-              heading="Customers"
-              arrayParam={defaultValues?.customers}
-            />
-            <ViewFormField
-              sm={12}
-              heading="Machines"
-              machineConnectionArrayChip={defaultValues?.machines}
             />
           </Grid>
           <ViewFormField />

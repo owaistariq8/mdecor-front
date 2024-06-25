@@ -38,9 +38,9 @@ export const ComponentsOverviewPage = Loadable(lazy(() => import('../components/
 // ----------------------------------------------------------------
 
 // AUTH SECURITY USER 
-export const SecurityUserProfile = Loadable(lazy(() => import('../pages/security/profile/SecurityUserProfile')))  
-export const SecurityUserProfileEdit = Loadable(lazy(() => import('../pages/security/profile/SecurityUserProfileEditForm')));
-export const SecurityUserChangePassword = Loadable(lazy(() => import('../pages/security/passwordChange/SecurityUserChangePassword')));
+export const UserProfile = Loadable(lazy(() => import('../pages/user/profile/userProfile')))  
+export const UserProfileEdit = Loadable(lazy(() => import('../pages/user/profile/userProfileEditForm')));
+export const UserChangePassword = Loadable(lazy(() => import('../pages/user/passwordChange/userChangePassword')));
 
 // ----------------------------------------------------------------
 
@@ -74,11 +74,11 @@ export const Setting = Loadable(lazy(() => import('../pages/settings/Setting')))
 
 
 // SECURITY USERS
-export const SecurityUserList = Loadable(lazy(() => import('../pages/security/securityUsers/SecurityUserList')));
-export const SecurityUserAdd = Loadable(lazy(() => import('../pages/security/securityUsers/SecurityUserAdd')));
-export const SecurityUserView = Loadable(lazy(() => import('../pages/security/securityUsers/SecurityUserView')));
-export const SecurityUserEdit = Loadable(lazy(() => import('../pages/security/securityUsers/SecurityUserEdit')));
-export const SecurityUserChangePasswordByAdmin = Loadable(lazy(() => import('../pages/security/passwordChange/SecurityUserChangePasswordByAdmin')));
+export const UserList = Loadable(lazy(() => import('../pages/user/users/userList')));
+export const UserAdd = Loadable(lazy(() => import('../pages/user/users/userAdd')));
+export const UserView = Loadable(lazy(() => import('../pages/user/users/userView')));
+export const UserEdit = Loadable(lazy(() => import('../pages/user/users/userEdit')));
+export const UserChangePasswordByAdmin = Loadable(lazy(() => import('../pages/user/passwordChange/userChangePasswordByAdmin')));
 
 // SECURITY SETTIGS ROLES
 export const RoleList = Loadable(lazy(() => import('../pages/settings/securitySettings/role/RoleList')));

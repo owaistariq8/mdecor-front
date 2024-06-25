@@ -8,28 +8,28 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Box, Card, Grid, Stack, Checkbox } from '@mui/material';
 // routes
-import { PATH_SECURITY } from '../../../routes/paths';
+import { PATH_USER } from '../../../routes/paths';
 // assets
 // components
 import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFSwitch, RHFTextField, RHFPasswordField, RHFAutocomplete, RHFPhoneInput } from '../../../components/hook-form';
 // slice
-import { addSecurityUser } from '../../../redux/slices/securityUser/securityUser';
+import { addUser } from '../../../redux/slices/user/user';
 import { getCustomers, resetCustomers } from '../../../redux/slices/customer/customer';
 import { getActiveContacts, resetActiveContacts } from '../../../redux/slices/customer/contact';
-import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/securityUser/role';
-import { addUserSchema , editUserSchema} from '../../schemas/securityUser';
+import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/user/role';
+import { addUserSchema , editUserSchema} from '../../schemas/user';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 
-SecurityUserAddForm.propTypes = {
+UserAddForm.propTypes = {
   isEdit: PropTypes.bool,
   currentUser: PropTypes.object,
   isInvite: PropTypes.bool,
 };
 
-export default function SecurityUserAddForm({ isEdit = false, currentUser, isInvite }) {
+export default function UserAddForm({ isEdit = false, currentUser, isInvite }) {
 
-  const { allActiveCustomers } = useSelector((state) => state.customer);
+  const { customers } = useSelector((state) => state.customer);
   const { activeRoles } = useSelector((state) => state.role);
   const { activeContacts } = useSelector((state) => state.contact);
 
@@ -59,21 +59,14 @@ export default function SecurityUserAddForm({ isEdit = false, currentUser, isInv
       password: '',
       confirmPassword: '',
       roles: [],
-      regions: [],
-      customers: [],
-      machines: [],
-      dataAccessibilityLevel: 'RESTRICTED',
       isActive: true,
-      isInvite,
-      multiFactorAuthentication: false,
-      currentEmployee: false,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [ currentUser ]
   );
   // isInvite && editUserSchema || !isInvite && 
   const methods = useForm({
-    resolver: yupResolver( isInvite && editUserSchema || !isInvite && addUserSchema ),
+    resolver: yupResolver(  editUserSchema || addUserSchema ),
     defaultValues,
   });
 
@@ -88,8 +81,8 @@ export default function SecurityUserAddForm({ isEdit = false, currentUser, isInv
 const { customer, contact } = watch();
 
   useEffect(() => {
-    setValue('customer',allActiveCustomers.find(c => c?.type?.toUpperCase() === "SP" ));
-  },[ allActiveCustomers, setValue ])
+    setValue('customer',customers.find(c => c?.type?.toUpperCase() === "SP" ));
+  },[ customers, setValue ])
 
   useEffect(() => {
     if(customer?._id){
@@ -113,10 +106,10 @@ const { customer, contact } = watch();
 
   const onSubmit = async (data) => {
     try {
-      const message = !isInvite ? "User Added Successfully":"User Invitation Sent Successfulllfy";
-      const response = await dispatch(addSecurityUser(data, isInvite));
+      const message = "User Added Successfully";
+      const response = await dispatch(addUser(data));
       reset();
-      navigate(PATH_SECURITY.users.view(response.data.user._id));
+      navigate(PATH_USER.users.view(response.data.user._id));
       enqueueSnackbar(message);
     } catch (error) {
         enqueueSnackbar(error, { variant: `error` });
@@ -124,7 +117,7 @@ const { customer, contact } = watch();
     }
   };
 
-  const toggleCancel = () =>  navigate(PATH_SECURITY.root);
+  const toggleCancel = () =>  navigate(PATH_USER.root);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -138,7 +131,7 @@ const { customer, contact } = watch();
               <RHFAutocomplete
                 name='customer'
                 label="Customer*"
-                options={ allActiveCustomers }
+                options={ customers }
                 getOptionLabel={(option) => option?.name || ''}
                 isOptionEqualToValue={(option, value) => option?._id === value?._id}
                 renderOption={(props, option) => (<li  {...props} key={option?._id}>{option?.name || ''}</li>)}
@@ -161,16 +154,14 @@ const { customer, contact } = watch();
               rowGap={2} columnGap={2} display="grid"
               gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' }}
             >
-              <RHFTextField name="email" label="Login/Email Address*" inputProps={{ style: { textTransform: 'lowercase' } }} />
+              <RHFTextField name="email" label="Email Address*" inputProps={{ style: { textTransform: 'lowercase' } }} />
             </Box>
-            {(!isInvite &&(
-              <Box sx={{ mb: 3 }} rowGap={2} columnGap={2} display="grid" 
-                gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)',}}
-              >
-                <RHFPasswordField name="password" label="Password*"/>
-                <RHFPasswordField name="confirmPassword" label="Confirm Password*" />
-              </Box>
-            ))}
+            <Box sx={{ mb: 3 }} rowGap={2} columnGap={2} display="grid" 
+              gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)',}}
+            >
+              <RHFPasswordField name="password" label="Password*"/>
+              <RHFPasswordField name="confirmPassword" label="Confirm Password*" />
+            </Box>
 
             <Box rowGap={2} columnGap={2} display="grid"
               gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }}
@@ -188,48 +179,24 @@ const { customer, contact } = watch();
                 renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
               />
 
-              <RHFAutocomplete
-                disableClearable
-                name="dataAccessibilityLevel"
-                label="Data Accessibility Level"
-                options={ [ 'RESTRICTED', 'GLOBAL' ] }
-                isOptionEqualToValue={(option, value) => option === value}
-                renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option|| ''}</li> )}
-              />
-
             </Box>
             <Box rowGap={2} columnGap={2} display="grid"
               gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' }}
             >
               
 
-              <RHFAutocomplete
-                multiple
-                disableCloseOnSelect
-                filterSelectedOptions
-                name="customers" 
-                label="Customers"
-                options={allActiveCustomers}
-                getOptionLabel={(option) => option.name}
-                isOptionEqualToValue={(option, value) => option?._id === value?._id}
-                renderOption={(props, option) => ( <li {...props} key={option?._id}> {option?.name || ''} </li> )}
-                ChipProps={{ size: 'small' }}
-              />
+              
 
              
 
             </Box>
             <Grid item md={12} display="flex">
-                {(!isInvite &&(
-                  <>
-                  <RHFSwitch name="isActive" label="Active" />
-                  <RHFSwitch name="multiFactorAuthentication" label="Multi-Factor Authentication" />
-                  </>
-              ))}
-              <RHFSwitch name="currentEmployee" label="Current Employee" />
+              <>
+              <RHFSwitch name="isActive" label="Active" />
+              </>
             </Grid>
             <Stack sx={{ mt: 3 }}>
-              <AddFormButtons securityUserPage saveButtonName={isInvite?"Invite":"Save"} isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+              <AddFormButtons userPage saveButtonName="Save" isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Stack>
           </Stack>
           </Card>

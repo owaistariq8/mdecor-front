@@ -37,7 +37,7 @@ import { deleteRole, getRoles,
   ChangeRowsPerPage,
   ChangePage,
   setFilterBy,
- } from '../../../../redux/slices/securityUser/role';
+ } from '../../../../redux/slices/user/role';
 import { Cover } from '../../../../components/Defaults/Cover';
 import { fDate } from '../../../../utils/formatTime';
 import TableCard from '../../../../components/ListTableTools/TableCard';

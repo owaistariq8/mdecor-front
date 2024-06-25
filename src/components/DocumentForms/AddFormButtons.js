@@ -21,7 +21,7 @@ AddFormButtons.propTypes = {
   isDisabled: PropTypes.bool,
   machineSettingPage: PropTypes.bool,
   settingPage: PropTypes.bool,
-  securityUserPage: PropTypes.bool,
+  userPage: PropTypes.bool,
   machinePage: PropTypes.bool,
   customerPage: PropTypes.bool,
   drawingPage: PropTypes.bool,
@@ -41,7 +41,7 @@ export default function AddFormButtons({
   isDisabled,
   machineSettingPage,
   settingPage,
-  securityUserPage,
+  userPage,
   machinePage,
   customerPage,
   drawingPage,
@@ -76,13 +76,13 @@ export default function AddFormButtons({
   };
 
   useLayoutEffect(()=>{
-    if(( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly || !isDocumentAccessAllowed || !isDrawingAccessAllowed )){
+    if(( machineSettingPage || settingPage || userPage ) && ( isSettingReadOnly || isSecurityReadOnly || !isDocumentAccessAllowed || !isDrawingAccessAllowed )){
       navigate(PATH_DASHBOARD.root)
     }
   },[ 
     machineSettingPage, 
     settingPage, 
-    securityUserPage, 
+    userPage, 
     drawingPage, 
     isSettingReadOnly, 
     isSecurityReadOnly, 

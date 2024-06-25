@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // @mui
 import { Card, Grid } from '@mui/material';
 // redux
-import { deleteRole } from '../../../../redux/slices/securityUser/role';
+import { deleteRole } from '../../../../redux/slices/user/role';
 // paths
 import { PATH_SETTING } from '../../../../routes/paths';
 // components

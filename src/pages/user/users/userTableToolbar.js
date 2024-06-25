@@ -6,14 +6,14 @@ import { Stack } from '@mui/material';
 import { useDispatch } from '../../../redux/store';
 // components
 import SearchBarCombo from '../../../components/ListTableTools/SearchBarCombo';
-import { PATH_SECURITY } from '../../../routes/paths';
-import { setSecurityUserFormVisibility } from '../../../redux/slices/securityUser/securityUser';
+import { PATH_USER } from '../../../routes/paths';
+import { setUserFormVisibility } from '../../../redux/slices/user/user';
 import { BUTTONS } from '../../../constants/default-constants';
 import { options } from '../../../theme/styles/default-styles';
 
 // ----------------------------------------------------------------------
 
-SecurityUserTableToolbar.propTypes = {
+UserTableToolbar.propTypes = {
   isFiltered: PropTypes.bool,
   filterName: PropTypes.string,
   filterRole: PropTypes.string,
@@ -30,7 +30,7 @@ SecurityUserTableToolbar.propTypes = {
   onReload: PropTypes.func,
 };
 
-export default function SecurityUserTableToolbar({
+export default function UserTableToolbar({
   isFiltered,
   filterName,
   filterRole,
@@ -50,13 +50,13 @@ export default function SecurityUserTableToolbar({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const formNewVisibleToggle = () => {
-    dispatch(setSecurityUserFormVisibility(true));
-    navigate(PATH_SECURITY.users.new);
+    dispatch(setUserFormVisibility(true));
+    navigate(PATH_USER.users.new);
   };
 
   const formInviteVisibleToggle = () => {
-    dispatch(setSecurityUserFormVisibility(true));
-    navigate(PATH_SECURITY.users.invite);
+    dispatch(setUserFormVisibility(true));
+    navigate(PATH_USER.users.invite);
   };
 
   return (
@@ -77,7 +77,7 @@ export default function SecurityUserTableToolbar({
         addButton={BUTTONS.ADDUSER}
         inviteButton={BUTTONS.INVITEUSER}
         onReload={onReload}
-        securityUserPage
+        userPage
       />
     </Stack>
   );

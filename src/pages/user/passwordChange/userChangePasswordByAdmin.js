@@ -15,19 +15,19 @@ import Iconify from '../../../components/iconify';
 import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFTextField } from '../../../components/hook-form';
 import { Cover } from '../../../components/Defaults/Cover';
-import { SecurityUserPasswordUpdate, sendResetPasswordEmail, resetLoadingResetPasswordEmail } from '../../../redux/slices/securityUser/securityUser';
+import { UserPasswordUpdate, sendResetPasswordEmail, resetLoadingResetPasswordEmail } from '../../../redux/slices/user/user';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
-import { PATH_SECURITY } from '../../../routes/paths';
+import { PATH_USER } from '../../../routes/paths';
 import { StyledCardContainer, StyledTooltip } from '../../../theme/styles/default-styles';
 import { useAuthContext } from '../../../auth/useAuthContext';
 
 // ----------------------------------------------------------------------
 
-export default function SecurityUserChangePassword() {
+export default function UserChangePassword() {
   const navigate = useNavigate();
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { securityUser, isLoadingResetPasswordEmail } = useSelector((state) => state.user);
+  const { user, isLoadingResetPasswordEmail } = useSelector((state) => state.user);
 
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
@@ -64,11 +64,11 @@ export default function SecurityUserChangePassword() {
     formState: { isSubmitting },
   } = methods;
 
-  const toggleCancel = () => navigate(PATH_SECURITY.users.view(securityUser._id));
+  const toggleCancel = () => navigate(PATH_USER.users.view(user._id));
 
   const senResetPasswordLink = async () => {
     try{
-      await dispatch(sendResetPasswordEmail(securityUser?.login))
+      await dispatch(sendResetPasswordEmail(user?.login))
       await dispatch(resetLoadingResetPasswordEmail())
       await enqueueSnackbar('Email sent successfully!');
     }catch(e){
@@ -79,10 +79,10 @@ export default function SecurityUserChangePassword() {
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(SecurityUserPasswordUpdate(data, securityUser._id, true));
+      await dispatch(UserPasswordUpdate(data, user._id, true));
       reset();
       enqueueSnackbar('Update success!');
-      navigate(PATH_SECURITY.users.view(securityUser._id));
+      navigate(PATH_USER.users.view(user._id));
     } catch (error) {
       if (error.Message) {
         enqueueSnackbar(error.Message, { variant: `error` });
@@ -110,7 +110,7 @@ export default function SecurityUserChangePassword() {
                   label="Name"
                   type="name"
                   autoComplete="name"
-                  value={securityUser?.name || '' }
+                  value={user?.name || '' }
                   disabled
                 />
 
@@ -119,7 +119,7 @@ export default function SecurityUserChangePassword() {
                   label="Login"
                   type="email"
                   autoComplete="email"
-                  value={securityUser?.login || '' }
+                  value={user?.login || '' }
                   disabled
                 />
                 
@@ -128,7 +128,7 @@ export default function SecurityUserChangePassword() {
                   label="Email"
                   type="email"
                   autoComplete="email"
-                  value={securityUser?.email || ''}
+                  value={user?.email || ''}
                   disabled
                 />
 
@@ -178,7 +178,7 @@ export default function SecurityUserChangePassword() {
                     Change Password
                   </LoadingButton> */}
               </Stack>
-              <AddFormButtons securityUserPage isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+              <AddFormButtons userPage isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>
           </Grid>
         </Grid>

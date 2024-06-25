@@ -15,7 +15,7 @@ import {
   Tabs,
 } from '@mui/material';
 // routes
-import { PATH_DASHBOARD, PATH_SECURITY } from '../../../../routes/paths';
+import { PATH_DASHBOARD, PATH_USER } from '../../../../routes/paths';
 // auth
 import { useAuthContext } from '../../../../auth/useAuthContext';
 // _mock_
@@ -23,9 +23,9 @@ import { _userAbout } from '../../../../_mock/arrays';
 import Iconify from '../../../../components/iconify';
 // Redux Slice
 import {
-  getSecurityUser,
+  getUser,
   setSecurityUserEditFormVisibility,
-} from '../../../../redux/slices/securityUser/securityUser';
+} from '../../../../redux/slices/user/user';
 // components
 // import { ProfileCover} from '../../sections/@dashboard/user/profile';
 import { useSnackbar } from '../../../../components/snackbar';
@@ -42,10 +42,10 @@ import CustomAvatar from '../../../../components/custom-avatar/CustomAvatar';
 import ViewFormEditDeleteButtons from '../../../../components/ViewForms/ViewFormEditDeleteButtons';
 // ----------------------------------------------------------------------
 
-export default function SecurityUserProfile() {
+export default function UserProfile() {
   const { customer } = useSelector((state) => state.customer);
   const { contact } = useSelector((state) => state.contact);
-  const { securityUser, initial, isLoading} = useSelector((state) => state.user);
+  const { user, initial, isLoading} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -61,49 +61,49 @@ export default function SecurityUserProfile() {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getSecurityUser(userId));
+      dispatch(getUser(userId));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, userId, initial]);
 
   useEffect(() => {
     batch(() => {
-      if (userId && securityUser?.customer?._id) {
-        dispatch(getCustomer(securityUser?.customer?._id));
+      if (userId && user?.customer?._id) {
+        dispatch(getCustomer(user?.customer?._id));
       }
-      if (userId && securityUser?.contact?._id) {
-        dispatch(getContact(securityUser?.customer?._id, securityUser?.contact?._id));
+      if (userId && user?.contact?._id) {
+        dispatch(getContact(user?.customer?._id, user?.contact?._id));
       }
     });
-  }, [dispatch, userId, securityUser]);
+  }, [dispatch, userId, user]);
 
   const handleViewCustomer = (id) => {
-    navigate(PATH_SECURITY.users.view(id));
+    navigate(PATH_USER.users.view(id));
   };
 
   const handleEdit = () => {
     dispatch(setSecurityUserEditFormVisibility(true));
-    navigate(PATH_SECURITY.users.edit(securityUser?._id));
+    navigate(PATH_USER.users.edit(user?._id));
   };
 
   const defaultValues = useMemo(
     () => ({
-      customer: securityUser?.customer?.name || '',
-      contact: securityUser?.contact?.firstName || '',
-      name: securityUser?.name || '',
-      phone: securityUser?.phone || '',
-      email: securityUser?.email || '',
-      login: securityUser?.login || '',
-      roles: securityUser?.roles || [],
-      isActive: securityUser?.isActive || false,
-      createdByFullName: securityUser?.createdBy?.name || '',
-      createdAt: securityUser?.createdAt || '',
-      createdIP: securityUser?.createdIP || '',
-      updatedByFullName: securityUser?.updatedBy?.name || '',
-      updatedAt: securityUser?.updatedAt || '',
-      updatedIP: securityUser?.updatedIP || '',
+      customer: user?.customer?.name || '',
+      contact: user?.contact?.firstName || '',
+      name: user?.name || '',
+      phone: user?.phone || '',
+      email: user?.email || '',
+      login: user?.login || '',
+      roles: user?.roles || [],
+      isActive: user?.isActive || false,
+      createdByFullName: user?.createdBy?.name || '',
+      createdAt: user?.createdAt || '',
+      createdIP: user?.createdIP || '',
+      updatedByFullName: user?.updatedBy?.name || '',
+      updatedAt: user?.updatedAt || '',
+      updatedIP: user?.updatedIP || '',
     }),
-    [securityUser]
+    [user]
   );
   return (
     <>

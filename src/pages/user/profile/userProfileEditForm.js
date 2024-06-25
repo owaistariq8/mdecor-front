@@ -7,30 +7,29 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Box, Card, Grid, Stack, Container, Checkbox } from '@mui/material';
 // routes
-import { PATH_SECURITY } from '../../../routes/paths';
+import { PATH_USER } from '../../../routes/paths';
 // components
 import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFSwitch, RHFTextField, RHFAutocomplete, RHFPhoneInput } from '../../../components/hook-form';
 // slice
-import { updateSecurityUser, getSecurityUser } from '../../../redux/slices/securityUser/securityUser';
+import { updateUser, getUser } from '../../../redux/slices/user/user';
 import { getCustomers, resetCustomers } from '../../../redux/slices/customer/customer';
 import { getActiveContacts, resetActiveContacts} from '../../../redux/slices/customer/contact';
-import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/securityUser/role';
+import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/user/role';
 // current user
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 import { Cover } from '../../../components/Defaults/Cover';
-import { editUserSchema } from '../../schemas/securityUser';
+import { editUserSchema } from '../../schemas/user';
 import { useAuthContext } from '../../../auth/useAuthContext';
 
 // ----------------------------------------------------------------------
 
-export default function SecurityUserProfileEditForm() {
+export default function UserProfileEditForm() {
 
   const { activeRoles } = useSelector((state) => state.role);
-  const { securityUser } = useSelector((state) => state.user);
-  const { allActiveCustomers } = useSelector((state) => state.customer);
+  const { user } = useSelector((state) => state.user);
+  const { customers } = useSelector((state) => state.customer);
   const { activeContacts } = useSelector((state) => state.contact);
-  const { isSecurityReadOnly } = useAuthContext();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -50,21 +49,16 @@ export default function SecurityUserProfileEditForm() {
 
   const defaultValues = useMemo(
     () => ({
-      customer: securityUser?.customer || null,
-      contact: securityUser?.contact || null,
-      name: securityUser?.name || '',
-      phone: securityUser?.phone || '+64 ',
-      email: securityUser?.email || '',
-      loginEmail: securityUser?.login || '',
-      roles: securityUser?.roles || [],
-      dataAccessibilityLevel: securityUser?.dataAccessibilityLevel || 'RESTRICTED',
-      customers: securityUser?.customers || [],
-      isActive: securityUser?.isActive,
-      multiFactorAuthentication: securityUser?.multiFactorAuthentication,
-      currentEmployee: securityUser?.currentEmployee
+      customer: user?.customer || null,
+      contact: user?.contact || null,
+      name: user?.name || '',
+      phone: user?.phone || '+64 ',
+      email: user?.email || '',
+      roles: user?.roles || [],
+      status: user?.status,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [securityUser]
+    [user]
   );
   const methods = useForm({
     resolver: yupResolver( editUserSchema ),
@@ -93,16 +87,16 @@ useEffect(() => {
 
   const onSubmit = async (data) => {
     try {
-      await  dispatch(updateSecurityUser(data, securityUser._id));
+      await  dispatch(updateUser(data, user._id));
       reset()
-      navigate(PATH_SECURITY.users.profile);
+      navigate(PATH_USER.users.profile);
     } catch (error) {
       enqueueSnackbar(error, { variant: `error` });
       console.log('Error:', error);
     }
   };
 
-  const toggleCancel = () => navigate(PATH_SECURITY.users.profile);
+  const toggleCancel = () => navigate(PATH_USER.users.profile);
 
 
   const onChangeContact = (contact) => {
@@ -137,7 +131,7 @@ useEffect(() => {
                 disabled
                 name='customer'
                 label="Customer"
-                options={ allActiveCustomers }
+                options={ customers }
                 getOptionLabel={(option) => option?.name || ''}
                 isOptionEqualToValue={(option, value) => option?._id === value?._id}
                 renderOption={(props, option) => (<li  {...props} key={option?._id}>{option?.name || ''}</li>)}
@@ -156,15 +150,14 @@ useEffect(() => {
 
               <RHFTextField name="name" label="Full Name*" />
 
-              <RHFPhoneInput name="phone" label="Phone Number" inputProps={{maxLength:13}} />
+              <RHFPhoneInput name="phone" label="Phone Number"  />
             </Box>
 
             <Box
               rowGap={2} columnGap={2} display="grid"
               gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' }}
             >
-                  <RHFTextField name="email" label="Email Address" inputProps={{ style: { textTransform: 'lowercase' } }} />
-                  <RHFTextField name="loginEmail" label="Login Email" disabled />
+              <RHFTextField name="email" label="Email Address" inputProps={{ style: { textTransform: 'lowercase' } }} />
             </Box>
 
             <Box
@@ -173,7 +166,6 @@ useEffect(() => {
             >
 
               <RHFAutocomplete
-                disabled={ isSecurityReadOnly }
                 multiple
                 disableCloseOnSelect
                 filterSelectedOptions
@@ -185,15 +177,7 @@ useEffect(() => {
                 renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
               />
               
-              <RHFAutocomplete
-                disabled={ isSecurityReadOnly }
-                disableClearable
-                name="dataAccessibilityLevel"
-                label="Data Accessibility Level"
-                options={ [ 'RESTRICTED', 'GLOBAL' ] }
-                isOptionEqualToValue={(option, value) => option === value}
-                renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option|| ''}</li> )}
-              />
+              
 
             </Box>
             <Box
@@ -206,26 +190,10 @@ useEffect(() => {
               }}
             >
 
-              <RHFAutocomplete
-                multiple
-                disableCloseOnSelect
-                filterSelectedOptions
-                name="customers" 
-                label="Customers"
-                options={allActiveCustomers}
-                getOptionLabel={(option) => option.name}
-                isOptionEqualToValue={(option, value) => option?._id === value?._id}
-                renderOption={(props, option) => ( <li {...props} key={option?._id}> {option?.name || ''} </li> )}
-                ChipProps={{ size: 'small' }}
-              />
-
-              
 
             </Box>
             <Grid item md={12} display="flex">
-              <RHFSwitch name="isActive" disabled label="Active" />
-              <RHFSwitch name="multiFactorAuthentication" label="Multi-Factor Authentication" />
-              <RHFSwitch name="currentEmployee" disabled label="Current Employee" />
+              <RHFSwitch name="status" disabled label="Active" />
             </Grid>
 
             <Stack sx={{ mt: 3 }}>

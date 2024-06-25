@@ -54,43 +54,41 @@ import IdleManager from './components/idleManager';
 
 import Page500 from './pages/Page500';
 import { AuthProvider } from './auth/JwtContext';
-import { WebSocketProvider } from './auth/WebSocketContext';
+// import { WebSocketProvider } from './auth/WebSocketContext';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
   return (
     <AuthProvider>
-      <WebSocketProvider>
-        <HelmetProvider>
-          <ReduxProvider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <SettingsProvider>
-                  <BrowserRouter>
-                    <MotionLazyContainer>
-                      <ThemeProvider>
-                        <ThemeSettings>
-                          <ErrorBoundary fallback={<Page500 />}>
-                            <ScrollToTop />
-                            <ThemeLocalization>
-                              <SnackbarProvider>
-                                <StyledChart />
-                                <IdleManager />
-                                <Router />
-                              </SnackbarProvider>
-                            </ThemeLocalization>
-                          </ErrorBoundary>
-                        </ThemeSettings>
-                      </ThemeProvider>
-                    </MotionLazyContainer>
-                  </BrowserRouter>
-                </SettingsProvider>
-              </LocalizationProvider>
-            </PersistGate>
-          </ReduxProvider>
-        </HelmetProvider>
-      </WebSocketProvider>
+      <HelmetProvider>
+        <ReduxProvider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <SettingsProvider>
+                <BrowserRouter>
+                  <MotionLazyContainer>
+                    <ThemeProvider>
+                      <ThemeSettings>
+                        <ErrorBoundary fallback={<Page500 />}>
+                          <ScrollToTop />
+                          <ThemeLocalization>
+                            <SnackbarProvider>
+                              <StyledChart />
+                              <IdleManager />
+                              <Router />
+                            </SnackbarProvider>
+                          </ThemeLocalization>
+                        </ErrorBoundary>
+                      </ThemeSettings>
+                    </ThemeProvider>
+                  </MotionLazyContainer>
+                </BrowserRouter>
+              </SettingsProvider>
+            </LocalizationProvider>
+          </PersistGate>
+        </ReduxProvider>
+      </HelmetProvider>
     </AuthProvider>
   );
 }

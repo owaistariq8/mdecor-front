@@ -33,13 +33,9 @@ import { ICONS } from '../../../constants/icons/default-icons';
 function NotificationsPopover() {
   const userId = localStorage.getItem('userId');
   const [ openPopover, setOpenPopover ] = useState(null);
-  const { notifications, sendJsonMessage } = useWebSocketContext();
   const [ totalUnRead, setTotalUnRead ] = useState(0);
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    setTotalUnRead(notifications && notifications.filter((item) => item?.readBy?.includes(userId) === false).length);
-  },[notifications, userId])
 
   const handleOpenPopover = (event) => {
     setOpenPopover(event.currentTarget);
@@ -50,12 +46,7 @@ function NotificationsPopover() {
   };
 
   const handleMarkAs = (notification) => {
-    if(notification?._id){
-      // setOpenPopover(null);
-      sendJsonMessage({eventName:'markAs',_id:notification?._id, status:true});
-    }else{
-      sendJsonMessage({eventName:'markAs', status:true});
-    }
+    
   }
 
   return (
@@ -73,41 +64,9 @@ function NotificationsPopover() {
             </Typography>
           </Box>
 
-          {totalUnRead > 0 && (
-            <Tooltip title=" Mark all as read">
-              <IconButton color="primary" onClick={()=>handleMarkAs()}>
-                <Iconify icon="eva:done-all-fill" />
-              </IconButton>
-            </Tooltip>
-          )}
+          
         </Box>
-        {notifications && notifications?.length>0 &&
-          <>
-          <Divider sx={{ borderStyle: 'solid' }} />
-          <Scrollbar key='scrollbar' >
-            <List key={notifications?.length} disablePadding
-              // subheader={
-              //   <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
-              //     {!notifications && 'Loading...' ? 'No notifications' : 'NEW'}
-              //   </ListSubheader>
-              // }
-            >
-              {notifications.map((notification) => (
-                <NotificationItem handleMarkAs={handleMarkAs} key={notification?._id} notification={notification} />
-              ))}
-            </List>
-          </Scrollbar>
-          <Divider sx={{ borderStyle: 'solid' }} />
-          {!notifications && 'Loading...' ? (
-            ''
-          ) : (
-            <Box sx={{ p: 1 }}>
-                {` `}{/* <Button disableRipple onClick={handleClearAll} variant='outlined' startIcon={<Iconify icon='icon-park-outline:clear-format' />}>Clear</Button> */}
-                {/* <Button disableRipple>Remove All</Button> */}
-            </Box>
-          )}
-          </>
-        }
+        
 
       </MenuPopover>
     </>

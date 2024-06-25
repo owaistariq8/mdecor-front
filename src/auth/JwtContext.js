@@ -146,22 +146,23 @@ export function AuthProvider({ children }) {
   const login = useCallback(async (uEmail, uPassword) => {
     await dispatch(clearAllPersistedStates());
     const response = await axios.post(`${CONFIG.SERVER_URL}users/login`, { email: uEmail, password : uPassword, })
-    
-    const { accessToken, user, userId} = response.data;
-    
-    localStorage.setItem("customer", user?.customer);
+    const { success } = response.data;
+    if(success) {
+      const { accessToken, user, userId} = response.data.data;
+      localStorage.setItem("customer", user?.customer);
 
-    const rolesArrayString = JSON.stringify(user.roles);
-    localStorage.setItem('email', user.email);
-    localStorage.setItem('name', user.displayName);
-    localStorage.setItem('userId', userId);
-    localStorage.setItem('userRoles', rolesArrayString);
+      // const rolesArrayString = JSON.stringify(user.roles);
+      localStorage.setItem('email', user.email);
+      localStorage.setItem('name', user.displayName);
+      localStorage.setItem('userId', userId);
+      // localStorage.setItem('userRoles', rolesArrayString);
 
-    setSession(accessToken);
-    dispatch({
-      type: 'LOGIN',
-      payload: { user, userId },
-    });
+      setSession(accessToken);
+      dispatch({
+        type: 'LOGIN',
+        payload: { user, userId },
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -192,7 +193,7 @@ export function AuthProvider({ children }) {
     console.log("id : ",id, userId,userId)
     try{
       await dispatch(clearStorageAndNaviagteToLogin());
-      await axios.post(`${CONFIG.SERVER_URL}security/logout/${userId}`)
+      await axios.post(`${CONFIG.SERVER_URL}users/logout/${userId}`)
     }catch (error) {
       console.error(error)
     }

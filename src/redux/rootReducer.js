@@ -2,11 +2,11 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 // slices
-import userReducer from './slices/securityUser/securityUser';
+import userReducer from './slices/user/user';
 import customerReducer from './slices/customer/customer';
 import siteReducer from './slices/customer/site';
 import contactReducer from './slices/customer/contact';
-import roleReducer from './slices/securityUser/role';
+import roleReducer from './slices/user/role';
 import countReducer from './slices/dashboard/count';
 
 // ----------------------------------------------------------------------

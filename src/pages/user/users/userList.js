@@ -6,7 +6,7 @@ import { Card, Table, TableBody, Container, TableContainer } from '@mui/material
 // redux
 import { useDispatch, useSelector } from '../../../redux/store';
 // routes
-import { PATH_SECURITY } from '../../../routes/paths';
+import { PATH_USER } from '../../../routes/paths';
 // components
 import { useSnackbar } from '../../../components/snackbar';
 import Scrollbar from '../../../components/scrollbar';
@@ -21,17 +21,17 @@ import {
   TablePaginationCustom,
 } from '../../../components/table';
 // sections
-import SecurityUserTableToolbar from './SecurityUserTableToolbar';
-import UserTableRow from './SecurityUserTableRow';
+import UserTableToolbar from './userTableToolbar';
+import UserTableRow from './userTableRow';
 import {
-  getSecurityUsers,
-  resetSecurityUsers,
+  getUsers,
+  resetUsers,
   ChangeRowsPerPage,
   ChangePage,
   setFilterBy,
   setActiveFilterList,
   setEmployeeFilterList,
-} from '../../../redux/slices/securityUser/securityUser';
+} from '../../../redux/slices/user/user';
 import { fDate } from '../../../utils/formatTime';
 // constants
 import TableCard from '../../../components/ListTableTools/TableCard';
@@ -58,7 +58,7 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 
-export default function SecurityUserList() {
+export default function UserList() {
   const {
     dense,
     order,
@@ -73,12 +73,12 @@ export default function SecurityUserList() {
 
   const dispatch = useDispatch();
   const {
-    securityUsers,
+    users,
     error,
     responseMessage,
     initial,
-    securityUserEditFormVisibility,
-    securityUserFormVisibility,
+    userEditFormVisibility,
+    userFormVisibility,
     filterBy, 
     employeeFilterList, 
     filterRegion,
@@ -106,18 +106,18 @@ export default function SecurityUserList() {
 
 
   useLayoutEffect(() => {
-    dispatch(getSecurityUsers());
+    dispatch(getUsers());
     return ()=>{
-      dispatch(resetSecurityUsers());
+      dispatch(resetUsers());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, securityUserEditFormVisibility, securityUserFormVisibility]);
+  }, [dispatch, userEditFormVisibility, userFormVisibility]);
 
   useEffect(() => {
     if (initial) {
-      setTableData(securityUsers);
+      setTableData(users);
     }
-  }, [securityUsers, error, enqueueSnackbar, responseMessage, initial]);
+  }, [users, error, enqueueSnackbar, responseMessage, initial]);
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -191,8 +191,8 @@ useEffect(()=>{
   };
 
   const handleViewRow = (id) => {
-    // dispatch(getSecurityUser(id))
-    navigate(PATH_SECURITY.users.view(id));
+    // dispatch(getUser(id))
+    navigate(PATH_USER.users.view(id));
   };
 
   const handleResetFilter = () => {
@@ -203,7 +203,7 @@ useEffect(()=>{
   };
 
   const onRefresh = () => {
-    dispatch(getSecurityUsers());
+    dispatch(getUsers());
   };
 
   return (
@@ -212,7 +212,7 @@ useEffect(()=>{
           <Cover name="Users" />
         </StyledCardContainer>
         <TableCard>
-          <SecurityUserTableToolbar
+          <UserTableToolbar
             isFiltered={isFiltered}
             filterName={filterName}
             filterRole={filterRole}
@@ -313,15 +313,15 @@ function applyFilter({ inputData, comparator, filterName, filterStatus, filterRo
 
   if (filterName) {
     inputData = inputData.filter(
-      (securityUser) =>
-        securityUser?.name?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        securityUser?.email?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        securityUser?.phone?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        securityUser?.phone?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        `${securityUser?.contact?.firstName?.toLowerCase() || ''} ${securityUser?.contact?.lastName?.toLowerCase() || '' }`.indexOf(filterName.toLowerCase()) >= 0 ||
-        securityUser?.roles?.map((obj) => obj.name).join(', ').toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        // (securityUser?.isActive ? "Active" : "Deactive")?.toLowerCase().indexOf(filterName.toLowerCase())  >= 0 ||
-        fDate(securityUser?.createdAt)?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0
+      (user) =>
+        user?.name?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
+        user?.email?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
+        user?.phone?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
+        user?.phone?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
+        `${user?.contact?.firstName?.toLowerCase() || ''} ${user?.contact?.lastName?.toLowerCase() || '' }`.indexOf(filterName.toLowerCase()) >= 0 ||
+        user?.roles?.map((obj) => obj.name).join(', ').toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
+        // (user?.isActive ? "Active" : "Deactive")?.toLowerCase().indexOf(filterName.toLowerCase())  >= 0 ||
+        fDate(user?.createdAt)?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0
     );
   }
 

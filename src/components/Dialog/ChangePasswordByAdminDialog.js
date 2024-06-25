@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid, Dialog, DialogContent, DialogTitle, Divider, InputAdornment, IconButton, DialogActions, Button, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { SecurityUserPasswordUpdate, resetLoadingResetPasswordEmail, sendResetPasswordEmail, setChangePasswordByAdminDialog } from '../../redux/slices/securityUser/securityUser';
+import { UserPasswordUpdate, resetLoadingResetPasswordEmail, sendResetPasswordEmail, setChangePasswordByAdminDialog } from '../../redux/slices/user/user';
 import DialogLink from './DialogLink';
 import FormLabel from '../DocumentForms/FormLabel';
 import ViewPhoneComponent from '../ViewForms/ViewPhoneComponent';
@@ -26,7 +26,7 @@ function ChangePasswordByAdminDialog() {
 
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { changePasswordByAdminDialog, securityUser, isLoadingResetPasswordEmail } = useSelector((state) => state.user);
+  const { changePasswordByAdminDialog, user, isLoadingResetPasswordEmail } = useSelector((state) => state.user);
 
   const handleChangePasswordByAdminDialog = () => { dispatch(setChangePasswordByAdminDialog(false))  }
 
@@ -58,7 +58,7 @@ function ChangePasswordByAdminDialog() {
 
   const senResetPasswordLink = async () => {
     try{
-      await dispatch(sendResetPasswordEmail(securityUser?.login));
+      await dispatch(sendResetPasswordEmail(user?.login));
       await dispatch(resetLoadingResetPasswordEmail());
       await dispatch(setChangePasswordByAdminDialog(false));
       await enqueueSnackbar('Email Sent Successfully!');
@@ -70,7 +70,7 @@ function ChangePasswordByAdminDialog() {
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(SecurityUserPasswordUpdate(data, securityUser._id, true));
+      await dispatch(UserPasswordUpdate(data, user._id, true));
       reset();
       dispatch(setChangePasswordByAdminDialog(false));
       enqueueSnackbar('Password has been updated Successfully!');
@@ -100,9 +100,9 @@ function ChangePasswordByAdminDialog() {
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} >
       <DialogContent dividers sx={{py:2}}>
           <Box rowGap={2} display="grid">
-              <RHFTextField name="name" label="Name" value={securityUser?.name || '' } disabled />
-              <RHFTextField name="login" label="Login" value={securityUser?.login || '' } disabled />
-              <RHFTextField name="email" label="Email" value={securityUser?.email || ''} disabled />
+              <RHFTextField name="name" label="Name" value={user?.name || '' } disabled />
+              <RHFTextField name="login" label="Login" value={user?.login || '' } disabled />
+              <RHFTextField name="email" label="Email" value={user?.email || ''} disabled />
 
               <RHFTextField
                 name="newPassword"
