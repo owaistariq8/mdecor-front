@@ -20,17 +20,17 @@ export default function AuthRegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
+    name: Yup.string().required('Full Name required'),
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     password: Yup.string().min(6).required('Password is required'),
+    phone: Yup.string(),
   });
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     password: '',
+    phone: '',
   };
 
   const methods = useForm({
@@ -47,8 +47,12 @@ export default function AuthRegisterForm() {
 
   const onSubmit = async (data) => {
     try {
+        console.log('Register',register);
       if (register) {
-        await register(data.firstName, data.lastName, data.email, data.password);
+        
+        console.log('Register inside');
+
+        await register(data.name, data.email, data.password, data.phone);
       }
     } catch (error) {
       console.error(error);
@@ -65,10 +69,7 @@ export default function AuthRegisterForm() {
       <Stack spacing={2.5}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <RHFTextField name="firstName" label="First name" />
-          <RHFTextField name="lastName" label="Last name" />
-        </Stack>
+        <RHFTextField name="name" label="Full Name" />
 
         <RHFTextField name="email" label="Email address" />
 
@@ -86,6 +87,8 @@ export default function AuthRegisterForm() {
             ),
           }}
         />
+
+        <RHFTextField name="phone" label="Phone # +92xxxxxxxxxx" />
 
         <LoadingButton
           fullWidth

@@ -33,7 +33,7 @@ import { FORMLABELS } from '../../../../constants/default-constants';
 // sections
 import CustomerListTableRow from './CustomerListTableRow';
 import CustomerListTableToolbar from './CustomerListTableToolbar';
-import { getCustomers, resetCustomers, resetCustomer, ChangePage, ChangeRowsPerPage, setFilterBy, setVerified, setExcludeReporting } from '../../../../redux/slices/customer/customer';
+import { getCustomers, resetCustomers, resetCustomer, ChangePage, ChangeRowsPerPage, setFilterBy, setExcludeReporting } from '../../../../redux/slices/customer/customer';
 import { Cover } from '../../../../components/Defaults/Cover';
 import TableCard from '../../../../components/ListTableTools/TableCard';
 import { fDate } from '../../../../utils/formatTime';
@@ -122,7 +122,6 @@ export default function CustomerList({ isArchived }) {
 
   const debouncedVerified = useRef(debounce((value) => {
     dispatch(ChangePage(0))
-    dispatch(setVerified(value))
   }, 500))
 
   const handleFilterName = (event) => {

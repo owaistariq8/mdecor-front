@@ -13,7 +13,7 @@ import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFSwitch, RHFTextField, RHFAutocomplete, RHFPhoneInput } from '../../../components/hook-form';
 // slice
 import { updateSecurityUser, getSecurityUser } from '../../../redux/slices/securityUser/securityUser';
-import { getAllActiveCustomers, resetAllActiveCustomers } from '../../../redux/slices/customer/customer';
+import { getCustomers, resetCustomers } from '../../../redux/slices/customer/customer';
 import { getActiveContacts, resetActiveContacts} from '../../../redux/slices/customer/contact';
 import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/securityUser/role';
 // current user
@@ -37,10 +37,10 @@ export default function SecurityUserProfileEditForm() {
 
 
   useEffect(() => {
-    dispatch(getAllActiveCustomers());
+    dispatch(getCustomers({status:'active'}));
     dispatch(getActiveRoles());
     return ()=> { 
-      dispatch(resetAllActiveCustomers());
+      dispatch(resetCustomers());
       dispatch(resetActiveRoles()); 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

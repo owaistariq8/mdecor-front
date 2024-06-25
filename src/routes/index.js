@@ -16,7 +16,6 @@ import {
   VerifyCodePage,
   NewPasswordPage,
   ResetPasswordPage,
-  Authenticate,
 
   // ----------------------------------------------------------------
 
@@ -93,14 +92,6 @@ export default function Router() {
           element: (
             <GuestGuard>
               <LoginPage />
-            </GuestGuard>
-          ),
-        },
-        {
-          path: 'authenticate',
-          element: (
-            <GuestGuard>
-              <Authenticate />
             </GuestGuard>
           ),
         },

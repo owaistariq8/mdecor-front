@@ -23,15 +23,12 @@ function SearchBarCombo({
   employeeFilterListBy,
   onEmployeeFilterListBy,
   onFilterListByRegion,
-  filterByRegion,
   filterListBy,
   onFilterListBy,
   categoryVal,
   setCategoryVal,
   typeVal,
   setTypeVal,
-  signInLogsFilter,
-  onSignInLogsFilter,
   onChange,
   onClick,
   SubOnClick,
@@ -41,12 +38,10 @@ function SearchBarCombo({
   inviteOnClick,
   inviteButton,
   buttonIcon,
-  transferredMachine,
   handleAttach,
   radioStatus,
   radioStatusLabel,
   handleRadioStatus,
-  onExportCSV,
   onExportLoading,
   onReload,
   filterExcludeRepoting,
@@ -54,22 +49,15 @@ function SearchBarCombo({
   handleGalleryView,
   dateFrom,
   dateTo,
-  machineSettingPage,
   securityUserPage,
   settingPage,
   isDateFromDateTo,
-  isPm2Environments,
-  isPm2LogTypes,
   handleRefresh,
   handleFullScreen,
   ...other
 }) {
   
-  const { activeDocumentTypes } = useSelector((state) => state.documentType);
-  const { activeDocumentCategories } = useSelector((state) => state.documentCategory);
-  const { pm2Logs, pm2Environment, pm2Environments ,pm2LogType, pm2Lines } = useSelector((state) => state.pm2Logs);
   const { spContacts } = useSelector((state) => state.contact);
-  const { activeRegions } = useSelector((state) => state.region);
   const [ isDateFrom, setIsDateFrom ] = useState(new Date( Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
   const [ isDateTo, setIsDateTo ] = useState(new Date(Date.now()).toISOString().split('T')[0]);
   const isMobile = useResponsive('sm', 'down');
@@ -130,54 +118,7 @@ function SearchBarCombo({
             </Stack>
           </Grid>}
           
-          { onFilterListByRegion &&
-          <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
-            <Autocomplete 
-              value={ filterByRegion || null}
-              options={activeRegions}
-              isOptionEqualToValue={(option, val) => option?._id === val?._id}
-              getOptionLabel={(option) => option?.name}
-              onChange={(event, newValue) => {
-                if (newValue) {
-                  onFilterListByRegion(newValue);
-                } else {
-                  onFilterListByRegion(null);
-                }
-              }}
-              renderOption={(props, option) => ( <li {...props} key={option?._id}>{option?.name || ''}</li> )}
-              renderInput={(params) => <TextField {...params} size='small' label="Region" />}
-            />  
-          </Grid>}
-
-          {setAccountManagerFilter && isAllAccessAllowed &&
-          <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
-            <Autocomplete 
-              id="controllable-states-demo"
-              value={accountManagerFilter || null}
-              options={spContacts}
-              isOptionEqualToValue={(option, val) => option?._id === val?._id}
-              getOptionLabel={(option) =>
-                `${option.firstName ? option.firstName : ''} ${
-                  option.lastName ? option.lastName : ''
-                }`
-              }
-              onChange={(event, newValue) => {
-                if (newValue) {
-                  setAccountManagerFilter(newValue);
-                } else {
-                  setAccountManagerFilter(null);
-                }
-              }}
-              renderOption={(props, option) => (
-                <li {...props} key={option?._id}>{`${
-                  option.firstName ? option.firstName : ''
-                } ${option.lastName ? option.lastName : ''}`}</li>
-              )}
-              renderInput={(params) => <TextField {...params} size='small' label="Account Manager" />}
-            />  
-          
-          </Grid>}
-
+         
           { isDateFromDateTo && 
             <Grid item xs={12} sm={6} md={4} lg={2} xl={2}  >
                 <TextField  
@@ -212,56 +153,7 @@ function SearchBarCombo({
             </Grid>
           }
 
-          {setSupportManagerFilter && isAllAccessAllowed &&
-          <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
-            <Autocomplete 
-              id="controllable-states-demo"
-              value={supportManagerFilter || null}
-              options={spContacts}
-              isOptionEqualToValue={(option, val) => option?._id === val?._id}
-              getOptionLabel={(option) =>
-                `${option.firstName ? option.firstName : ''} ${
-                  option.lastName ? option.lastName : ''
-                }`
-              }
-              onChange={(event, newValue) => {
-                if (newValue) {
-                  setSupportManagerFilter(newValue);
-                } else {
-                  setSupportManagerFilter(null);
-                }
-              }}
-              renderOption={(props, option) => (
-                <li {...props} key={option?._id}>{`${
-                  option.firstName ? option.firstName : ''
-                } ${option.lastName ? option.lastName : ''}`}</li>
-              )}
-              renderInput={(params) => <TextField {...params} size='small' label="Support Manager" />}
-            />  
-          
-          </Grid>}
-
-          {onEmployeeFilterListBy &&
-          <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
-            <Stack alignItems="flex-start">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Employee</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                size='small'
-                name="employee"
-                value={employeeFilterListBy}
-                label="Employee"
-                onChange={onEmployeeFilterListBy}
-              >
-                <MenuItem key="all" value="all">All</MenuItem>
-                <MenuItem key="verified" value="employee">Employee</MenuItem>
-                <MenuItem key="unverified" value="notEmployee">Not Employee</MenuItem>
-                </Select>
-            </FormControl>
-            </Stack>
-          </Grid>}
+         
 
           {onFilterListBy &&
           <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
@@ -334,51 +226,6 @@ function SearchBarCombo({
                 </Grid>
               }
                 
-                {inviteButton && !isSettingReadOnly && !isSecurityReadOnly &&
-                  <Grid item>
-                    <StyledTooltip title={inviteButton} placement="top" disableFocusListener  tooltipcolor="#103996" color="#fff">
-                      <IconButton onClick={inviteOnClick} 
-                        color="#fff"
-                        sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                        '&:hover': {
-                          background:"#103996", 
-                          color:"#fff"
-                        }
-                      }}>
-                        <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:user-plus' />
-                      </IconButton>
-                    </StyledTooltip>
-                  </Grid>
-                }
-              
-              {handleAttach && !transferredMachine &&
-                <Grid item>
-                  <StyledTooltip title="Attach Existing Drawing" placement="top" disableFocusListener tooltipcolor="#103996" color="#103996">
-                  <IconButton onClick={handleAttach} color="#fff" sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                    '&:hover': {
-                      background:"#103996", 
-                      color:"#fff"
-                    }
-                  }}>
-                    <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='fluent:attach-arrow-right-24-filled' />
-                  </IconButton>
-                </StyledTooltip>
-              </Grid>}
-
-              {isPm2Environments && pm2Logs?.data &&
-                <Grid item>
-                    <StyledTooltip title="Full Screen" placement="top" disableFocusListener tooltipcolor="#103996" color="#103996">
-                      <IconButton onClick={handleFullScreen} color="#fff" sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                        '&:hover': {
-                          background:"#103996", 
-                          color:"#fff"
-                        }
-                      }}>
-                        <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='icon-park-outline:full-screen-two' />
-                      </IconButton>
-                    </StyledTooltip>
-                </Grid>
-              }
               {handleRefresh && 
                 <Grid item>
                     <StyledTooltip title="Refresh" placement="top" disableFocusListener tooltipcolor="#103996" color="#103996">
@@ -391,92 +238,6 @@ function SearchBarCombo({
                         <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:reload' />
                       </IconButton>
                     </StyledTooltip>
-                </Grid>
-              }
-
-              {handleGalleryView && 
-                <Grid item>
-                    <StyledTooltip title="View Gallery" placement="top" disableFocusListener tooltipcolor="#103996" color="#103996">
-                      <IconButton onClick={handleGalleryView} color="#fff" sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                        '&:hover': {
-                          background:"#103996", 
-                          color:"#fff"
-                        }
-                      }}>
-                        <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='ooui:image-gallery' />
-                      </IconButton>
-                    </StyledTooltip>
-                </Grid>
-              }
-
-              {onExportCSV && isAllAccessAllowed && 
-                  <Grid item>
-                    <LoadingButton onClick={()=> onExportCSV(false, false)}  variant='contained' sx={{p:0, minWidth:'24px'}} loading={onExportLoading}>
-                      <StyledTooltip title={BUTTONS.EXPORT.label} placement="top" disableFocusListener tooltipcolor="#103996" color="#103996">
-                        <Iconify color="#fff" sx={{ height: '41px', width: '55px', p:'8px'}} icon={BUTTONS.EXPORT.icon} />
-                      </StyledTooltip>
-                    </LoadingButton>
-                </Grid>
-              }
-
-              {openGraph && 
-              <Grid item>
-                <StyledTooltip title="Log Graph" placement="top" disableFocusListener tooltipcolor="#103996" color="#103996">
-                    <IconButton onClick={openGraph} color="#fff" sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                        '&:hover': {
-                            background:"#103996", 
-                            color:"#fff"
-                        }
-                    }}>
-                        <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:graph-bar' />
-                    </IconButton>
-                </StyledTooltip>
-              </Grid>
-              }
-              
-              {SubOnClick2 && !transferredMachine && 
-                <Grid item >
-                    <StyledTooltip 
-                      title="Upload Multiple Drawing" 
-                      placement="top" 
-                      disableFocusListener 
-                      tooltipcolor={( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly ) ? "#c3c3c3":"#103996"} 
-                      color={( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly ) ? "#c3c3c3":"#103996"} 
-                    >
-                    <IconButton 
-                      disabled={ ( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly ) } 
-                      color={( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly ) ? "#c3c3c3":"#fff"}
-                      onClick={SubOnClick2} 
-                      sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                      '&:hover': {
-                        background:"#103996", 
-                        color:"#fff"
-                      }
-                    }}>
-                      <Iconify 
-                        color={( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly ) ? "#c3c3c3":"#fff"} 
-                        sx={{ height: '24px', width: '24px'}} icon='ic:round-post-add'
-                      />
-                    </IconButton>
-                  </StyledTooltip>
-                </Grid>
-              }
-              
-              {addButton && !transferredMachine 
-              && !(( machineSettingPage || settingPage || securityUserPage ) && ( isSettingReadOnly || isSecurityReadOnly )) &&
-                <Grid item >
-                    <StyledTooltip title={addButton} placement="top" disableFocusListener tooltipcolor="#103996" color="#fff">
-                    <IconButton color="#fff" onClick={SubOnClick} 
-                      sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                            '&:hover': {
-                              background:"#103996", 
-                              color:"#fff"
-                            }
-                          }}>
-                      <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon={buttonIcon || 'eva:plus-fill'} 
-                      />
-                    </IconButton>
-                  </StyledTooltip>
                 </Grid>
               }
             </Grid>

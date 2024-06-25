@@ -14,23 +14,7 @@ import { CONFIG } from '../../config-global';
 export default function Register() {
   return (
     <LoginLayout title={CONFIG.MESSAGE_REGISTER_USER}>
-      <Grid item xs={6}>
-        <Typography
-          sx={{
-            backgroundColor: CONFIG.Background_Color,
-            borderRadius: '2px',
-            textAlign: 'center',
-            fontWeight: 'bold',
-            p: 1,
-            py: 0.1,
-            mb: 1,
-          }}
-        >
-          {CONFIG.ENV}
-          {'  '}
-          {CONFIG.Version}
-        </Typography>
-      </Grid>
+      
       <Stack
         spacing={2}
         sx={{
@@ -42,7 +26,7 @@ export default function Register() {
           p: 1,
         }}
       >
-        <Typography variant="h3">Sign Up for your account</Typography>
+        <Typography variant="h3">Create Account</Typography>
       </Stack>
       <AuthRegisterForm />
       <Stack direction="row" spacing={0.5} sx={{ mt: 2, justifyContent: 'center' }}>

@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Card, Grid, Stack } from '@mui/material';
 // slice
 import { setIsExpanded, moveCustomerContact,getContacts, getContact } from '../../../redux/slices/customer/contact';
-import { getActiveCustomers } from '../../../redux/slices/customer/customer';
+import { getCustomers } from '../../../redux/slices/customer/customer';
 // components
 import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFAutocomplete } from '../../../components/hook-form';
@@ -53,7 +53,7 @@ export default function ContactMoveForm( ) {
   } = methods;
 
   useEffect(() => {
-    dispatch(getActiveCustomers())
+    dispatch(getCustomers({status:'active'}))
   }, [ dispatch ]);
 
   useEffect(() => {

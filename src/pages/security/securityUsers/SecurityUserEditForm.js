@@ -13,7 +13,7 @@ import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFSwitch, RHFTextField, RHFAutocomplete, RHFPhoneInput } from '../../../components/hook-form';
 // slice
 import { updateSecurityUser } from '../../../redux/slices/securityUser/securityUser';
-import { getAllActiveCustomers, resetAllActiveCustomers } from '../../../redux/slices/customer/customer';
+import { getCustomers, resetCustomers } from '../../../redux/slices/customer/customer';
 import { getActiveContacts, resetActiveContacts } from '../../../redux/slices/customer/contact';
 import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/securityUser/role';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
@@ -33,10 +33,10 @@ export default function SecurityUserEditForm() {
   const { enqueueSnackbar } = useSnackbar();
 
   useLayoutEffect(() => {
-    dispatch(getAllActiveCustomers());
+    dispatch(getCustomers({status:'active'}));
     dispatch(getActiveRoles());
     return ()=>{ 
-      dispatch(resetAllActiveCustomers());
+      dispatch(resetCustomers());
       dispatch(resetActiveRoles()); 
     }
   }, [dispatch]);

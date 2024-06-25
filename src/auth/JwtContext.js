@@ -17,18 +17,6 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   userId: null,
-  isAllAccessAllowed: false,
-  isDisableDelete:  true,
-  isDashboardAccessLimited:  true,
-  isDocumentAccessAllowed: false,
-  isDrawingAccessAllowed: false,
-  isSettingReadOnly:  true,
-  isSecurityReadOnly:  true,
-  isSettingAccessAllowed: false,
-  isSecurityUserAccessAllowed: false,
-  isEmailAccessAllowed: false,
-  isDeveloper: false,
-  // resetTokenTime: null,
 };
 
 const reducer = (state, action) => {
@@ -40,52 +28,15 @@ const reducer = (state, action) => {
         isAuthenticated: action.payload.isAuthenticated,
         user: action.payload.user,
         userId: action.payload.userId,
-        isAllAccessAllowed: action.payload.isAllAccessAllowed,
-        isDisableDelete:action.payload.isDisableDelete,
-        isDashboardAccessLimited: action.payload.isDashboardAccessLimited,
-        isDocumentAccessAllowed: action.payload.isDocumentAccessAllowed,
-        isDrawingAccessAllowed: action.payload.isDrawingAccessAllowed,
-        isSettingReadOnly: action.payload.isSettingReadOnly,
-        isSecurityReadOnly: action.payload.isSecurityReadOnly,
-        isSettingAccessAllowed: action.payload.isSettingAccessAllowed,
-        isSecurityUserAccessAllowed: action.payload.isSecurityUserAccessAllowed,
-        isEmailAccessAllowed: action.payload.isEmailAccessAllowed,
-        isDeveloper: action.payload.isDeveloper,
-        // resetTokenTime: action.payload.resetTokenTime, // keeps track to avoid repeating the request
       };
     }
     case 'LOGIN': {
-      const { 
-              user, 
-              userId, 
-              isAllAccessAllowed,
-              isDisableDelete,
-              isDashboardAccessLimited,
-              isDocumentAccessAllowed,
-              isDrawingAccessAllowed,
-              isSettingReadOnly,
-              isSecurityReadOnly,
-              isSettingAccessAllowed,
-              isSecurityUserAccessAllowed,
-              isEmailAccessAllowed,
-              isDeveloper,
-            } = action.payload;
+      const { user, userId } = action.payload;
       return {
         ...state,
         isAuthenticated: true,
         user,
         userId,
-        isAllAccessAllowed,
-        isDisableDelete,
-        isDashboardAccessLimited,
-        isDocumentAccessAllowed,
-        isDrawingAccessAllowed,
-        isSettingReadOnly,
-        isSecurityReadOnly,
-        isSettingAccessAllowed,
-        isSecurityUserAccessAllowed,
-        isEmailAccessAllowed,
-        isDeveloper,
       };
     }
     case 'REGISTER': {
@@ -102,18 +53,6 @@ const reducer = (state, action) => {
         isAuthenticated: false,
         user: null,
         userId: null,
-        isAllAccessAllowed: false,
-        isDisableDelete:  true,
-        isDashboardAccessLimited:  true,
-        isDocumentAccessAllowed: false,
-        isDrawingAccessAllowed: false,
-        isSettingReadOnly:  true,
-        isSecurityReadOnly:  true,
-        isSettingAccessAllowed: false,
-        isSecurityUserAccessAllowed: false,
-        isEmailAccessAllowed: false,
-        isDeveloper: false,
-        // resetTokenTime: null, // reset the timeout ID when logging out
       };
     }
     default: {
@@ -151,38 +90,12 @@ export function AuthProvider({ children }) {
 
         const userId = localStorage.getItem('userId');
 
-        const {
-                isAllAccessAllowed,
-                isDisableDelete,
-                isDashboardAccessLimited,
-                isDocumentAccessAllowed,
-                isDrawingAccessAllowed,
-                isSettingReadOnly,
-                isSecurityReadOnly,
-                isSettingAccessAllowed,
-                isSecurityUserAccessAllowed,
-                isEmailAccessAllowed,
-                isDeveloper,
-            } = getUserAccess()
-
         dispatch({
           type: 'INITIAL',
           payload: {
             isAuthenticated: true,
             user,
             userId,
-            isAllAccessAllowed,
-            isDisableDelete,
-            isDashboardAccessLimited,
-            isDocumentAccessAllowed,
-            isDrawingAccessAllowed,
-            isSettingReadOnly,
-            isSecurityReadOnly,
-            isSettingAccessAllowed,
-            isSecurityUserAccessAllowed,
-            isEmailAccessAllowed,
-            isDeveloper,
-            // resetTokenTime, // added the timeout ID to the payload
           },
         });
       } else {
@@ -191,18 +104,6 @@ export function AuthProvider({ children }) {
           payload: {
             isAuthenticated: false,
             user: null,
-            isAllAccessAllowed: false,
-            isDisableDelete:  true,
-            isDashboardAccessLimited:  true,
-            isDocumentAccessAllowed: false,
-            isDrawingAccessAllowed: false,
-            isSettingReadOnly:  true,
-            isSecurityReadOnly:  true,
-            isSettingAccessAllowed: false,
-            isSecurityUserAccessAllowed: false,
-            isEmailAccessAllowed: false,
-            isDeveloper: false,
-            // resetTokenTime: null, // reset the timeout ID when not authenticated
           },
         });
       }
@@ -213,18 +114,6 @@ export function AuthProvider({ children }) {
         payload: {
           isAuthenticated: false,
           user: null,
-          isAllAccessAllowed: false,
-          isDisableDelete:  true,
-          isDashboardAccessLimited:  true,
-          isDocumentAccessAllowed: false,
-          isDrawingAccessAllowed: false,
-          isSettingReadOnly:  true,
-          isSecurityReadOnly:  true,
-          isSettingAccessAllowed: false,
-          isSecurityUserAccessAllowed: false,
-          isEmailAccessAllowed: false,
-          isDeveloper: false,
-          // resetTokenTime: null,
         },
       });
     }
@@ -243,10 +132,6 @@ export function AuthProvider({ children }) {
           localStorage.removeItem('userId');
           localStorage.removeItem('userRoles');
           localStorage.removeItem('accessToken');
-          localStorage.removeItem("configurations");
-          const keys = Object.keys(localStorage); 
-          const reduxPersistKeys = keys.filter(  key => !(key === 'isRemember' || key === 'HowickUserEmail' || key === 'HowickUserPassword')  );
-        await Promise.all(reduxPersistKeys.map(key => storage.removeItem(key)));
       } catch (error) {
         console.error('Error clearing persisted states:', error);
       }
@@ -257,128 +142,37 @@ export function AuthProvider({ children }) {
         window.location.href = PATH_AUTH.login
     },[ clearAllPersistedStates ]);
 
-  // CONFIGURATIONS
-  async function getConfigs(){
-    const configsResponse = await axios.get(`${CONFIG.SERVER_URL}configs`, {  params: { isActive: true, isArchived: false } });
-    if(configsResponse && Array.isArray(configsResponse.data) && configsResponse.data.length>0 ) {
-      const configs = configsResponse.data.map((c)=>({name:c.name, type:c.type, value:c.value, notes:c.notes}));
-      localStorage.setItem("configurations",JSON.stringify(configs));
-    }
-  }
-
   // LOGIN
   const login = useCallback(async (uEmail, uPassword) => {
     await dispatch(clearAllPersistedStates());
     const response = await axios.post(`${CONFIG.SERVER_URL}users/login`, { email: uEmail, password : uPassword, })
-    if (response.data.multiFactorAuthentication){
-      localStorage.setItem("userId", response.data.userId);
-      localStorage.setItem("MFA", true);
-    } else{
-      const { accessToken, user, userId} = response.data;
-      
-      localStorage.setItem("customer", user?.customer);
+    
+    const { accessToken, user, userId} = response.data;
+    
+    localStorage.setItem("customer", user?.customer);
 
-      const {
-        isAllAccessAllowed,
-        isDisableDelete,
-        isDashboardAccessLimited,
-        isDocumentAccessAllowed,
-        isDrawingAccessAllowed,
-        isSettingReadOnly,
-        isSecurityReadOnly,
-        isSettingAccessAllowed,
-        isSecurityUserAccessAllowed,
-        isEmailAccessAllowed,
-        isDeveloper,
-    } = getUserAccess( user?.roles, user?.dataAccessibilityLevel )
+    const rolesArrayString = JSON.stringify(user.roles);
+    localStorage.setItem('email', user.email);
+    localStorage.setItem('name', user.displayName);
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('userRoles', rolesArrayString);
 
-      const rolesArrayString = JSON.stringify(user.roles);
-      localStorage.setItem('email', user.email);
-      localStorage.setItem('name', user.displayName);
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('userRoles', rolesArrayString);
-      localStorage.setItem('dataAccessibilityLevel', user?.dataAccessibilityLevel);
-
-      setSession(accessToken);
-      await getConfigs();
-      dispatch({
-        type: 'LOGIN',
-        payload: { 
-                user, 
-                userId, 
-                isAllAccessAllowed,
-                isDisableDelete,
-                isDashboardAccessLimited,
-                isDocumentAccessAllowed,
-                isDrawingAccessAllowed,
-                isSettingReadOnly,
-                isSecurityReadOnly,
-                isSettingAccessAllowed,
-                isSecurityUserAccessAllowed,
-                isEmailAccessAllowed,
-                isDeveloper,
-              },
-      });
-    }
+    setSession(accessToken);
+    dispatch({
+      type: 'LOGIN',
+      payload: { user, userId },
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // MULTI FACTOR CODE
-  const muliFactorAuthentication = useCallback(async (code, userID) => {
-    const response = await axios.post(`${CONFIG.SERVER_URL}security/multifactorverifyCode`, {code, userID})
-      const { accessToken, user, userId } = response.data;
-
-      const {
-        isAllAccessAllowed,
-        isDisableDelete,
-        isDashboardAccessLimited,
-        isDocumentAccessAllowed,
-        isDrawingAccessAllowed,
-        isSettingReadOnly,
-        isSecurityReadOnly,
-        isSettingAccessAllowed,
-        isSecurityUserAccessAllowed,
-        isEmailAccessAllowed,
-        isDeveloper,
-    } = getUserAccess( user?.roles , user?.dataAccessibilityLevel )
-
-      const rolesArrayString = JSON.stringify(user.roles);
-      localStorage.setItem('email', user.email);
-      localStorage.setItem('name', user.displayName);
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('userRoles', rolesArrayString);
-      localStorage.setItem('dataAccessibilityLevel', user?.dataAccessibilityLevel);
-      
-      setSession(accessToken);
-      await getConfigs();
-      dispatch({
-        type: 'LOGIN',
-        payload: { 
-          user, 
-          userId,
-          isAllAccessAllowed,
-          isDisableDelete,
-          isDashboardAccessLimited,
-          isDocumentAccessAllowed,
-          isDrawingAccessAllowed,
-          isSettingReadOnly,
-          isSecurityReadOnly,
-          isSettingAccessAllowed,
-          isSecurityUserAccessAllowed,
-          isEmailAccessAllowed,
-          isDeveloper,
-        },
-      });
-  }, []);
-
-
+  
   // REGISTER
-  const register = useCallback(async (firstName, lastName, email, password) => {
+  const register = useCallback(async (name, email, password, phone) => {
     const response = await axios.post(`${CONFIG.SERVER_URL}users/signup`, {
-      firstName,
-      lastName,
+      name,
       email,
       password,
+      phone
     });
     const { accessToken, user } = response.data;
     localStorage.setItem('accessToken', accessToken);
@@ -412,37 +206,13 @@ export function AuthProvider({ children }) {
         isAuthenticated: state.isAuthenticated,
         user: state.user,
         userId: state.userId,
-        isAllAccessAllowed: state.isAllAccessAllowed,
-        isDisableDelete:  state.isDisableDelete,
-        isDashboardAccessLimited: state.isDashboardAccessLimited,
-        isDocumentAccessAllowed: state.isDocumentAccessAllowed,
-        isDrawingAccessAllowed: state.isDrawingAccessAllowed,
-        isSettingReadOnly: state.isSettingReadOnly,
-        isSecurityReadOnly: state.isSecurityReadOnly,
-        isSettingAccessAllowed: state.isSettingAccessAllowed,
-        isSecurityUserAccessAllowed: state.isSecurityUserAccessAllowed,
-        isEmailAccessAllowed: state.isEmailAccessAllowed,
-        isDeveloper: state.isDeveloper,
         method: 'jwt',
         login,
         register,
         logout,
         clearStorageAndNaviagteToLogin,
-        muliFactorAuthentication
       }),
-    [state.isAuthenticated, state.isInitialized, 
-      state.isAllAccessAllowed,
-      state.isDisableDelete,
-      state.isDashboardAccessLimited,
-      state.isDocumentAccessAllowed,
-      state.isDrawingAccessAllowed,
-      state.isSettingReadOnly,
-      state.isSecurityReadOnly,
-      state.isSettingAccessAllowed,
-      state.isSecurityUserAccessAllowed,
-      state.isEmailAccessAllowed,
-      state.isDeveloper,
-      state.user, state.userId, login, logout, register, muliFactorAuthentication, clearStorageAndNaviagteToLogin]
+    [state.isAuthenticated, state.isInitialized, state.user, state.userId, login, logout, register, clearStorageAndNaviagteToLogin]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
