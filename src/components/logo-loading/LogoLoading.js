@@ -7,7 +7,7 @@ import { Box, Link } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const Logo = forwardRef(({ disabledLink = false, sx, src="/logo/HowickIcon.svg", ...other }, ref) => {
+const Logo = forwardRef(({ disabledLink = false, sx, src="/logo/mdecor.jpg", ...other }, ref) => {
   // const theme = useTheme();
 
   // const PRIMARY_LIGHT = theme.palette.primary.light;

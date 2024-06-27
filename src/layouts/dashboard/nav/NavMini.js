@@ -53,7 +53,7 @@ export default function NavMini() {
           ...hideScrollbarX,
         }}
       >
-        <Logo src="/logo/HowickIcon.svg" sx={{ mx: 'auto', my: 1, width: '50px', height: '50px' }} />
+        <Logo src="/logo/mdecor.jpg" sx={{ mx: 'auto', my: 1, width: '50px', height: '50px' }} />
         <Link
           sx={{ margin: '0 auto', mb: 2, display: 'flex', alignItems: 'baseline', textDecoration: 'none' }}
           href={PATH_SETTING.releases.list}

@@ -7,7 +7,7 @@ import { Box, Link } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const Logo = forwardRef(({width = 150, disabledLink = false, sx, src="/logo/logo.png", ...other }, ref) => {
+const Logo = forwardRef(({width = 150, disabledLink = false, sx, src="/logo/m-decore-logo.svg", ...other }, ref) => {
   // const theme = useTheme();
 
   // const PRIMARY_LIGHT = theme.palette.primary.light;
