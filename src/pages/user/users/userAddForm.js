@@ -180,16 +180,7 @@ const { customer, contact } = watch();
               />
 
             </Box>
-            <Box rowGap={2} columnGap={2} display="grid"
-              gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' }}
-            >
-              
-
-              
-
-             
-
-            </Box>
+          
             <Grid item md={12} display="flex">
               <>
               <RHFSwitch name="isActive" label="Active" />

@@ -44,9 +44,6 @@ import { exportCSV } from '../../../../utils/exportCSV';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Customer', align: 'left' },
-  { id: 'clientCode', label: 'Code', align: 'left' },
-  { id: 'tradingName', visibility: 's1', label: 'Trading Name', align: 'left' },
-  { id: 'mainSite.address.country', visibility: 'xs2', label: 'Address', align: 'left' },
   { id: 'isActive', label: 'Active', align: 'center' },
   { id: 'createdAt', label: 'Created At', align: 'left' },
 ];
@@ -182,7 +179,7 @@ export default function CustomerList({ isArchived }) {
   return (
     <Container maxWidth={false}>
         <StyledCardContainer>
-          <Cover name={ isArchived ? FORMLABELS.COVER.ARCHIVED_CUSTOMERS : FORMLABELS.COVER.CUSTOMERS  } customerSites customerContacts isArchivedCustomers={!isArchived} isArchived={isArchived} />
+          <Cover name={FORMLABELS.COVER.CUSTOMERS}   />
         </StyledCardContainer>
       <TableCard >
         <CustomerListTableToolbar
@@ -285,16 +282,20 @@ export default function CustomerList({ isArchived }) {
 // ----------------------------------------------------------------------
 
 function applyFilter({ inputData, comparator, filterName, filterVerify, filterExcludeRepoting, filterStatus }) {
-  const stabilizedThis = inputData.map((el, index) => [el, index]);
+  if(Array.isArray(inputData) && inputData.length>0) {
+    const stabilizedThis = inputData.map((el, index) => [el, index]);
 
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
 
-  inputData = stabilizedThis.map((el) => el[0]);
-  
+    inputData = stabilizedThis.map((el) => el[0]);
+  }
+  else {
+    inputData = [];
+  }
   if(filterVerify==='verified')
     inputData = inputData.filter((customer)=> customer.verifications.length>0);
   else if(filterVerify==='unverified')
@@ -309,12 +310,7 @@ function applyFilter({ inputData, comparator, filterName, filterVerify, filterEx
   if (filterName) {
     inputData = inputData.filter(
       (customer) =>
-        customer?.clientCode?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
         customer?.name?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        customer?.tradingName?.some((tName) => tName.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ) ||
-        `${customer?.mainSite?.address?.city}, ${customer?.mainSite?.address?.country}`.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        // customer?.mainSite?.address?.country?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        // (customer?.isActive ? "Active" : "Deactive")?.toLowerCase().indexOf(filterName.toLowerCase())  >= 0 ||
         fDate(customer?.createdAt)?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0
     );
   }

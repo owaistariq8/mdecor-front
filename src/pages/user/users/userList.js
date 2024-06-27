@@ -48,9 +48,6 @@ const TABLE_HEAD = [
   { id: 'email', visibility: 'xs1', label: 'Email', align: 'left' },
   { id: 'phone', visibility: 'xs2', label: 'Phone Number', align: 'left' },
   { id: 'roles.name.[]', visibility: 'md1', label: 'Roles', align: 'left' },
-  // { id: 'regions.name.[]', visibility: 'md1', label: 'Regions', align: 'left' },
-  // { id: 'isOnline', label: 'Online', align: 'center' },
-  // { id: 'currentEmployee', label: 'Employed', align: 'center' },
   { id: 'contact.firstName', label: 'Contact', align: 'left' },
   { id: 'isActive', label: 'Active', align: 'center' },
   { id: 'createdAt', label: 'Created At', align: 'right' },
@@ -114,9 +111,7 @@ export default function UserList() {
   }, [dispatch, userEditFormVisibility, userFormVisibility]);
 
   useEffect(() => {
-    if (initial) {
-      setTableData(users);
-    }
+    setTableData(users);
   }, [users, error, enqueueSnackbar, responseMessage, initial]);
 
   const dataFiltered = applyFilter({
@@ -287,15 +282,19 @@ useEffect(()=>{
 // ----------------------------------------------------------------------
 
 function applyFilter({ inputData, comparator, filterName, filterStatus, filterRole, activeFilterListBy, employeeFilterListBy, filterByRegion }) {
-  const stabilizedThis = inputData.map((el, index) => [el, index]);
+  if(Array.isArray(inputData) && inputData.length>0) {
+    const stabilizedThis = inputData.map((el, index) => [el, index]);
 
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
 
-  inputData = stabilizedThis.map((el) => el[0]);
+    inputData = stabilizedThis.map((el) => el[0]);
+  } else {
+    inputData = [];
+  }
 
   if(activeFilterListBy ==='active' )
     inputData = inputData.filter((user)=> user.isActive === true );

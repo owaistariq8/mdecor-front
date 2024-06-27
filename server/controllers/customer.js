@@ -28,10 +28,7 @@ async function getCustomers(req, res) {
 
 		if(query && typeof query == 'object') {
         	const customers = await Customer.find(query);
-        	if(customers && Array.isArray(customers) && customers.length>0)
-	    		res.status(200).json({ success: true, data:customers });
-	    	else 
-	    		res.status(404).json({ success: false, data:{} });
+    		res.status(200).json({ success: true, data:customers });
 		}
 		else
 	    	res.status(400).json({ success: false, message:'Invalid request' });

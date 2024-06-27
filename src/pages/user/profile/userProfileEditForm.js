@@ -155,13 +155,6 @@ useEffect(() => {
 
             <Box
               rowGap={2} columnGap={2} display="grid"
-              gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' }}
-            >
-              <RHFTextField name="email" label="Email Address" inputProps={{ style: { textTransform: 'lowercase' } }} />
-            </Box>
-
-            <Box
-              rowGap={2} columnGap={2} display="grid"
               gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }}
             >
 
@@ -176,26 +169,10 @@ useEffect(() => {
                 isOptionEqualToValue={(option, value) => option?._id === value?._id}
                 renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
               />
-              
-              
-
-            </Box>
-            <Box
-              rowGap={2}
-              columnGap={2}
-              display="grid"
-              gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(1, 1fr)',
-              }}
-            >
-
-
             </Box>
             <Grid item md={12} display="flex">
               <RHFSwitch name="status" disabled label="Active" />
             </Grid>
-
             <Stack sx={{ mt: 3 }}>
               <AddFormButtons isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Stack>

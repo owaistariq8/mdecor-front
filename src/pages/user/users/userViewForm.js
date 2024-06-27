@@ -11,7 +11,6 @@ import {
   getUsers,
   deleteUser,
   getUser,
-  changeUserStatus,
   setChangePasswordByAdminDialog,
 } from '../../../redux/slices/user/user';
 import { getCustomer , setCustomerDialog } from '../../../redux/slices/customer/customer';

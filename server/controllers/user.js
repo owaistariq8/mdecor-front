@@ -17,7 +17,7 @@ const bcryptHash = promisify(bcrypt.hash);
  * @returns {string} The generated JWT token.
  */
 const createToken = (payload) => {
-    return jwt.sign({ payload }, process.env.JWT_SECRET,{ expiresIn: process.env.TOKEN_EXP_TIME || '48h'});
+    return jwt.sign({ payload }, process.env.JWT_SECRET,{ expiresIn: '3d' });
 };
 
 
@@ -136,7 +136,7 @@ async function login(req, res) {
 		if(!req.body.email || !req.body.password) 
 			return res.status(400).json({ success: false, message : 'Invalid request' });
 
-        const user = await User.findOne({ email:  req.body.email }).populate('roles').populate('customer');
+        let user = await User.findOne({ email:  req.body.email }).populate('roles').populate('customer');
         if(user) {
 
         	let session = await manageSession(req,user.id);
@@ -144,6 +144,8 @@ async function login(req, res) {
 	          return res.status(500).send("Unable to Start session.");
 	        }
 	        else {
+	    		user.accessToken = await createToken({ id : user.id, email : user.email, sessID : session.session.sessionId });
+	    		user = await user.save();
 		        const passwordMatched = await bcryptCompare(req.body.password, user.password);
 		     	if (passwordMatched){
 		     		const data = {

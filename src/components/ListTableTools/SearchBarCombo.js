@@ -96,28 +96,6 @@ function SearchBarCombo({
             />
           </Grid>}
 
-          {onFilterVerify &&
-          <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
-            <Stack alignItems="flex-start">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Status</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                size='small'
-                name="isVerified"
-                value={filterVerify}
-                label="Verified"
-                onChange={onFilterVerify}
-              >
-                <MenuItem key="all" value="all">All</MenuItem>
-                <MenuItem key="verified" value="verified">Verified</MenuItem>
-                <MenuItem key="unverified" value="unverified">Not Verified</MenuItem>
-                </Select>
-            </FormControl>
-            </Stack>
-          </Grid>}
-          
          
           { isDateFromDateTo && 
             <Grid item xs={12} sm={6} md={4} lg={2} xl={2}  >
@@ -155,52 +133,6 @@ function SearchBarCombo({
 
          
 
-          {onFilterListBy &&
-          <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
-            <Stack alignItems="flex-start">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Status</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                size='small'
-                name="isVerified"
-                value={filterListBy}
-                label="Status"
-                onChange={onFilterListBy}
-              >
-                <MenuItem key="all" value="all">All</MenuItem>
-                <MenuItem key="verified" value="active">Active</MenuItem>
-                <MenuItem key="unverified" value="inActive">In-Active</MenuItem>
-                </Select>
-            </FormControl>
-            </Stack>
-          </Grid>}
-
-          
-
-          {handleExcludeRepoting &&
-            <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
-              <Stack alignItems="flex-start">
-              <FormControl fullWidth={isMobile} sx={{ml:2, width:'200px'}}>
-                <InputLabel id="demo-simple-select-label">Reporting</InputLabel>
-                <Select
-                  sx={{width:'200px'}}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  size="small"
-                  value={filterExcludeRepoting}
-                  label="Reporting"
-                  onChange={handleExcludeRepoting}
-                >
-                  <MenuItem key="all" value='all'>All</MenuItem>
-                  <MenuItem key="excluded" value='excluded'>Exclude Reporting</MenuItem>
-                  <MenuItem key="included" value='included'>Include Reporting</MenuItem>
-                  </Select>
-              </FormControl>
-              </Stack>
-            </Grid>
-          }
 
           {handleRadioStatus !== undefined &&
             <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>

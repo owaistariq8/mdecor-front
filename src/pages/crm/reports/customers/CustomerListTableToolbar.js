@@ -36,10 +36,6 @@ export default function CustomerListTableToolbar({
   onFilterStatus,
   onFilterVerify,
   filterVerify,
-  onExportCSV,
-  onExportLoading,
-  filterExcludeRepoting,
-  handleExcludeRepoting,
   isArchived,
 }) {
   const navigate = useNavigate();
@@ -58,10 +54,6 @@ export default function CustomerListTableToolbar({
         filterVerify={filterVerify}
         SubOnClick={ !isArchived ? toggleAdd : undefined }
         addButton={ !isArchived ? BUTTONS.ADDCUSTOMER : undefined }
-        onExportCSV={ !isArchived ? onExportCSV : undefined }
-        onExportLoading={onExportLoading}
-        filterExcludeRepoting={filterExcludeRepoting}
-        handleExcludeRepoting={handleExcludeRepoting}
       />
     </Stack>
   );

@@ -38,14 +38,8 @@ export default function CustomerListTableRow({
   onViewRow,
   isArchived,
 }) {
-  const { clientCode, name, tradingName, mainSite, isActive, createdAt, verifications, type } = row;
-  const address = [];
-  if (mainSite?.address?.city) {
-    address.push(mainSite?.address?.city);
-  }
-  if (mainSite?.address?.country) {
-    address.push(mainSite?.address?.country);
-  }
+  const { name, isActive, createdAt, type } = row;
+  
   const smScreen = useScreenSize('sm')
   return (
     <StyledTableRow hover selected={selected}>
@@ -53,27 +47,8 @@ export default function CustomerListTableRow({
         align="left"
         onClick={ onViewRow }
         param={name}
-        isVerified={verifications?.length > 0}
         main={type?.toLowerCase() === 'sp'}
       />
-      <LinkTableCell
-        align="left"
-        onClick={onViewRow}
-        param={clientCode}
-      />
-      { smScreen && <TableCell sx={{maxWidth:"400px"}}>
-        {tradingName.map((value, index) =>
-          typeof value === 'string'
-            ? value.trim() !== '' && <Chip key={index} label={value} sx={{ m: 0.2 }} />
-            : ''
-        )}
-      </TableCell>}
-      { smScreen && <TableCell>
-        {Object.values(address ?? {}).reverse()
-          .map((value) => (typeof value === 'string' ? value.trim() : ''))
-          .filter((value) => value !== '')
-          .join(', ')}
-      </TableCell>}
       <TableCell align="center">
         {' '}
         <Switch checked={isActive} disabled size="small" />{' '}
