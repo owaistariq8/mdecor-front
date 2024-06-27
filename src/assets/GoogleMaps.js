@@ -6,7 +6,7 @@ import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-map
 import { Button, Grid, Typography } from '@mui/material';
 import Iconify from '../components/iconify/Iconify';
 import { setLatLongCoordinates } from '../redux/slices/customer/site';
-import { CONFIG } from '../config-global';
+import { CONFIG } from './../config-global';
 import { ICONS } from '../constants/icons/default-icons';
 
 const reportDefaultCenter = {
