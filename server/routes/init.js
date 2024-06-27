@@ -6,6 +6,7 @@ const { rateLimiterUsingThirdParty } = require('../middlewares/rateLimiter');
 const cors = require('cors');
 const users = require('./users');
 const customers = require('./customers');
+const roles = require('./roles');
 
 
 module.exports = function(app) {
@@ -29,6 +30,7 @@ module.exports = function(app) {
 
   app.use('/users', users);
   app.use('/customers', customers);
+  app.use('/roles', roles);
 
 
 }

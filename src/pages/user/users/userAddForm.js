@@ -81,7 +81,7 @@ export default function UserAddForm({ isEdit = false, currentUser, isInvite }) {
 const { customer, contact } = watch();
 
   useEffect(() => {
-    setValue('customer',customers.find(c => c?.type?.toUpperCase() === "SP" ));
+    // setValue('customer',customers.find(c => c?.type?.toUpperCase() === "SP" ));
   },[ customers, setValue ])
 
   useEffect(() => {

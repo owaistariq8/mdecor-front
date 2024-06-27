@@ -59,10 +59,7 @@ export function Cover({
           <Grid item>
             {backLink && <Button size='small' startIcon={<Iconify icon="mdi:arrow-left" />} variant='outlined' sx={{float:'left'}} onClick={handleBackLink}>Back</Button>}
           </Grid>
-          <Grid item>
-            { !isArchived && customerSites && <Button size='small' startIcon={<Iconify icon="mdi:map-legend" />} variant='outlined' onClick={linkCustomerSites}>Sites</Button>}
-            { !isArchived && customerContacts && <Button size='small' startIcon={<Iconify icon="mdi:account-multiple" />} variant='outlined' sx={{ml:2}} onClick={linkCustomerContacts}>Contacts</Button>}
-          </Grid>
+          
       </Grid>
     </StyledRoot>
   );

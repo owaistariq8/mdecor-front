@@ -114,19 +114,15 @@ export default function UserList() {
     setTableData(users);
   }, [users, error, enqueueSnackbar, responseMessage, initial]);
 
+  console.log("tableData",tableData);
+  
   const dataFiltered = applyFilter({
     inputData: tableData,
     comparator: getComparator(order, orderBy),
-    filterName,
-    filterRole,
-    filterStatus,
-    activeFilterListBy,
-    employeeFilterListBy,
-    filterByRegion,
   });
   
 
-  
+  console.log("dataFiltered",dataFiltered);
   const denseHeight = 60;
   const isFiltered = filterName !== '' || filterRole !== 'all' || filterStatus !== 'all';
   const isNotFound =
@@ -295,42 +291,8 @@ function applyFilter({ inputData, comparator, filterName, filterStatus, filterRo
   } else {
     inputData = [];
   }
-
-  if(activeFilterListBy ==='active' )
-    inputData = inputData.filter((user)=> user.isActive === true );
-  else if(activeFilterListBy ==='inActive' )
-    inputData = inputData.filter((user)=> user.isActive === false );
   
-  if(employeeFilterListBy ==='employee' )
-    inputData = inputData.filter((user)=> user.currentEmployee === true );
-  else if(employeeFilterListBy ==='notEmployee' )
-    inputData = inputData.filter((user)=> user.currentEmployee === false );
-  
-    if (filterByRegion) {
-      inputData = inputData.filter((user) => user.regions.some((region) => region === filterByRegion?._id));
-    }
 
-  if (filterName) {
-    inputData = inputData.filter(
-      (user) =>
-        user?.name?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        user?.email?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        user?.phone?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        user?.phone?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        `${user?.contact?.firstName?.toLowerCase() || ''} ${user?.contact?.lastName?.toLowerCase() || '' }`.indexOf(filterName.toLowerCase()) >= 0 ||
-        user?.roles?.map((obj) => obj.name).join(', ').toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-        // (user?.isActive ? "Active" : "Deactive")?.toLowerCase().indexOf(filterName.toLowerCase())  >= 0 ||
-        fDate(user?.createdAt)?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0
-    );
-  }
-
-  if (filterStatus !== 'all') {
-    inputData = inputData.filter((user) => user.status === filterStatus);
-  }
-
-  if (filterRole !== 'all') {
-    inputData = inputData.filter((user) => user.role === filterRole);
-  }
-
+ 
   return inputData;
 }

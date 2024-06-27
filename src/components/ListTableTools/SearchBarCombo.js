@@ -63,7 +63,7 @@ function SearchBarCombo({
   const isMobile = useResponsive('sm', 'down');
   const dispatch = useDispatch()
 
-  const { isAllAccessAllowed, isSettingReadOnly, isSecurityReadOnly } = useAuthContext();
+  const { isAllAccessAllowed, isSettingReadOnly } = useAuthContext();
 
   const onChangeStartDate = (e) => setIsDateFrom(e.target.value);
 
@@ -132,6 +132,22 @@ function SearchBarCombo({
           }
 
          
+          {addButton && !((  settingPage || userPage ) && ( isSettingReadOnly  )) &&
+              <Grid item >
+                  <StyledTooltip title={addButton} placement="top" disableFocusListener tooltipcolor="#103996" color="#fff">
+                  <IconButton color="#fff" onClick={SubOnClick} 
+                    sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
+                          '&:hover': {
+                            background:"#103996", 
+                            color:"#fff"
+                          }
+                        }}>
+                    <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon={buttonIcon || 'eva:plus-fill'} 
+                    />
+                  </IconButton>
+                </StyledTooltip>
+              </Grid>
+            }
 
 
           {handleRadioStatus !== undefined &&
@@ -208,7 +224,6 @@ SearchBarCombo.propTypes = {
   filterByRegion: PropTypes.object,
   signInLogsFilter:PropTypes.number,
   onSignInLogsFilter:PropTypes.func,
-  transferredMachine:PropTypes.bool,
   handleAttach: PropTypes.func,
   radioStatus: PropTypes.bool,
   radioStatusLabel: PropTypes.string,

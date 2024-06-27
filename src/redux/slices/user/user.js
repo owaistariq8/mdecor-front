@@ -288,7 +288,7 @@ export function getUsers(query) {
       }
       );
       if(regEx.test(response.status)){
-        dispatch(slice.actions.getUsersSuccess(response.data));
+        dispatch(slice.actions.getUsersSuccess(response.data.data));
       }
       return response;
     } catch (error) {

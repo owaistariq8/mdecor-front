@@ -36,7 +36,7 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }) {
-  const { login, email, name, roles, phone, createdAt, contact, isActive, isOnline } = row;
+  const { login, email, name, roles, phone, createdAt, contact, isActive, isOnline, status } = row;
 
   const smScreen = useScreenSize('sm')
   const lgScreen = useScreenSize('lg')
@@ -101,7 +101,7 @@ export default function UserTableRow({
           </StyledTooltip>}
             {`${contact?.firstName || ''} ${contact?.lastName || '' }`}
         </TableCell>
-        <TableCell align="center"><Switch checked={isActive} disabled size="small" /></TableCell>
+        <TableCell align="center"><Switch checked={status==='active'} disabled size="small" /></TableCell>
         <TableCell align="right">{fDate(createdAt)}</TableCell>
       </TableRow>
   );

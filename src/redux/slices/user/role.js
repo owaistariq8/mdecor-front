@@ -160,7 +160,7 @@ export function addRole(params) {
         isActive: params.isActive,
         isDefault: params.isDefault,
       }
-      const response = await axios.post(`${CONFIG.SERVER_URL}security/roles`, data);
+      const response = await axios.post(`${CONFIG.SERVER_URL}roles`, data);
       dispatch(slice.actions.setResponseMessage('Role Saved successfully'));
       return response;
     } catch (error) {
@@ -186,7 +186,7 @@ export function updateRole(id, params) {
         isActive: params.isActive,
         isDefault: params.isDefault,
       }
-      await axios.patch(`${CONFIG.SERVER_URL}security/roles/${id}`, data);
+      await axios.patch(`${CONFIG.SERVER_URL}roles/${id}`, data);
       dispatch(slice.actions.setResponseMessage('Role updated successfully'));
     } catch (error) {
       console.log(error);
@@ -201,7 +201,7 @@ export function getRoles() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}security/roles`,
+      const response = await axios.get(`${CONFIG.SERVER_URL}roles`,
       {
         params: {
           isArchived: false
@@ -223,7 +223,7 @@ export function getActiveRoles() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}security/roles`,
+      const response = await axios.get(`${CONFIG.SERVER_URL}roles`,
       {
         params: {
           isArchived: false,
@@ -248,7 +248,7 @@ export function getRole(id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}security/roles/${id}`);
+      const response = await axios.get(`${CONFIG.SERVER_URL}roles/${id}`);
       dispatch(slice.actions.getRoleSuccess(response.data));
       // dispatch(slice.actions.setResponseMessage('User Loaded Successfuly'));
     } catch (error) {
@@ -265,7 +265,7 @@ export function deleteRole(id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
-      const response = await axios.patch(`${CONFIG.SERVER_URL}security/roles/${id}`,
+      const response = await axios.patch(`${CONFIG.SERVER_URL}roles/${id}`,
       {
         isArchived: true, 
       }
