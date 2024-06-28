@@ -1,7 +1,7 @@
 // import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Divider, Link, Typography } from '@mui/material';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // components
@@ -29,12 +29,11 @@ export default function ResetPasswordPage() {
             padding: '3rem 0'
           }}
         />
-        <PasswordIcon sx={{ position: 'absolute', width: '10%', top: '100px', right: '100px', transform: 'rotate(30deg)'}}/>
+        <PasswordIcon sx={{ position: 'absolute', width: '10%', top: '100px', left: '50%', transform: 'rotate(30deg)'}}/>
       </Box>
-      <Typography variant="h3" paragraph>
-        {TITLES.FORGOT_PASSWORD}
-      </Typography>
-
+      <Divider sx={{mt:2}}>
+        <Typography variant="h4" paragraph>{TITLES.FORGOT_PASSWORD}</Typography>
+      </Divider>
       <Typography sx={{ color: 'text.secondary', mb: 5 }}>{TITLES.FORGOT_DESC}</Typography>
       <AuthResetPasswordForm />
 

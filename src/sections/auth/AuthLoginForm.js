@@ -75,53 +75,22 @@ export default function AuthLoginForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3} sx={{ mt: 1 }}>
-        {!!errors.afterSubmit && <Alert sx={{width:'380px'}} severity="error">{errors.afterSubmit.message}</Alert>}
-        <RHFTextField 
-          type="email" 
-          name="email"
-          label="Email address*" 
-          autoComplete="email" 
-          inputRef={inputRef}
+      <Stack spacing={3} sx={{ mt: 1, mb:1 }}>
+        {!!errors?.afterSubmit && <Alert sx={{width:'380px'}} severity="error">{errors?.afterSubmit?.message}</Alert>}
+        <RHFTextField  type="email"  name="email" label="Email address*" autoComplete="email"  inputRef={inputRef}
           inputProps={{ style: { textTransform: 'lowercase' } }}
         />
-        <RHFPasswordField
-          name="password"
-          id="password"
-          label="Password*"
-          autoComplete="current-password"
-        />
+        <RHFPasswordField name="password" id="password" label="Password*" autoComplete="current-password" />
+        <LoadingButton fullWidth color="secondary" size="large" type="submit" variant="contained" loading={isSubmitSuccessful || isSubmitting}>
+          Login
+        </LoadingButton>
       </Stack>
-
-      <LoadingButton
-        fullWidth
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitSuccessful || isSubmitting}
-        sx={{ bgcolor: '#10079F', color: 'white', '&:hover': { bgcolor: '#FFA200' }}}
-      >
-        Login
-      </LoadingButton>
       <Stack alignItems="flex-end" sx={{ my: 2 }}>
-        <Link
-          component={RouterLink}
-          to={PATH_AUTH.register}
-          variant="body2"
-          color="inherit"
-          underline="always"
-        >
+        <Link component={RouterLink} to={PATH_AUTH.register} variant="body2" color="inherit" underline="always" >
           Create Account
         </Link>
-        <Link
-          component={RouterLink}
-          to={PATH_AUTH.resetPassword}
-          variant="body2"
-          color="inherit"
-          underline="always"
-        >
-          Forgot password?
+        <Link component={RouterLink} to={PATH_AUTH.resetPassword} variant="body2" color="inherit" underline="always" >
+         Forgot password?
         </Link>
       </Stack>
     </FormProvider>

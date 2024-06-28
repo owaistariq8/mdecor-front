@@ -71,23 +71,17 @@ const ERROR = {
   contrastText: '#fff',
 };
 
-// const HOWICKGRAY = {
-//   light: '#F4F4F4',
-//   main: '#DFDFDF',
-//   dark: '#DFE3E8',
-// };
-
-const HOWICKBLUE = {
+const BLUE = {
   light: '#0084C9',
   main: '#0940B2',
   dark: '#10079F',
 };
 
-const HOWICKORANGE = {
+const ORANGE = {
   main: '#FFA200',
 };
 
-const HOWICKBRONZE = {
+const BRONZE = {
   lighter: '#B8AEA3',
   light: '#A39586',
   main: '#897A69',
@@ -95,7 +89,7 @@ const HOWICKBRONZE = {
   darker: '#473D31',
 };
 
-const HOWICKBURNIN = {
+const BURNIN = {
   main: '#D1ED18',
 };
 
@@ -108,10 +102,10 @@ const COMMON = {
   warning: WARNING,
   error: ERROR,
   grey: GREY,
-  bronze: HOWICKBRONZE,
-  blue: HOWICKBLUE,
-  orange: HOWICKORANGE,
-  burnIn: HOWICKBURNIN,
+  bronze: BRONZE,
+  blue: BLUE,
+  orange: ORANGE,
+  burnIn: BURNIN,
   divider: alpha(GREY[500], 0.24),
   action: {
     hover: alpha(GREY[500], 0.08),

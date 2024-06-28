@@ -85,9 +85,7 @@ export function AuthProvider({ children }) {
         const user = {}
         user.customer = localStorage.getItem('customer')
         user.email = localStorage.getItem('email')
-        user.displayName = localStorage.getItem('name')
-
-
+        user.name = localStorage.getItem('name')
         const userId = localStorage.getItem('userId');
 
         dispatch({
@@ -150,10 +148,9 @@ export function AuthProvider({ children }) {
     if(success) {
       const { accessToken, user, userId} = response.data.data;
       localStorage.setItem("customer", user?.customer);
-
       // const rolesArrayString = JSON.stringify(user.roles);
       localStorage.setItem('email', user.email);
-      localStorage.setItem('name', user.displayName);
+      localStorage.setItem('name', user.name);
       localStorage.setItem('userId', userId);
       // localStorage.setItem('userRoles', rolesArrayString);
 
@@ -190,7 +187,6 @@ export function AuthProvider({ children }) {
   const logout = useCallback( async () => {
     const userId  = localStorage.getItem("userId")
     const id = initialState.userId
-    console.log("id : ",id, userId,userId)
     try{
       await dispatch(clearStorageAndNaviagteToLogin());
       await axios.post(`${CONFIG.SERVER_URL}users/logout/${userId}`)

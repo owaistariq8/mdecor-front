@@ -2,10 +2,11 @@
 // ----------------------------------------------------------------------
 
 export const defaultSettings = {
+  toggleDrawer:false,
   themeMode: 'light',
   themeDirection: 'ltr',
   themeContrast: 'default',
   themeLayout: 'vertical',
-  themeColorPresets: 'blue',
+  themeColorPresets: 'orange',
   themeStretch: false,
 };

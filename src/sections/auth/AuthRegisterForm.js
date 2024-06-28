@@ -62,13 +62,10 @@ export default function AuthRegisterForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={2.5}>
+      <Stack spacing={2.5} sx={{mt:2}}>
         {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
-
         <RHFTextField name="name" label="Full Name" />
-
         <RHFTextField name="email" label="Email address" />
-
         <RHFTextField
           name="password"
           label="Password"

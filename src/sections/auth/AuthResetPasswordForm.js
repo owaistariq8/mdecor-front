@@ -74,12 +74,13 @@ export default function AuthResetPasswordForm() {
 
       <LoadingButton
         fullWidth
+        color='secondary'
         size="large"
         type="submit"
         variant="contained"
         loading={isSubmitting}
         disabled={disable}
-        sx={{ mt: 3 }}
+        sx={{ mt: 2 }}
       >
         {disable ? TITLES.CHECK_EMAIL : TITLES.FORGOT_REQUEST}
       </LoadingButton>

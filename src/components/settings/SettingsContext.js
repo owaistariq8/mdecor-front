@@ -12,6 +12,7 @@ import { defaultPreset, getPresets, presetsOption } from './presets';
 
 const initialState = {
   ...defaultSettings,
+  onChangeDrawer: () => {},
   // Mode
   onToggleMode: () => {},
   onChangeMode: () => {},
@@ -69,6 +70,15 @@ export function SettingsProvider({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isArabic]);
 
+   // Open Setting Drawer
+   const onChangeDrawer = useCallback(
+    (event) => {
+      const toggleDrawer = !settings.toggleDrawer;
+      setSettings({ ...settings, toggleDrawer });
+    },
+    [setSettings, settings]
+  );
+  
   // Mode
   const onToggleMode = useCallback(() => {
     const themeMode = settings.themeMode === 'light' ? 'dark' : 'light';
@@ -156,6 +166,7 @@ export function SettingsProvider({ children }) {
   const memoizedValue = useMemo(
     () => ({
       ...settings,
+      onChangeDrawer,
       // Mode
       onToggleMode,
       onChangeMode,
@@ -180,6 +191,7 @@ export function SettingsProvider({ children }) {
     }),
     [
       settings,
+      onChangeDrawer,
       // Mode
       onToggleMode,
       onChangeMode,
