@@ -28,16 +28,16 @@ async function getUserById(req, res) {
 		if(mongoose.Types.ObjectId.isValid(userId)) {
         	const user = await User.findById(userId).populate('roles');
         	if(user)
-	    		res.status(200).json({ success: true, data:user });
+	    		res.status(200).json(user);
 	    	else 
-	    		res.status(404).json({ success: false, data:{} });
+	    		res.status(404).json({});
 		}
 		else
-	    	res.status(400).json({ success: false, message:'Invalid userId' });
+	    	res.status(400).json({ message:'Invalid userId' });
 
     } catch (err) {
         console.log('Exception controllers/user.js => getUserById => ', err);
-    	res.status(500).json({ success: false, message:'Internal Server Error' });
+    	res.status(500).json({  message:'Internal Server Error' });
     }
 }
 
@@ -49,16 +49,16 @@ async function getUsers(req, res) {
 		if(query && typeof query == 'object') {
         	const users = await User.find(query).populate('roles');
         	if(users && Array.isArray(users) && users.length>0)
-	    		res.status(200).json({ success: true, data:users });
+	    		res.status(200).json(users);
 	    	else 
-	    		res.status(404).json({ success: false, data:{} });
+	    		res.status(404).json({  data:{} });
 		}
 		else
-	    	res.status(400).json({ success: false, message:'Invalid request' });
+	    	res.status(400).json({  message:'Invalid request' });
 
     } catch (err) {
         console.log('Exception controllers/user.js => getUsers => ', err);
-    	res.status(500).json({ success: false, message:'Internal Server Error' });
+    	res.status(500).json({  message:'Internal Server Error' });
     }
 }
 
@@ -66,12 +66,12 @@ async function signup(req, res) {
 	try {
 
 		if(!req.body.email) 
-			return res.status(400).json({ success: false, message : 'Invalid request' });
+			return res.status(400).json({  message : 'Invalid request' });
 
 	 	const existingUser = await User.findOne({ email: req.body.email }).select('_id').lean();
         
         if (existingUser) 
-    		return res.status(400).json({ success: false, message : 'User already exists' });
+    		return res.status(400).json({  message : 'User already exists' });
         
 
         const hash = await bcryptHash(req.body.password, 10);
@@ -85,14 +85,14 @@ async function signup(req, res) {
     	const user = await userObj.save();
 		
 		if(user) {
-    		res.status(200).json({ success: true, data : user });
+    		res.status(200).json( user );
 		}
 		else
-	    	res.status(404).json({ success: false, message : 'Unable to create user' });
+	    	res.status(404).json({  message : 'Unable to create user' });
 
     } catch (err) {
         console.log('Exception controllers/user.js => signup => ', err);
-    	res.status(500).json({ success: false, message:'Internal Server Error' });
+    	res.status(500).json({  message:'Internal Server Error' });
     }
 }
 
@@ -101,7 +101,7 @@ async function resetPassword(req, res) {
 	try {
 
 		if(!req.body.password || !req.body.email) 
-			return res.status(400).json({ success: false, message : 'Invalid request' });
+			return res.status(400).json({  message : 'Invalid request' });
 
 		const salt = await bcrypt.genSalt(10);
         const newPassword = await bcrypt.hash(req.body.password, salt);
@@ -110,22 +110,22 @@ async function resetPassword(req, res) {
         const user = await User.findOne({ email });
 
         if (!user) 
-        	return res.status(404).json({ success: false, message : 'User not found' });
+        	return res.status(404).json({  message : 'User not found' });
 
         const currentPassword = user.password;
         const compare = promisify(bcrypt.compare);
         const result = await compare(req.body.password, currentPassword);
 
         if (result) 
-            return res.status(400).json({ success: false, message : 'You have already used this password!' });;
+            return res.status(400).json({  message : 'You have already used this password!' });;
 
         await User.updateOne({ email }, { password: newPassword });
-        res.status(200).json({ success: true, message : 'Password updated successfully' });
+        res.status(200).json({ message : 'Password updated successfully' });
 	 	
 
     } catch (err) {
         console.log('Exception controllers/user.js => resetPassword => ', err);
-    	res.status(500).json({ success: false, message:'Internal Server Error' });
+    	res.status(500).json({  message:'Internal Server Error' });
     }
 }
 
@@ -134,7 +134,7 @@ async function login(req, res) {
 	try {
 
 		if(!req.body.email || !req.body.password) 
-			return res.status(400).json({ success: false, message : 'Invalid request' });
+			return res.status(400).json({  message : 'Invalid request' });
 
         let user = await User.findOne({ email:  req.body.email }).populate('roles').populate('customer');
         if(user) {
@@ -159,17 +159,17 @@ async function login(req, res) {
 			              roles: user.roles,
 			            }
 		     		}
-		            res.status(200).json({ success: true, data});
+		            res.status(200).json(data);
 		     	}
 		        else 
-					return res.status(400).json({ success: false, message : 'Invalid request' });
+					return res.status(400).json({  message : 'Invalid request' });
 	        }
         }
         else 
-			return res.status(400).json({ success: false, message : 'Invalid request' });
+			return res.status(400).json({  message : 'Invalid request' });
     } catch (err) {
         console.log('Exception controllers/user.js => login => ', err);
-    	res.status(500).json({ success: false, message:'Internal Server Error' });
+    	res.status(500).json({  message:'Internal Server Error' });
     }
 }
 
@@ -218,19 +218,19 @@ async function updateUser(req, res) {
 	try {
 
 		if(!mongoose.Types.ObjectId.isValid(req.params.id)) 
-			return res.status(400).json({ success: false, message : 'Invalid request' });
+			return res.status(400).json({  message : 'Invalid request' });
 
 		const salt = await bcrypt.genSalt(10);
         req.body.password = await bcryptHash(req.body.password, salt);
 
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if(user)
-            res.status(200).json({ success: true, data : user});
+            res.status(200).json(user);
         else 
-			return res.status(404).json({ success: false, message : 'User Not found' });
+			return res.status(404).json({  message : 'User Not found' });
     } catch (err) {
         console.log('Exception controllers/user.js => updateUser => ', err);
-    	res.status(500).json({ success: false, message:'Internal Server Error' });
+    	res.status(500).json({  message:'Internal Server Error' });
     }
 }
 
@@ -238,16 +238,16 @@ async function deleteUser(req, res) {
 	try {
 
 		if(!mongoose.Types.ObjectId.isValid(req.params.id)) 
-			return res.status(400).json({ success: false, message : 'Invalid request' });
+			return res.status(400).json({  message : 'Invalid request' });
 
         const deleteResponse = await User.deleteOne({_id:req.params.id});
         if(deleteResponse)
-            res.status(200).json({ success: true, data : {}});
+            res.status(200).json({});
         else 
-			return res.status(404).json({ success: false, message : 'User Not found' });
+			return res.status(404).json({  message : 'User Not found' });
     } catch (err) {
         console.log('Exception controllers/user.js => deleteUser => ', err);
-    	res.status(500).json({ success: false, message:'Internal Server Error' });
+    	res.status(500).json({  message:'Internal Server Error' });
     }
 }
 
