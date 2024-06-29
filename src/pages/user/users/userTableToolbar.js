@@ -66,16 +66,16 @@ export default function UserTableToolbar({
         value={filterName}
         onChange={onFilterName}
         onClick={onResetFilter}
-        SubOnClick={formNewVisibleToggle}
-        inviteOnClick={formInviteVisibleToggle}
+        // SubOnClick={formNewVisibleToggle}
+        // inviteOnClick={formInviteVisibleToggle}
         filterListBy={filterListBy}
         onFilterListBy={onFilterListBy}
         employeeFilterListBy={employeeFilterListBy}
         onEmployeeFilterListBy={onEmployeeFilterListBy}
         onFilterListByRegion={onFilterListByRegion}
         filterByRegion={filterByRegion}
-        addButton={BUTTONS.ADDUSER}
-        inviteButton={BUTTONS.INVITEUSER}
+        // addButton={BUTTONS.ADDUSER}
+        // inviteButton={BUTTONS.INVITEUSER}
         onReload={onReload}
         userPage
       />

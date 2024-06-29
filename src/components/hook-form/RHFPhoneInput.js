@@ -24,7 +24,7 @@ export default function RHFPhoneInput({ name, label, flagSize, defaultCountry, o
           name={name}
           label={label}
           flagSize={flagSize || 'medium' }
-          defaultCountry={ defaultCountry || "NZ" }
+          defaultCountry={ defaultCountry || "PK" }
           onChange={(newValue) => setValue(name, newValue, { shouldValidate: true })}
           inputProps={{ ...inputProps, maxLength: 13 }}
           forceCallingCode

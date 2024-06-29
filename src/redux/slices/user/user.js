@@ -228,17 +228,7 @@ export function addUser(param) {
     dispatch(slice.actions.startLoading());
     dispatch(resetSecurityUser());
     try{
-      const data = {
-        customer: param.customer?._id,
-        contact: param.contact?._id,
-        name: param.name,
-        phone:  param.phone,
-        email: param.email,
-        password: param.password,
-        roles: param.roles.map(role => role?._id ),
-        status: param.status,
-      }
-      const response = await axios.post(`${CONFIG.SERVER_URL}users`, data);
+      const response = await axios.post(`${CONFIG.SERVER_URL}user/add/`, param);
       return response;
     } catch (error) {
       console.error(error);
@@ -253,19 +243,7 @@ export function  updateUser(param, id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
-      const data = {
-          customer: param.customer,
-          contact: param.contact?._id,
-          name: param.name,
-          phone:  param.phone,
-          email: param.email,
-          roles: param?.roles?.map( role => role?._id),
-          status: param.status,
-      }
-      if(param.password !== ""){
-        data.password = param.password 
-      }
-      const response = await axios.patch(`${CONFIG.SERVER_URL}users/${id}`, data);
+      const response = await axios.patch(`${CONFIG.SERVER_URL}users/update/${id}`, param);
       return response;
     } catch (error) {
       console.error(error);
@@ -306,8 +284,9 @@ export function getUser(id) {
     dispatch(slice.actions.startLoading());
     try{
       const response = await axios.get(`${CONFIG.SERVER_URL}users/${id}`);
+      console.log("response::::::",response)
       if(regEx.test(response.status)){
-        dispatch(slice.actions.getUserSuccess(response.data));
+        dispatch(slice.actions.getUserSuccess(response.data.data));
       }
       return response;
     } catch (error) {

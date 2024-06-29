@@ -31,6 +31,7 @@ import {
   setFilterBy,
   setActiveFilterList,
   setEmployeeFilterList,
+  getUser,
 } from '../../../redux/slices/user/user';
 import { fDate } from '../../../utils/formatTime';
 // constants
@@ -113,16 +114,12 @@ export default function UserList() {
   useEffect(() => {
     setTableData(users);
   }, [users, error, enqueueSnackbar, responseMessage, initial]);
-
-  console.log("tableData",tableData);
   
   const dataFiltered = applyFilter({
     inputData: tableData,
     comparator: getComparator(order, orderBy),
   });
   
-
-  console.log("dataFiltered",dataFiltered);
   const denseHeight = 60;
   const isFiltered = filterName !== '' || filterRole !== 'all' || filterStatus !== 'all';
   const isNotFound =
@@ -182,7 +179,6 @@ useEffect(()=>{
   };
 
   const handleViewRow = (id) => {
-    // dispatch(getUser(id))
     navigate(PATH_USER.users.view(id));
   };
 
@@ -199,9 +195,7 @@ useEffect(()=>{
 
   return (
       <Container maxWidth={false}>
-        <StyledCardContainer>
-          <Cover name="Users" />
-        </StyledCardContainer>
+        <StyledCardContainer><Cover icon="ph:users-light" name="Users" /></StyledCardContainer>
         <TableCard>
           <UserTableToolbar
             isFiltered={isFiltered}

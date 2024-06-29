@@ -50,7 +50,7 @@ export default function AccountPopover() {
   const dispatch = useDispatch();
   const { user, logout } = useAuthContext();
   const email = localStorage.getItem('email')
-  const displayName = localStorage.getItem('name')
+  const name = localStorage.getItem('name')
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState(null);
   const { onChangeDrawer } = useSettingsContext();
@@ -109,18 +109,17 @@ export default function AccountPopover() {
               height: '100%',
               borderRadius: '50%',
               position: 'absolute',
-              // bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
             },
           }),
         }}
       >
-        <CustomAvatar src={user?.photoURL} alt={user?.displayName} name={user?.displayName} />
+        <CustomAvatar src={user?.photoURL} alt={user?.name} name={user?.name} />
       </IconButtonAnimate>
 
       <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 200, p: 0 }}>
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName || displayName}
+            {user?.name || name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {user?.login || email }

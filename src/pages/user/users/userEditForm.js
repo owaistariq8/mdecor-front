@@ -13,8 +13,6 @@ import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFSwitch, RHFTextField, RHFAutocomplete, RHFPhoneInput } from '../../../components/hook-form';
 // slice
 import { updateUser } from '../../../redux/slices/user/user';
-import { getCustomers, resetCustomers } from '../../../redux/slices/customer/customer';
-import { getActiveContacts, resetActiveContacts } from '../../../redux/slices/customer/contact';
 import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/user/role';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 import { editUserSchema } from '../../schemas/user';
@@ -25,34 +23,39 @@ export default function UserEditForm() {
 
   const { user } = useSelector((state) => state.user);
   const { activeRoles } = useSelector((state) => state.role);
-  const { customers } = useSelector((state) => state.customer);
-  const { activeContacts } = useSelector((state) => state.contact);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  useLayoutEffect(() => {
-    dispatch(getCustomers({status:'active'}));
-    dispatch(getActiveRoles());
-    return ()=>{ 
-      dispatch(resetCustomers());
-      dispatch(resetActiveRoles()); 
-    }
-  }, [dispatch]);
+  // useLayoutEffect(() => {
+  //   dispatch(getActiveRoles());
+  //   return ()=>{ 
+  //     dispatch(resetActiveRoles()); 
+  //   }
+  // }, [dispatch]);
 
   const defaultValues = useMemo(
     () => ({
-      customer: user?.customer || null,
-      contact: user?.contact || null,
-      name: user?.name || '',
-      phone: user?.phone || '+64 ',
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      phone: user?.phone || '',
+      mobile: user?.mobile || '',
       email: user?.email || '',
-      roles: user?.roles || [],
-      isActive: user?.status==='active',
+      gender: user?.gender || '',
+      religion: user?.religion,
+      roles: user?.roles,
+      status: user?.status || '',
+      isActive: user?.status==="active" || false,
+      password: user?.password || '',
+      createdByFullName: user?.createdBy?.name,
+      createdAt: user?.createdAt,
+      createdIP: user?.createdIP,
+      updatedByFullName: user?.updatedBy?.name,
+      updatedAt: user?.updatedAt,
+      updatedIP: user?.updatedIP,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ user ]
+    [user]
   );
   
   const methods = useForm({
@@ -68,32 +71,8 @@ export default function UserEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-const { customer } = watch();
-
-
-useEffect(() => {
-  if(customer?._id){
-    dispatch(getActiveContacts(customer?._id));
-  } else {
-    dispatch(resetActiveContacts());
-  }
-}, [ dispatch,customer?._id ]);
-
-
-const onChangeContact = (contact) => {
-  if(contact?._id){
-    setValue( 'name', `${contact?.firstName || ''} ${contact?.lastName || ''}` );
-    setValue( 'phone', contact?.phone );
-    setValue( 'email', contact?.email );
-    setValue( 'contact', contact );
-  } else {
-    setValue( 'name', '' );
-    setValue( 'phone', '' );
-    setValue( 'email', '' );
-    setValue( 'contact', null );
-  }
-}
-
+  const religionList = ['Christianity', 'Islam', 'Hinduism', 'Buddhism', 'Judaism', 'Sikhism'];
+  const genderList = ['Male', 'Female'];
 
   const onSubmit = async (data) => {
     try {
@@ -114,69 +93,35 @@ const onChangeContact = (contact) => {
         <Grid item xs={12} md={12}>
           <Card sx={{ p: 3 }}>
           <Stack  spacing={2} >
-            <Box rowGap={2} columnGap={2} display="grid"
-              gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }}
-            >
-              
-              <RHFAutocomplete
-                disabled
-                name='customer'
-                label="Customer"
-                options={ customers }
-                getOptionLabel={(option) => option?.name || ''}
-                isOptionEqualToValue={(option, value) => option?._id === value?._id}
-                renderOption={(props, option) => (<li  {...props} key={option?._id}>{option?.name || ''}</li>)}
-              />
-
-              <RHFAutocomplete
-                name='contact'
-                label="Contact"
-                options={activeContacts}
-                onChange={(event, newValue) => onChangeContact(newValue) }
-                getOptionLabel={(option) => `${option?.firstName || ''} ${option?.lastName || ''}`}
-                isOptionEqualToValue={(option, value) => option?._id === value?._id}
-                renderOption={(props, option) => (<li  {...props} key={option?._id}>{option?.firstName || ''}{' '}{option?.lastName || ''}</li>)}
-              />
-
-              <RHFTextField name="name" label="Full Name*" />
-
+            <Box rowGap={2} columnGap={2} display="grid" gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }} >
+              <RHFTextField name="firstName" label="First Name*" />
+              <RHFTextField name="lastName" label="Last Name" />
               <RHFPhoneInput name="phone" label="Phone Number"  />
-
-            </Box>
-            <Box rowGap={2} columnGap={2} display="grid"
-              gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' }}
-            >
               <RHFTextField name="email" label="Email Address*" inputProps={{ style: { textTransform: 'lowercase' } }} />
-            </Box>
-
-            <Box
-              rowGap={2} columnGap={2} display="grid"
-              gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }}
-            >
-
               <RHFAutocomplete
-                multiple
-                disableCloseOnSelect
-                filterSelectedOptions
+                name="religion"
+                label="Religion"
+                options={ religionList }
+                getOptionLabel={(option) => option}
+                isOptionEqualToValue={(option, value) => option?.toLowerCase() === value}
+              />
+              <RHFAutocomplete
+                name="gender"
+                label="Gender"
+                options={ genderList }
+                getOptionLabel={(option) => option}
+                isOptionEqualToValue={(option, value) => option?.toLowerCase() === value}
+              />
+              <RHFAutocomplete
                 name="roles"
                 label="Roles"
                 options={ activeRoles }
                 getOptionLabel={(option) => `${option?.name || ''} `}
                 isOptionEqualToValue={(option, value) => option?._id === value?._id}
-                renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
+                // renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
               />
-              
-              
-
             </Box>
-         
-            <Grid item md={12} display="flex">
-              <RHFSwitch name="isActive" label="Active" />
-            </Grid>
-
-            <Stack sx={{ mt: 3 }}>
-              <AddFormButtons userPage isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
-            </Stack>
+            <AddFormButtons isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
           </Stack>
           </Card>
         </Grid>

@@ -5,19 +5,17 @@ import UserViewForm from './userViewForm'
 import { getUser } from '../../../redux/slices/user/user';
 
 const UserView = () => {
+
   const dispatch = useDispatch();
   const { id } = useParams();
+
   useLayoutEffect(() => {
     if (id) {
-
       dispatch(getUser(id));
-
     }
   },[dispatch, id]);
 
-  return (
-    <UserViewForm />
-  )
+  return (<UserViewForm />)
 }
 
 export default UserView
