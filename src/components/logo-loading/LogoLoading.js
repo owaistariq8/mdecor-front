@@ -7,23 +7,10 @@ import { Box, Link } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const Logo = forwardRef(({ disabledLink = false, sx, src="/logo/mdecor.jpg", ...other }, ref) => {
-  // const theme = useTheme();
+const Logo = forwardRef(({ disabledLink = false, sx, src="/favicon.svg", ...other }, ref) => {
 
-  // const PRIMARY_LIGHT = theme.palette.primary.light;
-
-  // const PRIMARY_MAIN = theme.palette.primary.main;
-
-  // const PRIMARY_DARK = theme.palette.primary.dark;
-
-  // OR using local (public folder)
-  // -------------------------------------------------------
   const logo = (
-    <Box
-      component="img"
-      src={src}
-      sx={{ width: 150, height: 150, cursor: 'pointer', ...sx }}
-    />
+    <Box component="img" src={src} sx={{ width: 150, height: 150, cursor: 'pointer', ...sx }} />
   );
 
 

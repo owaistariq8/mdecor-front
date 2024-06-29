@@ -53,7 +53,7 @@ export default function NavMini() {
           ...hideScrollbarX,
         }}
       >
-        <Logo src="/favicon/m-decore-icon.svg" sx={{ mx: 'auto', my: 1, width: '50px', height: '50px' }} />
+        <Logo src="/favicon.svg" sx={{ mx: 'auto', my: 1, width: '50px', height: '50px' }} />
 
         <NavSectionMini data={navConfig} />
       </Stack>

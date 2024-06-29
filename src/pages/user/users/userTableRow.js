@@ -44,52 +44,21 @@ export default function UserTableRow({
   return (
       <TableRow hover selected={selected} >
           <Stack direction="row" alignItems="center">
-            <CustomAvatar
-              name={name}
-              alt={name}
+            <CustomAvatar name={name} alt={name}
               BadgeProps={{
                 badgeContent: <BadgeStatus status={isOnline?"online":"offline"} />,
               }}
-              sx={{ ml: 1, my: 0.5, width: '30px', height: '30px' }}
+              sx={{ p:2, ml: 1, my: 0.5, width: '30px', height: '30px' }}
             />
             <LinkTableCell align="left" onClick={onViewRow} param={name} />
           </Stack>
-        { smScreen && <TableCell align="left">
-          {login}
-          {email?.trim() !== login?.trim() &&
-              <StyledTooltip 
-              placement="top" 
-              disableFocusListener 
-              title={ email } 
-              tooltipcolor={ ICONS.EMAIL.color } 
-              color={ ICONS.EMAIL.color }
-              >
-                <Iconify sx={{ ml: 0.5, height: 20, width: 20, mb: -0.5 }} icon={ICONS.EMAIL.icon} />
-              </StyledTooltip>
-          }
-          </TableCell>}
+        { smScreen && <TableCell align="left">{email || ''}</TableCell>}
         { smScreen && <TableCell align="left">{phone || ''}</TableCell>}
         { lgScreen && 
           <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
             {roles.map((obj, index) => (obj.roleType === 'SuperAdmin' ? <Chip key={index} label={obj.name} sx={{m:0.2}} color='secondary' /> : <Chip  key={index} label={obj.name} sx={{m:0.2}} />))}
           </TableCell>
         }
-        {/* { lgScreen && 
-          <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-            {regions?.map((obj, index) =>  <Chip  key={index} label={obj?.name} sx={{mx:0.3}} />)}
-          </TableCell>
-        } */}
-        {/* <TableCell align="center" key={isOnline}>
-          <StyledTooltip 
-            placement="top" 
-            title={isOnline?ICONS.ONLINE.heading:ICONS.OFFLINE.heading} 
-            disableFocusListener tooltipcolor={isOnline?ICONS.ONLINE.color:ICONS.OFFLINE.color} 
-            color={isOnline?ICONS.ONLINE.color:ICONS.OFFLINE.color}
-          >
-            <Iconify color={isOnline?ICONS.ONLINE.color:ICONS.OFFLINE.color} sx={{ height: 20, width: 20 }} icon={isOnline?ICONS.ONLINE.icon:ICONS.OFFLINE.icon} />
-          </StyledTooltip>
-        </TableCell> */}
-        {/* <TableCell align="center"><Switch checked={currentEmployee} disabled size="small" /></TableCell> */}
         <TableCell align="left">
           {contact?.firstName && <StyledTooltip
             placement="top" 

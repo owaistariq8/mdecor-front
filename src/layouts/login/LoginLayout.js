@@ -13,21 +13,21 @@ import { StyledRoot, StyledContent } from './styles';
 LoginLayout.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
-  illustration: PropTypes.string,
 };
 
-export default function LoginLayout({ children, illustration, title }) {
-  title = title || "BATHROOM ACCESSORIES";
+export default function LoginLayout({ children, title }) {
   return (
     <StyledRoot>
       <StyledContent>
         <Grid sx={{ display: 'flex', justifyContent: 'center'}} alignItems="center" spacing={2} container >
-          <Grid item>
-            <Logo sx={{pointerEvents: 'none', }} />
-            <Stack sx={{ alignItems: 'end' }} >
-              <Typography variant="h5">{title}</Typography>
-                {/* <Typography variant="body2" sx={{ mb: 6}}>{CONFIG.VERSION}</Typography> */}
-            </Stack>
+          <Grid item textAlign='right'>
+            <Logo disabledLink />
+            {title &&
+            <>
+              <Typography variant="h5" sx={{mt:-1}}>{title}</Typography>
+              <Typography variant="body2" sx={{fontStyle:'italic', color:'gray', fontSize:'small', mt:-1}}>V{CONFIG.VERSION}</Typography>
+            </>
+            }
           </Grid>
         </Grid>
         <Stack> {children} </Stack>

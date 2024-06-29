@@ -121,7 +121,7 @@ export default function UserEditForm() {
                 // renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
               />
             </Box>
-            <AddFormButtons isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+            <AddFormButtons isActive isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
           </Stack>
           </Card>
         </Grid>

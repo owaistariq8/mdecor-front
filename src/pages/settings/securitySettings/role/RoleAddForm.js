@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Card, Grid, Stack, Container } from '@mui/material';
+import { Card, Grid, Stack, Container, CardContent } from '@mui/material';
 // ROUTES
 import { PATH_SETTING } from '../../../../routes/paths';
 // slice
@@ -19,6 +19,7 @@ import FormProvider, { RHFTextField, RHFSwitch, RHFAutocomplete } from '../../..
 import AddFormButtons from '../../../../components/DocumentForms/AddFormButtons';
 import { Cover } from '../../../../components/Defaults/Cover';
 import { StyledCardContainer } from '../../../../theme/styles/default-styles';
+import { StyledCard } from '../../../../components/settings/styles';
 
 // ----------------------------------------------------------------------
 RoleAddForm.propTypes = {
@@ -90,11 +91,9 @@ export default function RoleAddForm({ currentRole }) {
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={18} md={12}>
-            <Card sx={{ p: 3 }}>
+            <Card sx={{ p:3, pb:1 }}>
               <Stack spacing={2}>
-
                 <RHFTextField name="name" label="Name" />
-
                 <RHFAutocomplete
                   name="roleType" 
                   label="Role Type"
@@ -103,16 +102,9 @@ export default function RoleAddForm({ currentRole }) {
                   isOptionEqualToValue={(option, value) => option.name === value.name}
                   renderOption={(props, option) => (<li {...props} key={option.key}> {option.name || ''}</li>)}
                 />
-
                 <RHFTextField name="description" label="Description" minRows={8} multiline />
-
-                <Grid display="flex" alignItems="end">
-                  <RHFSwitch name="isActive" label="Active" />
-                  <RHFSwitch name="isDefault" label="Default" />
-                  <RHFSwitch name="disableDelete" label="Disable Delete" />
-                </Grid>
               </Stack>
-              <AddFormButtons settingPage isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+              <AddFormButtons isActive isDefault disableDelete isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>
           </Grid>
         </Grid>

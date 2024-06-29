@@ -266,7 +266,7 @@ export function getUsers(query) {
       }
       );
       if(regEx.test(response.status)){
-        dispatch(slice.actions.getUsersSuccess(response.data.data));
+        dispatch(slice.actions.getUsersSuccess(response.data));
       }
       return response;
     } catch (error) {
@@ -284,9 +284,8 @@ export function getUser(id) {
     dispatch(slice.actions.startLoading());
     try{
       const response = await axios.get(`${CONFIG.SERVER_URL}users/${id}`);
-      console.log("response::::::",response)
       if(regEx.test(response.status)){
-        dispatch(slice.actions.getUserSuccess(response.data.data));
+        dispatch(slice.actions.getUserSuccess(response.data));
       }
       return response;
     } catch (error) {
@@ -302,8 +301,7 @@ export function deleteUser(id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
-      const response = await axios.patch(`${CONFIG.SERVER_URL}users/${id}`);
-      // state.responseMessage = response.data;
+      const response = await axios.get(`${CONFIG.SERVER_URL}user/delete/${id}`);
       if(regEx.test(response.status)){
         dispatch(slice.actions.setResponseMessage(response.data));
         dispatch(resetSecurityUser())

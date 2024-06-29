@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import { Grid, TextField, InputAdornment, Button, Stack, 
-  FormControl, Select, InputLabel, MenuItem, IconButton, Switch, FormControlLabel, Autocomplete } from '@mui/material';
+  FormControl, Select, InputLabel, MenuItem, IconButton, Switch, FormControlLabel, Autocomplete, 
+  useTheme} from '@mui/material';
 import { BUTTONS } from '../../constants/default-constants';
 import Iconify from '../iconify';
 import useResponsive from '../../hooks/useResponsive';
@@ -57,6 +58,8 @@ function SearchBarCombo({
   ...other
 }) {
   
+  const theme = useTheme();
+
   const { spContacts } = useSelector((state) => state.contact);
   const [ isDateFrom, setIsDateFrom ] = useState(new Date( Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
   const [ isDateTo, setIsDateTo ] = useState(new Date(Date.now()).toISOString().split('T')[0]);
@@ -161,23 +164,26 @@ function SearchBarCombo({
             <Grid container rowSpacing={1} columnSpacing={2} sx={{display:'flex', justifyContent:'flex-end'}}>
               {onReload && 
                   <Grid item>
-                    <StyledTooltip title='Reload' placement="top" disableFocusListener tooltipcolor="#103996" color="#103996">
-                    <IconButton onClick={onReload} color="#fff" sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
+                    <StyledTooltip title='Reload' placement="top" disableFocusListener>
+                      <Button variant='contained' size='large'><Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:reload' /></Button>
+                    </StyledTooltip>
+                    {/* <StyledTooltip title='Reload' placement="top" disableFocusListener> */}
+                    {/* <IconButton title='Reload' onClick={onReload} color="#fff" sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
                       '&:hover': {
                         background:"#103996", 
                         color:"#fff"
                       }
                     }}>
                       <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:reload' />
-                    </IconButton>
-                  </StyledTooltip>
+                    </IconButton> */}
+                  {/* </StyledTooltip> */}
                 </Grid>
               }
                 
               {handleRefresh && 
                 <Grid item>
-                    <StyledTooltip title="Refresh" placement="top" disableFocusListener tooltipcolor="#103996" color="#103996">
-                      <IconButton onClick={handleRefresh} color="#fff" sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
+                    <StyledTooltip title="Refresh"  placement="top" disableFocusListener>
+                      <IconButton onClick={handleRefresh} color="#fff" sx={{background:"theme.palette.main", borderRadius:1, height:'1.7em', p:'8.5px 14px',
                         '&:hover': {
                           background:"#103996", 
                           color:"#fff"

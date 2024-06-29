@@ -13,13 +13,23 @@ export default function NavDocs() {
         px: 5, pb: 5, pt: 15,
         display: 'block',
         textAlign: 'center',
-        background: `url('/logo/m-decore-icon.svg')`,
-        backgroundPosition:'center top',
-        backgroundRepeat:'no-repeat',
-        backgroundBlendMode:'lighten',
-        backgroundSize:"70%"
+        position: 'relative', // Ensure the stack is positioned relatively
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: `url('/favicon.svg')`,
+          backgroundPosition: 'center top',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '70%',
+          opacity: 0.1, // Set the opacity of the background image
+          zIndex: -1, // Ensure the background is behind the content
+        },
       }}
-      >
+    >
         <Typography gutterBottom variant="subtitle1">Hi, {user?.name || ''}</Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary', pb:1 }}>Know more about our products and services</Typography>
     </Stack>
