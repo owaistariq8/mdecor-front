@@ -3,6 +3,8 @@ const Joi = require('joi');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  firstName: { type: String },
+  lastName: { type: String },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   type: String,
