@@ -146,7 +146,7 @@ export function AuthProvider({ children }) {
     const response = await axios.post(`${CONFIG.SERVER_URL}users/login`, { email: uEmail, password : uPassword, })
     const { success } = response.data;
     if(success) {
-      const { accessToken, user, userId} = response.data.data;
+      const { accessToken, user, userId} = response.data;
       localStorage.setItem("customer", user?.customer);
       // const rolesArrayString = JSON.stringify(user.roles);
       localStorage.setItem('email', user.email);
