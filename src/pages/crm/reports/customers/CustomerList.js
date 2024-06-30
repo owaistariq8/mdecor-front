@@ -179,7 +179,7 @@ export default function CustomerList({ isArchived }) {
   return (
     <Container maxWidth={false}>
         <StyledCardContainer>
-          <Cover name={FORMLABELS.COVER.CUSTOMERS}   />
+          <Cover icon='mdi:users' name={FORMLABELS.COVER.CUSTOMERS}   />
         </StyledCardContainer>
       <TableCard >
         <CustomerListTableToolbar
