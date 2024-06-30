@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const auth = require('../middlewares/auth');
 
 const { User } = require('../models/user');
-const { getUsers, getUserById, signup, login, resetPassword, updateUser, deleteUser } = require('../controllers/user');
+const { getUsers, getUserById, signup, login, resetPassword, updateUser, deleteUser,createUser } = require('../controllers/user');
 
 
 router.get('/', auth, getUsers);
