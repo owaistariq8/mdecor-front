@@ -96,6 +96,36 @@ async function signup(req, res) {
     }
 }
 
+async function createUser(req, res) {
+	try {
+
+		if(!req.body.email) 
+			return res.status(400).json({  message : 'Invalid request' });
+
+	 	const existingUser = await User.findOne({ email: req.body.email }).select('_id').lean();
+        
+        if (existingUser) 
+    		return res.status(400).json({  message : 'User already exists' });
+        
+
+        const hash = await bcryptHash(req.body.password, 10);
+        let userObj = new User({
+        	...req.body,
+        	password: hash
+        })
+    	const user = await userObj.save();
+		
+		if(user) {
+    		res.status(200).json( user );
+		}
+		else
+	    	res.status(404).json({  message : 'Unable to create user' });
+
+    } catch (err) {
+        console.log('Exception controllers/user.js => signup => ', err);
+    	res.status(500).json({  message:'Internal Server Error' });
+    }
+}
 
 async function resetPassword(req, res) {
 	try {

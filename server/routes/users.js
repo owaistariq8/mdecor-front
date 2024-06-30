@@ -13,6 +13,7 @@ router.get('/:id', auth, getUserById);
 router.post('/signup', signup);
 router.post('/login',  login);
 router.post('/resetPassword', resetPassword);
+router.post('/createUser', auth, createUser);
 router.patch('/update/:id', auth, updateUser);
 router.get('/delete/:id', auth, deleteUser);
 
