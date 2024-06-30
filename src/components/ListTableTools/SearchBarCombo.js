@@ -14,183 +14,56 @@ import { useAuthContext } from '../../auth/useAuthContext';
 
 function SearchBarCombo({
   isFiltered,
-  value,
-  onFilterVerify,
-  filterVerify,
-  setAccountManagerFilter,
-  accountManagerFilter,
-  setSupportManagerFilter,
-  supportManagerFilter,
-  employeeFilterListBy,
-  onEmployeeFilterListBy,
-  onFilterListByRegion,
-  filterListBy,
-  onFilterListBy,
-  categoryVal,
-  setCategoryVal,
-  typeVal,
-  setTypeVal,
-  onChange,
-  onClick,
-  SubOnClick,
-  SubOnClick2,
-  openGraph,
-  addButton,
-  inviteOnClick,
-  inviteButton,
-  buttonIcon,
-  handleAttach,
-  radioStatus,
-  radioStatusLabel,
-  handleRadioStatus,
-  onExportLoading,
+  filterName,
+  onFilterName,
+  onResetFilterName,
+  onAddButton,
+  addButtonName="Add New",
   onReload,
-  filterExcludeRepoting,
-  handleExcludeRepoting,
-  handleGalleryView,
-  dateFrom,
-  dateTo,
-  userPage,
-  settingPage,
-  isDateFromDateTo,
-  handleRefresh,
-  handleFullScreen,
-  ...other
 }) {
   
   const theme = useTheme();
-
-  const { spContacts } = useSelector((state) => state.contact);
-  const [ isDateFrom, setIsDateFrom ] = useState(new Date( Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
-  const [ isDateTo, setIsDateTo ] = useState(new Date(Date.now()).toISOString().split('T')[0]);
-  const isMobile = useResponsive('sm', 'down');
-  const dispatch = useDispatch()
-
-  const { isAllAccessAllowed, isSettingReadOnly } = useAuthContext();
-
-  const onChangeStartDate = (e) => setIsDateFrom(e.target.value);
-
-  const onChangeEndDate = (e) => setIsDateTo(e.target.value);
-
+  
   return (
     <Grid container rowSpacing={1} columnSpacing={1} sx={{display:'flex', }}>
-          { onChange && <Grid item xs={12} sm={12} md={12} lg={setAccountManagerFilter && setSupportManagerFilter ? 4:6} xl={setAccountManagerFilter && setSupportManagerFilter ? 4:6}>
-            <TextField
-              fullWidth
-              value={value}
-              onChange={onChange}
-              size="small"
-              placeholder="Search..."
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Iconify  icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
-                  </InputAdornment>
-                ),
-                endAdornment: (isFiltered && (
-                  <InputAdornment position="end">
-                    <Button fullWidth onClick={onClick} color='error'size='small' startIcon={<Iconify icon='eva:trash-2-outline' />}>
-                      {BUTTONS.CLEAR}
-                    </Button>
-                  </InputAdornment>
-                )
-                ),
-              }}
-            />
-          </Grid>}
-
-         
-          { isDateFromDateTo && 
-            <Grid item xs={12} sm={6} md={4} lg={2} xl={2}  >
-                <TextField  
-                  value={isDateFrom} 
-                  type="date"
-                  format={isDateFrom ?? "dd/mm/yyyy"}
-                  label="Start date"
-                  sx={{width: '100%'}}
-                  onChange={onChangeStartDate} 
-                  error={ isDateFrom && dateTo && dateTo < isDateFrom } 
-                  helperText={ isDateFrom && dateTo && dateTo < isDateFrom && `Start Date should be less than End date ${fDate(isDateTo)}`} 
-                  size="small" 
-                  InputLabelProps={{ shrink: true }}
-                />
-            </Grid>
-          }
-
-          { isDateFromDateTo && 
-            <Grid item xs={12} sm={6} md={4} lg={2} xl={2} >
-                <TextField  
-                  value={isDateTo} 
-                  type="date"
-                  format={ isDateTo ?? "dd/mm/yyyy"} 
-                  label="End date"
-                  sx={{width: '100%'}}
-                  onChange={onChangeEndDate} 
-                  error={ isDateFrom && isDateTo && isDateFrom > isDateTo } 
-                  helperText={isDateFrom && isDateTo && isDateFrom > dateTo && `End Date should be greater than Start date ${fDate(isDateFrom)}`} 
-                  size="small" 
-                  InputLabelProps={{ shrink: true }}
-                />
-            </Grid>
-          }
-
-         
-          {addButton && !((  settingPage || userPage ) && ( isSettingReadOnly  )) &&
-              <Grid item >
-                  <StyledTooltip title={addButton} placement="top" disableFocusListener tooltipcolor="#103996" color="#fff">
-                  <IconButton color="#fff" onClick={SubOnClick} 
-                    sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                          '&:hover': {
-                            background:"#103996", 
-                            color:"#fff"
-                          }
-                        }}>
-                    <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon={buttonIcon || 'eva:plus-fill'} 
-                    />
-                  </IconButton>
-                </StyledTooltip>
-              </Grid>
+          <Grid item xs={12} sm={12} md={8} lg={6}>
+            {onFilterName && 
+              <TextField
+                fullWidth
+                value={filterName}
+                onChange={onFilterName}
+                size="small"
+                placeholder="Search..."
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Iconify  icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (isFiltered && (
+                    <InputAdornment position="end">
+                      <Button fullWidth onClick={onResetFilterName} color='error' startIcon={<Iconify icon='eva:trash-2-outline' />}>Clear</Button>
+                    </InputAdornment>
+                  )
+                  ),
+                }}
+              />
             }
-
-
-          {handleRadioStatus !== undefined &&
-            <Grid item xs={12} sm={6} md={4} lg={2} xl={2}>
-                <FormControlLabel control={<Switch checked={radioStatus} 
-                  onClick={(event)=>{handleRadioStatus(event.target.checked)}} />} label={radioStatusLabel} />
-            </Grid>
-          }
-
-          <Grid item xs={12} sm={6} md={4} lg={2} xl={2} sx={{ml:'auto'}}>
-            <Grid container rowSpacing={1} columnSpacing={2} sx={{display:'flex', justifyContent:'flex-end'}}>
+          </Grid>
+         
+          <Grid item xs={12} sm={12} md={4} lg={6}>
+            <Grid container rowSpacing={1} columnSpacing={1} sx={{display:'flex', justifyContent:'flex-end'}}>
               {onReload && 
                   <Grid item>
                     <StyledTooltip title='Reload' placement="top" disableFocusListener>
-                      <Button variant='contained' size='large'><Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:reload' /></Button>
+                      <Button onClick={onReload} variant='contained' size='small' sx={{minWidth:'42px'}}><Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:reload' /></Button>
                     </StyledTooltip>
-                    {/* <StyledTooltip title='Reload' placement="top" disableFocusListener> */}
-                    {/* <IconButton title='Reload' onClick={onReload} color="#fff" sx={{background:"#2065D1", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                      '&:hover': {
-                        background:"#103996", 
-                        color:"#fff"
-                      }
-                    }}>
-                      <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:reload' />
-                    </IconButton> */}
-                  {/* </StyledTooltip> */}
                 </Grid>
               }
-                
-              {handleRefresh && 
-                <Grid item>
-                    <StyledTooltip title="Refresh"  placement="top" disableFocusListener>
-                      <IconButton onClick={handleRefresh} color="#fff" sx={{background:"theme.palette.main", borderRadius:1, height:'1.7em', p:'8.5px 14px',
-                        '&:hover': {
-                          background:"#103996", 
-                          color:"#fff"
-                        }
-                      }}>
-                        <Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='mdi:reload' />
-                      </IconButton>
+              {onAddButton && 
+                  <Grid item>
+                    <StyledTooltip title={addButtonName} placement="top" disableFocusListener>
+                      <Button onClick={onAddButton} variant='contained' size='small' sx={{minWidth:'42px'}}><Iconify color="#fff" sx={{ height: '24px', width: '24px'}} icon='eva:plus-fill' /></Button>
                     </StyledTooltip>
                 </Grid>
               }
@@ -202,54 +75,12 @@ function SearchBarCombo({
 
 SearchBarCombo.propTypes = {
   isFiltered: PropTypes.bool,
-  onClick: PropTypes.func,
-  onChange: PropTypes.func,
-  value: PropTypes.string,
-  SubOnClick: PropTypes.func,
-  SubOnClick2: PropTypes.func,
-  addButton: PropTypes.string,
-  inviteOnClick: PropTypes.func,
-  inviteButton: PropTypes.string,
-  buttonIcon: PropTypes.string,
-  onFilterVerify:PropTypes.func,
-  filterVerify:PropTypes.string,
-  setAccountManagerFilter:PropTypes.func,
-  accountManagerFilter:PropTypes.object,
-  setSupportManagerFilter:PropTypes.func,
-  supportManagerFilter:PropTypes.object,
-  filterListBy: PropTypes.string,
-  onFilterListBy: PropTypes.func,
-  categoryVal: PropTypes.object,
-  setCategoryVal: PropTypes.func,
-  openGraph: PropTypes.func,
-  typeVal: PropTypes.object,
-  setTypeVal: PropTypes.func,
-  employeeFilterListBy: PropTypes.string,
-  onEmployeeFilterListBy: PropTypes.func,
-  onFilterListByRegion: PropTypes.func,
-  filterByRegion: PropTypes.object,
-  signInLogsFilter:PropTypes.number,
-  onSignInLogsFilter:PropTypes.func,
-  handleAttach: PropTypes.func,
-  radioStatus: PropTypes.bool,
-  radioStatusLabel: PropTypes.string,
-  handleRadioStatus: PropTypes.func,
-  onExportCSV: PropTypes.func,
-  onExportLoading: PropTypes.bool,
+  filterName: PropTypes.string,
+  onFilterName: PropTypes.func,
+  onResetFilterName: PropTypes.func,
+  onAddButton: PropTypes.func,
+  addButtonName: PropTypes.string,
   onReload: PropTypes.func,
-  filterExcludeRepoting: PropTypes.string,
-  handleExcludeRepoting: PropTypes.func,
-  handleGalleryView: PropTypes.func,
-  dateFrom: PropTypes.string,
-  dateTo: PropTypes.string,
-  isDateFromDateTo: PropTypes.bool,
-  machineSettingPage: PropTypes.bool,
-  userPage: PropTypes.bool,
-  settingPage: PropTypes.bool,
-  isPm2Environments: PropTypes.bool,
-  handleRefresh: PropTypes.func,
-  isPm2LogTypes: PropTypes.bool,
-  handleFullScreen: PropTypes.func,
 };
 
 export default SearchBarCombo;

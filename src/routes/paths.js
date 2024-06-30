@@ -7,7 +7,7 @@ function path(root, sublink) {
 const ROOTS_AUTH = '/auth';
 const ROOTS_DASHBOARD = '/dashboard';
 const ROOTS_CRM = '/crm';
-const ROOTS_USER = '/user';
+const ROOTS_SECURITY = '/security';
 const ROOTS_SETTING = '/settings';
 
 // ----------------------------------------------------------------------
@@ -87,20 +87,32 @@ export const PATH_SETTING = {
     view: (id) => path(ROOTS_SETTING, `/role/${id}/view`),
     edit: (id) => path(ROOTS_SETTING, `/role/${id}/edit`),
   },
+  item_category: {
+    new: path(ROOTS_SETTING, '/item-category/new'),
+    list: path(ROOTS_SETTING, '/item-category/list'),
+    view: (id) => path(ROOTS_SETTING, `/item-category/${id}/view`),
+    edit: (id) => path(ROOTS_SETTING, `/item-category/${id}/edit`),
+  },
+  item: {
+    new: path(ROOTS_SETTING, '/item/new'),
+    list: path(ROOTS_SETTING, '/item/list'),
+    view: (id) => path(ROOTS_SETTING, `/item/${id}/view`),
+    edit: (id) => path(ROOTS_SETTING, `/item/${id}/edit`),
+  },
 };
 
-export const PATH_USER = {
-  root: ROOTS_USER,
-  permissionDenied: path(ROOTS_USER, '/permission-denied'),
+export const PATH_SECURITY = {
+  root: ROOTS_SECURITY,
+  permissionDenied: path(ROOTS_SECURITY, '/permission-denied'),
   // ------------------------ SECURITY USERS ----------------------------------------
-  users: {
-    new: path(ROOTS_USER, `/users/new/`),
-    profile: path(ROOTS_USER, '/users/profile'),
-    editProfile: path(ROOTS_USER, '/users/editProfile'),
-    password: path(ROOTS_USER, '/users/password'),
-    userPassword: path(ROOTS_USER, '/users/changePassword'),
-    account: path(ROOTS_USER, '/users/account'),
-    view: (id) => path(ROOTS_USER, `/users/${id}/view`),
-    edit: (id) => path(ROOTS_USER, `/users/${id}/edit`),
+  user: {
+    new: path(ROOTS_SECURITY, `/user/new/`),
+    profile: path(ROOTS_SECURITY, '/user/profile'),
+    editProfile: path(ROOTS_SECURITY, '/user/editProfile'),
+    password: path(ROOTS_SECURITY, '/user/password'),
+    userPassword: path(ROOTS_SECURITY, '/user/changePassword'),
+    account: path(ROOTS_SECURITY, '/user/account'),
+    view: (id) => path(ROOTS_SECURITY, `/user/${id}/view`),
+    edit: (id) => path(ROOTS_SECURITY, `/user/${id}/edit`),
   },
 };

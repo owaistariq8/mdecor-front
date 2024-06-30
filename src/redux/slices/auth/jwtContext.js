@@ -70,7 +70,7 @@ export function AuthProvider({ children }) {
 
         const user = {
           email: localStorage.getItem('email'),
-          displayName: localStorage.getItem('name'),
+          name: localStorage.getItem('name'),
         };
         const userId = localStorage.getItem('userId');
 
@@ -105,7 +105,7 @@ export function AuthProvider({ children }) {
 
       // const rolesArrayString = JSON.stringify(user.roles);
       localStorage.setItem('email', user.email);
-      localStorage.setItem('name', user.displayName);
+      localStorage.setItem('name', user.name);
       localStorage.setItem('userId', userId);
       // localStorage.setItem('userRoles', rolesArrayString);
       setSession(accessToken);

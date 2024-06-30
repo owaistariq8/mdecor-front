@@ -6,8 +6,6 @@ import { CONFIG } from '../../../config-global';
 // ----------------------------------------------------------------------
 const regEx = /^[^2]*/
 const initialState = {
-  userFormVisibility: false,
-  userEditFormVisibility: false,
   changePasswordByAdminDialog: false,
   changePasswordDialog: false,
   intial: false,
@@ -20,7 +18,7 @@ const initialState = {
   user: null,
   userId: null,
   userEmail: null,
-  userDisplayName: null,
+  userName: null,
   userRoles: [],
   assignedUsers: [],
   signInLogs: [],
@@ -53,15 +51,7 @@ const slice = createSlice({
     },
 
     // SET VISIBILITY
-    setUserFormVisibility(state, action){
-      state.formVisibility = action.payload;
-    },
-
-    // SET VISIBILITY
-    setSecurityUserEditFormVisibility(state, action){
-      state.editFormVisibility = action.payload;
-    },
-
+    
     // SET VISIBILITY
     setChangePasswordByAdminDialog(state, action){
       state.changePasswordByAdminDialog = action.payload;
@@ -91,7 +81,7 @@ const slice = createSlice({
       state.userId = UserId;
       state.userEmail = User.email;
       state.userLogin = User.login;
-      state.userDisplayName = User.displayName;
+      state.userName = User.name;
       state.userRoles = User.roles;
     },
 
@@ -206,8 +196,6 @@ export default slice.reducer;
 
 // Actions
 export const {
-  setUserFormVisibility,
-  setSecurityUserEditFormVisibility,
   setChangePasswordByAdminDialog,
   setChangePasswordDialog,
   setSecurityUserProperties,
@@ -228,7 +216,22 @@ export function addUser(param) {
     dispatch(slice.actions.startLoading());
     dispatch(resetSecurityUser());
     try{
-      const response = await axios.post(`${CONFIG.SERVER_URL}user/add/`, param);
+
+      const data = {
+        firstName: param.firstName,
+        lastName: param.lastName,
+        phone: param.phone,
+        mobile: param.mobile,
+        email: param.email,
+        gender: param.gender.toLowerCase(),
+        religion: param.religion.toLowerCase(),
+        roles: param.roles,
+        status: param.status,
+        password: param.password,
+        confirmPassword: param.confirmPassword
+      }
+
+      const response = await axios.post(`${CONFIG.SERVER_URL}users/createUser/`, data);
       return response;
     } catch (error) {
       console.error(error);
@@ -258,13 +261,7 @@ export function getUsers(query) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{ 
-      const response = await axios.get(`${CONFIG.SERVER_URL}users`,
-      {
-        params: {
-          ...query
-        }
-      }
-      );
+      const response = await axios.get(`${CONFIG.SERVER_URL}users/`);
       if(regEx.test(response.status)){
         dispatch(slice.actions.getUsersSuccess(response.data));
       }
@@ -301,7 +298,7 @@ export function deleteUser(id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
-      const response = await axios.get(`${CONFIG.SERVER_URL}user/delete/${id}`);
+      const response = await axios.get(`${CONFIG.SERVER_URL}users/delete/${id}`);
       if(regEx.test(response.status)){
         dispatch(slice.actions.setResponseMessage(response.data));
         dispatch(resetSecurityUser())
@@ -315,7 +312,7 @@ export function deleteUser(id) {
 }
 //------------------------------------------------------------------------------
 
-export function UserPasswordUpdate(data, Id, isAdmin) {
+export function userPasswordUpdate(data, Id, isAdmin) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
@@ -329,7 +326,6 @@ export function UserPasswordUpdate(data, Id, isAdmin) {
     } catch (error) {
       console.error(error);
       throw error;
-      // dispatch(slice.actions.hasError(error.Message));
     }
   };
 }

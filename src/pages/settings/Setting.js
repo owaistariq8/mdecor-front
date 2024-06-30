@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 // @mui
 import { Box, Container, List } from '@mui/material';
 // routes
-import { PATH_USER, PATH_SETTING } from '../../routes/paths';
+import { PATH_SETTING } from '../../routes/paths';
 // components
 import { Cover } from '../../components/Defaults/Cover';
 import { StyledCardContainer } from '../../theme/styles/default-styles';
@@ -22,20 +22,11 @@ export default function Setting() {
 
   const navigate = useNavigate();
 
-  const linkDocumentType = () => navigate(PATH_SETTING.documentType.list);
-  const linkDocumentCategory = () => navigate(PATH_SETTING.documentCategory.list);
-  const linkRole = () => navigate(PATH_SETTING.role.list);
-  const linkSignInLogs = () => navigate(PATH_SETTING.signInLogs.list);
-  const linkRegions = () => navigate(PATH_SETTING.regions.list);
-  const linkConfigs = () => navigate(PATH_SETTING.configs.list);
-  const linkEmails = () => navigate(PATH_SETTING.email.list);
-  const linkUserInvites = () => navigate(PATH_SETTING.invite.list);
-  const releases = () => navigate(PATH_SETTING.releases.list);
-  const linkBlockedCustomer = () => navigate(PATH_USER.config.blockedCustomer.list);
-  const linkBlockedUser = () => navigate(PATH_USER.config.blockedUser.list);
-  const linkBlackListIP = () => navigate(PATH_USER.config.blacklistIP.list);
-  const linkWhiteListIP = () => navigate(PATH_USER.config.whitelistIP.list);
+  const linkItemCategory = () => navigate(PATH_SETTING.item_category.list);
+  const linkItem = () => navigate(PATH_SETTING.item.list);
 
+  const linkRole = () => navigate(PATH_SETTING.role.list);
+  
 return (
     <Container maxWidth={false}>
       <StyledCardContainer>
@@ -53,19 +44,15 @@ return (
               }}
             >
             <StyledSettingsCardContainer>
-                <List
-                  component="nav"
-                  aria-labelledby="nested-list-subheader"
-                  subheader={<ListItemsHeader header={FORMLABELS.SECURITY_SETTINGS} />}
-                >
-                  <ListItem
-                    onClick={linkRole}
-                    icon={ICONS.SECURITY_ROLES.icon}
-                    content={ICONS.SECURITY_ROLES.heading}
-                  />
+                <List component="nav" subheader={<ListItemsHeader header="Item Setting" />}>
+                  <ListItem onClick={linkItemCategory} icon={ICONS.ITEM_CATEGORY.icon} content={ICONS.ITEM_CATEGORY.heading} />
+                  <ListItem onClick={linkItem} icon={ICONS.ITEM_LIST.icon} content={ICONS.ITEM_LIST.heading} />
                 </List>
-                
-                
+            </StyledSettingsCardContainer>
+            <StyledSettingsCardContainer>
+                <List component="nav" subheader={<ListItemsHeader header={FORMLABELS.SECURITY_SETTINGS} />}>
+                  <ListItem onClick={linkRole} icon={ICONS.SECURITY_ROLES.icon} content={ICONS.SECURITY_ROLES.heading} />
+                </List>
             </StyledSettingsCardContainer>
             
           </Box>

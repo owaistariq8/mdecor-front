@@ -158,7 +158,7 @@ export function addRole(params) {
         isActive: params.isActive,
         isDefault: params.isDefault,
       }
-      const response = await axios.post(`${CONFIG.SERVER_URL}role/`, data);
+      const response = await axios.post(`${CONFIG.SERVER_URL}roles/`, data);
       dispatch(slice.actions.setResponseMessage('Role Saved successfully'));
       return response;
     } catch (error) {

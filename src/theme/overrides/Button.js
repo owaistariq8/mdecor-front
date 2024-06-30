@@ -87,7 +87,7 @@ export default function Button(theme) {
 
     const size = {
       ...(smallSize && {
-        height: 30,
+        height: 42,
         fontSize: 13,
         ...(softVariant && {
           padding: '4px 10px',

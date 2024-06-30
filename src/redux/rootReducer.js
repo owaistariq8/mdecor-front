@@ -7,6 +7,8 @@ import customerReducer from './slices/customer/customer';
 import siteReducer from './slices/customer/site';
 import contactReducer from './slices/customer/contact';
 import roleReducer from './slices/user/role';
+import itemCategoryReducer from './slices/settings/itemCategory';
+import itemReducer from './slices/settings/item';
 import countReducer from './slices/dashboard/count';
 
 // ----------------------------------------------------------------------
@@ -66,6 +68,22 @@ export const userRolesPersistConfig = {
   keyPrefix: 'redux-',
   blacklist: ['error', 'initial', 'responseMessage', 'userRoleTypes']
 };
+
+export const itemCategoryPersistConfig = {
+  key: 'itemCategory',
+  storage,
+  keyPrefix: 'redux-',
+  blacklist: ['error', 'initial', 'responseMessage', 'itemCategory']
+};
+
+export const itemPersistConfig = {
+  key: 'item',
+  storage,
+  keyPrefix: 'redux-',
+  blacklist: ['error', 'initial', 'responseMessage', 'item']
+};
+
+
 export const regionPersistConfig={
   key: 'region',
   storage,
@@ -80,6 +98,8 @@ const rootReducer = combineReducers({
   site: persistReducer(sitePersistConfig, siteReducer),
   contact: persistReducer(contactPersistConfig, contactReducer),
   role: persistReducer(userRolesPersistConfig, roleReducer),
+  itemCategory: persistReducer(itemCategoryPersistConfig, itemCategoryReducer),
+  item: persistReducer(itemPersistConfig, itemReducer),
 });
 
 export default rootReducer;

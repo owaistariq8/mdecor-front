@@ -15,9 +15,7 @@ import { NavSectionVertical } from '../../../components/nav-section';
 //
 import NavigationConfig from './NavigationConfig';
 import NavDocs from './NavDocs';
-import NavAccount from './NavAccount';
 import NavToggleButton from './NavToggleButton';
-import { PATH_SETTING } from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 
