@@ -290,5 +290,6 @@ module.exports = {
 	resetPassword,
 	login,
 	updateUser,
-	deleteUser
+	deleteUser,
+	createUser
 }
