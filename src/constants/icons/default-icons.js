@@ -8,8 +8,19 @@ export const ICONS = {
 
   // ------------------------------------------------------------
 
-  // @root - src/components/IconPopover -ViewFormFields
-  // isActive
+  // NEW PROJECT STARTED
+  ITEM_CATEGORY: {
+    icon: 'mingcute:cube-fill',
+    heading: 'Item Categories',
+  },
+  ITEM_LIST: {
+    icon: 'ph:cube-fill',
+    heading: 'Item List',
+  },
+
+
+
+
   UPLOAD_FILE: {
     icon: 'mingcute:file-upload-fill',
     heading: 'Uplaod File',

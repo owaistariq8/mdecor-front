@@ -5,15 +5,15 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, Alert } from '@mui/material';
+import { Link, Stack, Alert, Typography, Divider } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { QRCodeCanvas } from 'qrcode.react';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
 // components
 import FormProvider, { RHFTextField, RHFCheckbox, RHFPasswordField } from '../../components/hook-form';
-
 // ----------------------------------------------------------------------
 
 export default function AuthLoginForm() {
@@ -85,13 +85,28 @@ export default function AuthLoginForm() {
           Login
         </LoadingButton>
       </Stack>
-      <Stack alignItems="flex-end" sx={{ my: 2 }}>
+      <Stack direction="row" justifyContent="space-between" sx={{ my: 2 }}>
         <Link component={RouterLink} to={PATH_AUTH.register} variant="body2" color="inherit" underline="always" >
           Create Account
         </Link>
         <Link component={RouterLink} to={PATH_AUTH.resetPassword} variant="body2" color="inherit" underline="always" >
          Forgot password?
         </Link>
+      </Stack>
+      <Divider
+        sx={{
+          mt: 2,
+          typography: 'overline',
+          color: 'text.disabled',
+          '&::before, ::after': {
+            borderTopStyle: 'solid',
+          },
+        }}
+      >
+        SCAN QR CODE TO SIGN UP
+      </Divider>
+      <Stack alignItems="center" sx={{ my: 2 }}>
+        <QRCodeCanvas value={window.location.origin + PATH_AUTH.register} />
       </Stack>
     </FormProvider>
   );

@@ -6,7 +6,7 @@ import AuthLoginForm from './AuthLoginForm';
 
 export default function Login(){
 return (
-  <LoginLayout title="Bathroom Accessories">
+  <LoginLayout title="Sub Title Here">
     <AuthLoginForm />
   </LoginLayout>
 );

@@ -1,3 +1,4 @@
+import { status } from 'nprogress';
 import * as Yup from 'yup';
 
 export const addUserSchema = Yup.object().shape({
@@ -11,10 +12,10 @@ export const addUserSchema = Yup.object().shape({
       .label('Confirm Password')
       .trim()
       .required('Password confirmation is required'),
-    regions: Yup.string().label('Religion').nullable(),
-    gender: Yup.string().label('Gender').nullable(),
+    regions: Yup.object().label('Religion').nullable(),
+    gender: Yup.object().label('Gender').nullable(),
     roles: Yup.array().label('Roles').nullable(),
-    isActive: Yup.boolean(),
+    status: Yup.object(),
   });
 
   export const editUserSchema = Yup.object().shape({
@@ -22,8 +23,8 @@ export const addUserSchema = Yup.object().shape({
     lastName: Yup.string().label('Last Name'),
     phone: Yup.string().label('Phone Number'),
     email: Yup.string().transform(value => value?.toLowerCase()).email().label('Email Address').trim().required().max(200),
-    religion: Yup.string().label('Religion').nullable(),
-    gender: Yup.string().label('Gender').nullable(),
+    religion: Yup.object().label('Religion').nullable(),
+    gender: Yup.object().label('Gender').nullable(),
     roles: Yup.array().label('Roles').nullable(),
-    isActive: Yup.boolean(),
+    status: Yup.object(),
   });

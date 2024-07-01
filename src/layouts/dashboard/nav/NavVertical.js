@@ -15,9 +15,7 @@ import { NavSectionVertical } from '../../../components/nav-section';
 //
 import NavigationConfig from './NavigationConfig';
 import NavDocs from './NavDocs';
-import NavAccount from './NavAccount';
 import NavToggleButton from './NavToggleButton';
-import { PATH_SETTING } from '../../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -61,13 +59,13 @@ export default function NavVertical({ openNav, onCloseNav }) {
         },
       }}
       >
-        <Logo sx={{ width: '70%', margin: '0 auto', mt:2 }} />
-        <Grid sx={{ margin: '0 auto', mt:1, display:'flex', alignItems:'baseline'}}>          
+        <Logo sx={{ width: '80%', margin: '0 auto', mt:2 }} />
+        <Grid sx={{ margin: '0 auto'}}>          
             {CONFIG.ENV.toLocaleLowerCase() !== 'live' && ( <Typography sx={{ background: envColor, borderRadius: '50px', fontSize: '10px', padding: '2px 5px', color: '#FFF', }} > 
             {`${CONFIG.ENV.toLocaleUpperCase()} ${CONFIG.VERSION}`} </Typography> )}
             {CONFIG.ENV.toLocaleLowerCase() === 'live' && ( <Typography sx={{ color: '#897A69', fontSize: '10px' }}> {CONFIG.VERSION} </Typography> )}
         </Grid>
-      <NavSectionVertical sx={{ mt: '10px' }} data={navConfig} />
+      <NavSectionVertical data={navConfig} />
       <Box sx={{ flexGrow: 1 }} />
       <NavDocs />
     </Scrollbar>

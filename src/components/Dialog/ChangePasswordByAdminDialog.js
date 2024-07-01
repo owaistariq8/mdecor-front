@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid, Dialog, DialogContent, DialogTitle, Divider, InputAdornment, IconButton, DialogActions, Button, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { UserPasswordUpdate, resetLoadingResetPasswordEmail, sendResetPasswordEmail, setChangePasswordByAdminDialog } from '../../redux/slices/user/user';
+import { userPasswordUpdate, resetLoadingResetPasswordEmail, sendResetPasswordEmail, setChangePasswordByAdminDialog } from '../../redux/slices/user/user';
 import DialogLink from './DialogLink';
 import FormLabel from '../DocumentForms/FormLabel';
 import ViewPhoneComponent from '../ViewForms/ViewPhoneComponent';
@@ -70,7 +70,7 @@ function ChangePasswordByAdminDialog() {
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(UserPasswordUpdate(data, user._id, true));
+      await dispatch(userPasswordUpdate(data, user._id, true));
       reset();
       dispatch(setChangePasswordByAdminDialog(false));
       enqueueSnackbar('Password has been updated Successfully!');

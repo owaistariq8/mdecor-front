@@ -18,19 +18,13 @@ RoleListTableToolbar.propTypes = {
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
   onResetFilter: PropTypes.func,
-  filterStatus: PropTypes.array,
-  onFilterStatus: PropTypes.func,
-  statusOptions: PropTypes.array,
-};
+  };
 
 export default function RoleListTableToolbar({
   isFiltered,
   filterName,
-  filterStatus,
   onFilterName,
-  statusOptions,
   onResetFilter,
-  onFilterStatus,
 }) {
   const navigate = useNavigate();
   const toggleAdd = () => {
@@ -40,12 +34,11 @@ export default function RoleListTableToolbar({
     <Stack {...options}>
       <SearchBarCombo
         isFiltered={isFiltered}
-        value={filterName}
-        onChange={onFilterName}
-        onClick={onResetFilter}
-        SubOnClick={toggleAdd}
-        addButton={BUTTONS.ADDROLE}
-        settingPage
+        filterName={filterName}
+        onFilterName={onFilterName}
+        onResetFilterName={onResetFilter}
+        onAddButton={toggleAdd}
+        addButtonName={BUTTONS.ADDROLE}
       />
     </Stack>
   );

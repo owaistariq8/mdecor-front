@@ -42,6 +42,7 @@ import { Cover } from '../../../../components/Defaults/Cover';
 import { fDate } from '../../../../utils/formatTime';
 import TableCard from '../../../../components/ListTableTools/TableCard';
 import { StyledCardContainer } from '../../../../theme/styles/default-styles';
+import { ICONS } from '../../../../constants/icons/default-icons';
 
 // ----------------------------------------------------------------------
 
@@ -85,7 +86,6 @@ export default function RoleList() {
   const navigate = useNavigate();
   const [filterName, setFilterName] = useState('');
   const [tableData, setTableData] = useState([]);
-  const [filterStatus, setFilterStatus] = useState([]);
   const [openConfirm, setOpenConfirm] = useState(false);
   const { roles, filterBy, page, rowsPerPage, isLoading, initial } = useSelector((state) => state.role);
 
@@ -104,12 +104,11 @@ export default function RoleList() {
     inputData: tableData,
     comparator: getComparator(order, orderBy),
     filterName,
-    filterStatus,
   });
 
   const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   const denseHeight = 60;
-  const isFiltered = filterName !== '' || !!filterStatus.length;
+  const isFiltered = filterName !== '';
   const isNotFound = (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length);
 
   const handleOpenConfirm = () => {
@@ -139,11 +138,6 @@ export default function RoleList() {
       setFilterName(filterBy)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
-
-  const handleFilterStatus = (event) => {
-    setPage(0);
-    setFilterStatus(event.target.value);
-  };
 
   const handleDeleteRow = async (id) => {
     try {
@@ -198,15 +192,13 @@ export default function RoleList() {
     <>
       <Container maxWidth={false}>
         <StyledCardContainer>
-          <Cover name="Roles" icon="ph:users-light" generalSettings />
+          <Cover name={ICONS.SECURITY_ROLES.heading} icon={ICONS.SECURITY_ROLES.icon} generalSettings />
         </StyledCardContainer>
 
         <TableCard>
           <RoleListTableToolbar
             filterName={filterName}
-            filterStatus={filterStatus}
             onFilterName={handleFilterName}
-            onFilterStatus={handleFilterStatus}
             isFiltered={isFiltered}
             onResetFilter={handleResetFilter}
           />
@@ -316,7 +308,7 @@ export default function RoleList() {
 
 // ----------------------------------------------------------------------
 
-function applyFilter({ inputData, comparator, filterName, filterStatus }) {
+function applyFilter({ inputData, comparator, filterName }) {
 
   if(Array.isArray(inputData) && inputData.length>0 ) {
     const stabilizedThis = inputData.map((el, index) => [el, index]);
@@ -335,10 +327,6 @@ function applyFilter({ inputData, comparator, filterName, filterStatus }) {
           role?.roleType?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
           fDate(role?.createdAt)?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0
       );
-    }
-
-    if (filterStatus.length) {
-      inputData = inputData.filter((customer) => filterStatus.includes(customer.status));
     }
   }
   else {

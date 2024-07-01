@@ -43,7 +43,7 @@ export default function Register() {
         <Link underline="always" color="text.primary">Privacy Policy</Link>.
       </Typography>
 
-      {/* <AuthWithSocial /> */}
+      <AuthWithSocial />
     </LoginLayout>
   );
 }

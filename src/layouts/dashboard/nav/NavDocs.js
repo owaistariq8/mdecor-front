@@ -10,7 +10,7 @@ export default function NavDocs() {
   return (
     <Stack
       sx={{
-        px: 5, pb: 5, pt: 15,
+        px: 2, pb: 1, pt: 25,
         display: 'block',
         textAlign: 'center',
         position: 'relative', // Ensure the stack is positioned relatively

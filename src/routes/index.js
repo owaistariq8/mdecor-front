@@ -77,6 +77,16 @@ import {
   ErrorPage,
   BlankPage,
   PermissionDeniedPage,
+  
+  ItemCategoryList,
+  ItemCategoryAdd,
+  ItemCategoryEdit,
+  ItemCategoryView,
+  ItemList,
+  ItemAdd,
+  ItemEdit,
+  ItemView,
+
 } from './elements';
 
 // ----------------------------------------------------------------------
@@ -194,7 +204,7 @@ export default function Router() {
     
     // SECURITY
     {
-      path: 'user',
+      path: 'security',
       element: (
         <AuthGuard>
           <DashboardLayout />
@@ -203,7 +213,7 @@ export default function Router() {
       children: [
         { element: <UserList />, index: true },
         {
-          path: 'users',
+          path: 'user',
           children: [
             { path: 'profile', element: <UserProfile/> },
             { path: 'editProfile', element: <UserProfileEdit/> },
@@ -238,6 +248,24 @@ export default function Router() {
             { path: 'new', element: <RoleAdd /> },
             { path: ':id/edit', element: <RoleEdit />},
             { path: ':id/view', element: <RoleView />}
+          ],
+        },
+        {
+          path: 'item-category',
+          children: [
+            { path: 'list', element: <ItemCategoryList /> },
+            { path: 'new', element: <ItemCategoryAdd /> },
+            { path: ':id/edit', element: <ItemCategoryEdit />},
+            { path: ':id/view', element: <ItemCategoryView />}
+          ],
+        },
+        {
+          path: 'item',
+          children: [
+            { path: 'list', element: <ItemList /> },
+            { path: 'new', element: <ItemAdd /> },
+            { path: ':id/edit', element: <ItemEdit />},
+            { path: ':id/view', element: <ItemView />}
           ],
         },
       ],

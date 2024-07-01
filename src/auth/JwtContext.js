@@ -169,8 +169,8 @@ export function AuthProvider({ children }) {
       password,
       phone
     });
-    const { accessToken, user } = response.data;
-    localStorage.setItem('accessToken', accessToken);
+    const user = response.data;
+    localStorage.setItem('accessToken', user?.accessToken);
 
     dispatch({
       type: 'REGISTER',
