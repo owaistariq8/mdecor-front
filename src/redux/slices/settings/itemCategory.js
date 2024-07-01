@@ -125,10 +125,10 @@ export function addItemCategory(params) {
     try {
       const data = {
         name: params.name,
-        description: params.description,
+        desc: params.desc,
         image: params.image,
-        isActive: params.isActive,
-        isDefault: params.isDefault,
+        active: params.active,
+        default: params.default,
       }
 
       const response = await axios.post(`${CONFIG.SERVER_URL}categories/`, data);
@@ -152,8 +152,8 @@ export function updateItemCategory(id, params) {
         name: params.name,
         desc: params.desc,
         image: params.image,
-        isActive: params.isActive,
-        isDefault: params.isDefault,
+        active: params.active,
+        default: params.default,
       }
       await axios.patch(`${CONFIG.SERVER_URL}categories/update/${id}`, data);
       dispatch(slice.actions.setResponseMessage('Item Category updated successfully'));
@@ -189,8 +189,7 @@ export function getActiveItemCategories() {
       const response = await axios.get(`${CONFIG.SERVER_URL}categories`,
       {
         params: {
-          isArchived: false,
-          isActive: true,
+          active: true,
         }
       }
       );
@@ -227,11 +226,7 @@ export function deleteItemCategory(id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
-      const response = await axios.patch(`${CONFIG.SERVER_URL}categories/${id}`,
-      {
-        isArchived: true, 
-      }
-      );
+      const response = await axios.patch(`${CONFIG.SERVER_URL}categories/${id}`);
       if(regEx.test(response.status)){
         dispatch(slice.actions.setResponseMessage(response.data));
         dispatch(resetItemCategory());

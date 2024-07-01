@@ -12,7 +12,7 @@ const categorySchema = new mongoose.Schema({
   //   default: 'active',
   // }, // active,deleted
   active:{type:Boolean, required: true, default:true},
-  default:{type:Boolean, required: true, default:false},
+  _default:{type:Boolean, required: true, default:false},
   createdAt: { type: Date, required: true, default: Date.now },
   updatedAt: { type: Date, required: true, default: Date.now },
 }, {

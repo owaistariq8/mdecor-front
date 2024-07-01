@@ -29,8 +29,8 @@ export default function ItemCategoryAddForm() {
   const CategorySchema = Yup.object().shape({
     name: Yup.string().min(2).max(50).required('Name is required!'),
     desc: Yup.string().max(10000),
-    isActive: Yup.boolean(),
-    isDefault: Yup.boolean(),
+    active: Yup.boolean(),
+    _default: Yup.boolean(),
   });
 
   const defaultValues = useMemo(
@@ -38,8 +38,8 @@ export default function ItemCategoryAddForm() {
       name: '',
       desc: '',
       image:'',
-      isActive: true,
-      isDefault: false,
+      active: true,
+      _default: false,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -83,7 +83,7 @@ export default function ItemCategoryAddForm() {
                 <RHFTextField name="name" label="Name" />
                 <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
-              <AddFormButtons isActive isDefault isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+              <AddFormButtons active _default isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>
           </Grid>
         </Grid>

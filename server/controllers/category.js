@@ -72,10 +72,10 @@ async function createCategory(req, res) {
 
         req.body.images = files;
         
-        req.body.status = 'inactive';
-        req.body.desc = req.body.description;
-        if(req.body.isActive==true)
-        	req.body.status = 'active';
+        // req.body.status = 'inactive';
+        // req.body.desc = req.body.desc;
+        // if(req.body.isActive==true)
+        // 	req.body.status = 'active';
 
         delete req.body.description;
         delete req.body.isActive;

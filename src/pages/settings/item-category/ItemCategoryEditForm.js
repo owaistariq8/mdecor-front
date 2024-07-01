@@ -33,8 +33,8 @@ export default function ItemCategoryEditForm() {
   const CategorySchema = Yup.object().shape({
     name: Yup.string().min(2).max(50).required('Name is required!'),
     desc: Yup.string().max(10000),
-    isActive: Yup.boolean(),
-    isDefault: Yup.boolean(),
+    active: Yup.boolean(),
+    _default: Yup.boolean(),
   });
 
   const defaultValues = useMemo(
@@ -42,8 +42,8 @@ export default function ItemCategoryEditForm() {
       name: itemCategory?.name,
       desc: itemCategory?.desc || '',
       image:itemCategory?.image || '',
-      isActive: itemCategory?.isActive || false,
-      isDefault: itemCategory.isDefault || false,
+      active: itemCategory?.active || false,
+      _default: itemCategory._default || false,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [itemCategory]
@@ -87,7 +87,7 @@ export default function ItemCategoryEditForm() {
                 <RHFTextField name="name" label="Name" />
                 <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
-              <AddFormButtons isActive isDefault isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+              <AddFormButtons active={defaultValues.active} _default={defaultValues._default} isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>
           </Grid>
         </Grid>

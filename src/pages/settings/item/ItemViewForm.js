@@ -54,8 +54,7 @@ export default function RoleViewForm() {
     () => ({
       name: item?.name,
       description: item?.description || '',
-      isActive: item?.isActive,
-      isDefault: item?.isDefault,
+      active: item?.active,
       createdAt: item?.createdAt || '',
       createdByFullName: item?.createdBy?.name || '',
       createdIP: item?.createdIP || '',
@@ -75,7 +74,7 @@ export default function RoleViewForm() {
           <ViewFormTopBar onBackLink={handleBacklink} onEdit={handleEdit} onDelete={onDelete} />
           <Grid container sx={{mt:2}}>
             <ViewFormField isLoading={isLoading} sm={12} heading="Name" param={defaultValues.name} />
-            <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.description} />
+            <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.desc} />
             <ViewFormAudit defaultValues={defaultValues} />
           </Grid>
         </Grid>
