@@ -125,7 +125,7 @@ export function addItem(params) {
     try {
       const data = {
         name: params.name,
-        itemCategory: params.itemCategory,
+        category: params.itemCategory,
         description: params.description,
         price: params.price,
         stockQuantity: params.stockQuantity,
@@ -175,13 +175,7 @@ export function getItems() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}items`,
-      {
-        params: {
-          isArchived: false
-        }
-      }
-      );
+      const response = await axios.get(`${CONFIG.SERVER_URL}items`);
       dispatch(slice.actions.getItemsSuccess(response.data));
       dispatch(slice.actions.setResponseMessage('Item loaded successfully'));
 

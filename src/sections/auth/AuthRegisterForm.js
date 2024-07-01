@@ -81,7 +81,7 @@ export default function AuthRegisterForm() {
           }}
         />
 
-        <RHFTextField name="phone" label="Phone # +92xxxxxxxxxx" />
+        <RHFTextField name="phone" label="Phone # +xxxxxxxxxxxx" />
 
         <LoadingButton
           fullWidth

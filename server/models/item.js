@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
-const categorySchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
   name:{ type: String, required: true },
   desc:String,
+  category:{ type: mongoose.Schema.Types.ObjectId , ref: 'Category' },
   type:String,
+  price:Number,
+  stockQuantity:Number,
   images:[{ type: mongoose.Schema.Types.ObjectId , ref: 'File' }],
   status : { 
     type: String,
@@ -18,8 +21,8 @@ const categorySchema = new mongoose.Schema({
   toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
 });
 
-const Category = mongoose.model('Category', categorySchema);
+const Item = mongoose.model('Item', itemSchema);
 
 module.exports = {
-  Category,
+  Item,
 };
