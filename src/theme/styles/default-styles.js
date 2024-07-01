@@ -167,23 +167,26 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // @root - GeneralAppPage - dashboard
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  backgroundImage: `url(../../favicon.svg)`,
-  backgroundRepeat: 'no-repeat',
-  backgroundPositionY: 'center',
-  backgroundPositionX: 'left',
-  backgroundSize: '100px',
-  backgroundBlendMode: 'multiply',
-  backgroundOpacity: 0.9,
-  backgroundAttachment: 'fixed',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  padding: 0,
   alignContent: 'center',
   color: 'text.primary',
-  paddingRight:24,
-  paddingLeft:24
+  '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: 70,
+      left: 0,
+      right:50,
+      bottom: 0,
+      background: `url('/favicon.svg')`,
+      backgroundPosition: 'right top',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: '20%',
+      opacity: 0.1, // Set the opacity of the background image
+      zIndex: -1, // Ensure the background is behind the content
+    },
 }));
 
 export const StyledGlobalCard = styled(Card)(({ theme }) => ({

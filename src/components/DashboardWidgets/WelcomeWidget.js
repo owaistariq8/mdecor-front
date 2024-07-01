@@ -28,7 +28,7 @@ WelcomeWidget.propTypes = {
 export default function WelcomeWidget({ title, description, action, img, ...other }) {
   return (
     <StyledRoot {...other}>
-      <Stack flexGrow={1} sx={{textAlign: { xs: 'center', md: 'left' }, mb:{ xs:5, md:10 }, mt:{ xs:0, md:5 }}}>
+      <Stack flexGrow={1} sx={{px:2,textAlign: { xs: 'center', md: 'left' }, mb:{ xs:5, md:10 }, mt:{ xs:0, md:5 }}}>
         <Typography  variant="h1">{title}</Typography>
         <Typography variant="body" sx={{opacity: 0.8}}>{description}</Typography>
         {action && action}

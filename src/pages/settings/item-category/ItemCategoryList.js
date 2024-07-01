@@ -178,7 +178,7 @@ export default function ItemCategoryList() {
   };
 
   const handleViewRow = (id) => {
-    navigate(PATH_SETTING.role.view(id));
+    navigate(PATH_SETTING.item_category.view(id));
   };
 
   const handleResetFilter = () => {

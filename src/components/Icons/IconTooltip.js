@@ -21,7 +21,7 @@ export default function IconTooltip({
             variant="outlined"
             sx={{ cursor: 'default', color, borderColor: color, ':hover': { borderColor: alpha(color, 0.5),},}}
           >
-            <StyledTooltip title={title} placement={placement} disableFocusListener tooltipcolor={color} color={color}>
+            <StyledTooltip title={title} placement={placement || 'top'} disableFocusListener tooltipcolor={color} color={color}>
               <Iconify color={color} sx={{ height: '24px', width: '24px' }} icon={icon} />
             </StyledTooltip>
           </Button>
@@ -48,9 +48,4 @@ IconTooltip.propTypes = {
   title: PropTypes.string,
   placement: PropTypes.string,
   icon: PropTypes.string,
-};
-
-IconTooltip.defaultProps = {
-  placement: 'top',
-  color:'#1976d2'
 };

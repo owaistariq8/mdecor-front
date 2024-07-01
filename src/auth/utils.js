@@ -43,12 +43,11 @@ export const tokenExpired = (exp) => {
   // Test token expires after 10s
   // const timeLeft = currentTime + 10000 - currentTime; // ~10s
   const timeLeft = exp * 1000 - currentTime;
-  console.log(exp * 1000,currentTime,timeLeft)
 
   clearTimeout(expiredTimer);
 
   expiredTimer = setTimeout(() => {
-    alert('Your session has expired. Please login again');
+  alert('Your session has expired. Please login again');
 
     localStorage.removeItem('accessToken');
 
@@ -66,7 +65,6 @@ export const setSession = (accessToken) => {
 
     // This function below will handle when token is expired
     const { exp } = jwtDecode(accessToken); // ~3 days by minimals server
-    console.log("exp",exp);
     tokenExpired(exp);
   } else {
     localStorage.removeItem('accessToken');

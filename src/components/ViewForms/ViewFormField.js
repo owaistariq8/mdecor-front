@@ -50,7 +50,7 @@ function ViewFormField({
   ViewAllVersions,
   handleAllVersion,
   isLoading,
-  variant
+  variant="body1"
 }) {
   const [verifiedAnchorEl, setVerifiedAnchorEl] = useState(null);
   const [verifiedBy, setVerifiedBy] = useState([]);
@@ -355,8 +355,4 @@ ViewFormField.propTypes = {
   backLink: PropTypes.func,
   isLoading: PropTypes.bool,
   variant: PropTypes.string,
-};
-
-ViewFormField.defaultProps = {
-  variant: 'body1',
 };

@@ -37,6 +37,7 @@ import { fDate } from '../../../utils/formatTime';
 // constants
 import TableCard from '../../../components/ListTableTools/TableCard';
 import { StyledCardContainer } from '../../../theme/styles/default-styles';
+import { StyledCardHeader } from '../../../components/settings/styles';
 
 // ----------------------------------------------------------------------
 

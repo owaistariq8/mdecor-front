@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,6 +23,8 @@ import { StyledCardContainer } from '../../../theme/styles/default-styles';
 
 export default function ItemCategoryEditForm() {
 
+  const {id} = useParams();
+
   const { itemCategory } = useSelector((state) => state.itemCategory);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ export default function ItemCategoryEditForm() {
 
   const CategorySchema = Yup.object().shape({
     name: Yup.string().min(2).max(50).required('Name is required!'),
-    description: Yup.string().max(10000),
+    desc: Yup.string().max(10000),
     isActive: Yup.boolean(),
     isDefault: Yup.boolean(),
   });
@@ -38,10 +40,10 @@ export default function ItemCategoryEditForm() {
   const defaultValues = useMemo(
     () => ({
       name: itemCategory?.name,
-      description: itemCategory?.description || '',
+      desc: itemCategory?.desc || '',
       image:itemCategory?.image || '',
-      isActive: itemCategory?.isActive,
-      isDefault: itemCategory.isDefault,
+      isActive: itemCategory?.isActive || false,
+      isDefault: itemCategory.isDefault || false,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [itemCategory]
@@ -60,7 +62,7 @@ export default function ItemCategoryEditForm() {
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(updateItemCategory(data));
+      await dispatch(updateItemCategory(id, data));
       reset();
       enqueueSnackbar('Item Category updated successfully!');
       navigate(PATH_SETTING.item_category.list);
@@ -83,7 +85,7 @@ export default function ItemCategoryEditForm() {
             <Card sx={{ p:3, pb:1 }}>
               <Stack spacing={2}>
                 <RHFTextField name="name" label="Name" />
-                <RHFTextField name="description" label="Description" minRows={8} multiline />
+                <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
               <AddFormButtons isActive isDefault isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>

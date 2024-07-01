@@ -25,8 +25,7 @@ export default function Dashboard() {
             <Grid item xs={12}>
               <WelcomeWidget title={CONFIG.APP_NAME} description={CONFIG.APP_TITLE} />
             </Grid>
-
-            {/* <Grid item xs={12} md={6} lg={8}>
+            <Grid item xs={12} md={6} lg={8}>
               <ProductionLog
                 title="Orders Log"
                 chart={{
@@ -57,7 +56,7 @@ export default function Dashboard() {
               <Grid item>
                 <OperatorsWidget title="Users" list={_appAuthors} />
               </Grid>
-            </Grid> */}
+            </Grid>
             </Grid>
           </Grid>
         </StyledContainer>

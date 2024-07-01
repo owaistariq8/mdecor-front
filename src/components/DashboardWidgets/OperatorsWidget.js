@@ -9,6 +9,7 @@ import Iconify from '../iconify';
 // import Logo from '../../../components/logo-avatar/LogoAvatar';
 import LogoAvatar from '../logo-avatar/LogoAvatar';
 import { CustomAvatar } from '../custom-avatar';
+import { StyledCardHeader } from '../settings/styles';
 
 // ----------------------------------------------------------------------
 
@@ -21,13 +22,7 @@ OperatorsWidget.propTypes = {
 export default function OperatorsWidget({ title, subheader, list }) {
   return (
     <Card>
-      <CardHeader 
-          title={title} 
-          titleTypographyProps={{ variant: 'h4', color: '#fff' }} 
-          subheader={subheader} 
-          subheaderTypographyProps={{ color: '#fff', fontSize: 16 }} 
-          sx={{ background: '#2065D1', p: 2 }} 
-      />
+      <StyledCardHeader title={title} subheader={subheader} />
       <Divider />
       <Box sx={{ overflowY: 'auto', maxHeight: '410px' }}>
         <Stack sx={{ p: 2 }}>

@@ -33,7 +33,7 @@ export const _appInstalled = ['de', 'en', 'fr', 'kr', 'us'].map((country, index)
 
 // ----------------------------------------------------------------------
 
-export const _appAuthors = [...Array(6)].map((_, index) => ({
+export const _appAuthors = [...Array(20)].map((_, index) => ({
   id: _mock.id(index),
   name: _mock.name.fullName(index),
   description: _mock.address.fullAddress(index),

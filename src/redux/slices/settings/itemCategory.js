@@ -147,14 +147,15 @@ export function updateItemCategory(id, params) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
+
       const data = {
         name: params.name,
-        description: params.description,
+        desc: params.desc,
         image: params.image,
         isActive: params.isActive,
         isDefault: params.isDefault,
       }
-      await axios.patch(`${CONFIG.SERVER_URL}categories/${id}`, data);
+      await axios.patch(`${CONFIG.SERVER_URL}categories/update/${id}`, data);
       dispatch(slice.actions.setResponseMessage('Item Category updated successfully'));
     } catch (error) {
       console.log(error);
@@ -211,7 +212,7 @@ export function getItemCategory(id) {
     dispatch(slice.actions.startLoading());
     try {
       const response = await axios.get(`${CONFIG.SERVER_URL}categories/${id}`);
-      dispatch(slice.actions.getItemCategoriesuccess(response.data));
+      dispatch(slice.actions.getItemCategorySuccess(response.data));
     } catch (error) {
       console.error(error);
       dispatch(slice.actions.hasError(error.Message));

@@ -28,7 +28,7 @@ export default function ItemCategoryAddForm() {
 
   const CategorySchema = Yup.object().shape({
     name: Yup.string().min(2).max(50).required('Name is required!'),
-    description: Yup.string().max(10000),
+    desc: Yup.string().max(10000),
     isActive: Yup.boolean(),
     isDefault: Yup.boolean(),
   });
@@ -36,7 +36,7 @@ export default function ItemCategoryAddForm() {
   const defaultValues = useMemo(
     () => ({
       name: '',
-      description: '',
+      desc: '',
       image:'',
       isActive: true,
       isDefault: false,
@@ -81,7 +81,7 @@ export default function ItemCategoryAddForm() {
             <Card sx={{ p:3, pb:1 }}>
               <Stack spacing={2}>
                 <RHFTextField name="name" label="Name" />
-                <RHFTextField name="description" label="Description" minRows={8} multiline />
+                <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
               <AddFormButtons isActive isDefault isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>

@@ -53,7 +53,7 @@ export default function ItemCategoryViewForm() {
   const defaultValues = useMemo(
     () => ({
       name: itemCategory?.name,
-      description: itemCategory?.description || '',
+      desc: itemCategory?.desc || '',
       isActive: itemCategory?.isActive,
       isDefault: itemCategory?.isDefault,
       createdAt: itemCategory?.createdAt || '',
@@ -66,16 +66,16 @@ export default function ItemCategoryViewForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [itemCategory]
   );
-  
+
   return (
     <Container maxWidth={false}>
       <StyledCardContainer><Cover name={itemCategory?.name} generalSettings/></StyledCardContainer>
       <Card sx={{ p: 2 }}>
         <Grid>
-          <ViewFormTopBar onBackLink={handleBacklink} onEdit={handleEdit} onDelete={onDelete} />
+          <ViewFormTopBar isActive={defaultValues.isActive} isDefault={defaultValues.isDefault} onBackLink={handleBacklink} onEdit={handleEdit} onDelete={onDelete} />
           <Grid container sx={{mt:2}}>
             <ViewFormField isLoading={isLoading} sm={12} heading="Name" param={defaultValues.name} />
-            <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.description} />
+            <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.desc} />
             <ViewFormAudit defaultValues={defaultValues} />
           </Grid>
         </Grid>

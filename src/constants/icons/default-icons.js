@@ -96,7 +96,7 @@ export const ICONS = {
     color: '#008000',
     heading: 'Default',
   },
-  CONTRAST: {
+  NOT_DEFAULT: {
     icon: 'carbon:settings-check',
     color: '#878787',
     heading: 'Not-Default',

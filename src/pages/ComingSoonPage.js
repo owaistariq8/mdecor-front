@@ -9,7 +9,6 @@ import useCountdown from '../hooks/useCountdown';
 import { _socials } from '../_mock/arrays';
 // components
 import Iconify from '../components/iconify';
-import { CustomTextField } from '../components/custom-input';
 // assets
 import { ComingSoonIllustration } from '../assets/illustrations';
 
@@ -44,22 +43,6 @@ export default function ComingSoonPage() {
 
         <TimeBlock label="Seconds" value={seconds} />
       </Stack>
-
-      <CustomTextField
-        fullWidth
-        placeholder="Enter your email"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <Button variant="contained" size="large">
-                Notify Me
-              </Button>
-            </InputAdornment>
-          ),
-          sx: { pr: 0.5 },
-        }}
-        sx={{ my: 5 }}
-      />
 
       <Stack spacing={1} alignItems="center" justifyContent="center" direction="row">
         {_socials.map((social) => (

@@ -63,6 +63,14 @@ function ViewFormTopBar({
               icon={isActive?ICONS.ACTIVE.icon:ICONS.INACTIVE.icon}
             />
           }
+
+          {isDefault!==undefined &&
+            <IconTooltip
+              title={isDefault?ICONS.DEFAULT.heading:ICONS.NOT_DEFAULT.heading}
+              color={isDefault?ICONS.DEFAULT.color:ICONS.NOT_DEFAULT.color}
+              icon={isDefault?ICONS.DEFAULT.icon:ICONS.NOT_DEFAULT.icon}
+            />
+          }
         </StyledStack>
       </Grid>
 

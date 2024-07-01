@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { CardActionArea, Radio, FormControlLabel, Stack, Box } from '@mui/material';
+import { CardActionArea, Radio, FormControlLabel, Stack, Box, CardHeader } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -12,6 +12,16 @@ export const StyledWrap = styled(Box)(() => ({
 }));
 
 // ----------------------------------------------------------------------
+
+export const StyledCardHeader = styled(({ ...props }) => (
+  <CardHeader {...props}  
+    titleTypographyProps={{ variant: 'h4', color: '#fff' }}
+    subheaderTypographyProps={{ color: '#fff'}}  />
+))(({ theme }) => ({
+  background: theme.palette.primary.dark,
+  padding:16,
+}));
+
 
 export const StyledCard = styled(CardActionArea, {
   shouldForwardProp: (prop) => prop !== 'selected',
