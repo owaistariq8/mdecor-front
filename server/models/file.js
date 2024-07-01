@@ -6,8 +6,7 @@ const fileSchema = new mongoose.Schema({
   desc:String,
   type:String,
   ext:String,
-  originalName:String,
-  url:String,
+  path:String,
   status : { 
     type: String,
     enum: ['active', 'inactive', 'deleted'],
