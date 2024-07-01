@@ -10,7 +10,7 @@ async function getCustomerById(req, res) {
         	if(customer)
 	    		res.status(200).json(customer);
 	    	else 
-	    		res.status(404).json({ data:{} });
+	    		res.status(404).json({});
 		}
 		else
 	    	res.status(400).json({ message:'Invalid custID' });

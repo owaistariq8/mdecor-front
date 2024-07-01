@@ -51,7 +51,7 @@ async function getUsers(req, res) {
         	if(users && Array.isArray(users) && users.length>0)
 	    		res.status(200).json(users);
 	    	else 
-	    		res.status(404).json({  data:{} });
+	    		res.status(404).json([]);
 		}
 		else
 	    	res.status(400).json({  message:'Invalid request' });

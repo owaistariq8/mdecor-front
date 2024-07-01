@@ -15,7 +15,7 @@ async function getItemById(req, res) {
         	if(item)
 	    		res.status(200).json(item);
 	    	else 
-	    		res.status(404).json({ data:{} });
+	    		res.status(404).json({});
 		}
 		else
 	    	res.status(400).json({ message:'Invalid custID' });
@@ -48,6 +48,7 @@ async function getItems(req, res) {
 async function createItem(req, res) {
 	try {
 
+		let files = [];
 		if(Array.isArray(req.files) && req.files.length>0) {
             for(const file of req.files) {
 				if(!file || !file.originalname) {
@@ -70,7 +71,7 @@ async function createItem(req, res) {
         }
 
         req.body.images = files;
-        const item = await Item.create(...req.body);
+        const item = await Item.create({...req.body});
         if(item)
             res.status(200).json(item);
         else 

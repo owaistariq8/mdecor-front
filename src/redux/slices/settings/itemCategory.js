@@ -131,7 +131,7 @@ export function addItemCategory(params) {
         isDefault: params.isDefault,
       }
 
-      const response = await axios.post(`${CONFIG.SERVER_URL}itemCategories/`, data);
+      const response = await axios.post(`${CONFIG.SERVER_URL}categories/`, data);
       dispatch(slice.actions.setResponseMessage('Item Category Saved successfully'));
       return response;
     } catch (error) {
@@ -154,7 +154,7 @@ export function updateItemCategory(id, params) {
         isActive: params.isActive,
         isDefault: params.isDefault,
       }
-      await axios.patch(`${CONFIG.SERVER_URL}itemCategories/${id}`, data);
+      await axios.patch(`${CONFIG.SERVER_URL}categories/${id}`, data);
       dispatch(slice.actions.setResponseMessage('Item Category updated successfully'));
     } catch (error) {
       console.log(error);
@@ -169,13 +169,7 @@ export function getItemCategories() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}itemCategories`,
-      {
-        params: {
-          isArchived: false
-        }
-      }
-      );
+      const response = await axios.get(`${CONFIG.SERVER_URL}categories`);
       dispatch(slice.actions.getItemCategoriesSuccess(response.data));
       dispatch(slice.actions.setResponseMessage('Item Categories loaded successfully'));
 
@@ -191,7 +185,7 @@ export function getActiveItemCategories() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}itemCategories`,
+      const response = await axios.get(`${CONFIG.SERVER_URL}categories`,
       {
         params: {
           isArchived: false,
@@ -216,7 +210,7 @@ export function getItemCategory(id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}itemCategories/${id}`);
+      const response = await axios.get(`${CONFIG.SERVER_URL}categories/${id}`);
       dispatch(slice.actions.getItemCategoriesuccess(response.data));
     } catch (error) {
       console.error(error);
@@ -232,7 +226,7 @@ export function deleteItemCategory(id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
-      const response = await axios.patch(`${CONFIG.SERVER_URL}itemCategories/${id}`,
+      const response = await axios.patch(`${CONFIG.SERVER_URL}categories/${id}`,
       {
         isArchived: true, 
       }

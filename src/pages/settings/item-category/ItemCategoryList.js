@@ -90,9 +90,9 @@ export default function ItemCategoryList() {
   const [filterStatus, setFilterStatus] = useState([]);
   const { itemCategories, filterBy, page, rowsPerPage, isLoading, initial } = useSelector((state) => state.itemCategory);
 
-  // useLayoutEffect(() => {
-  //     dispatch(getItemCategories());
-  // }, [dispatch]);
+  useLayoutEffect(() => {
+      dispatch(getItemCategories());
+  }, [dispatch]);
 
   useEffect(() => {
     if (initial) {

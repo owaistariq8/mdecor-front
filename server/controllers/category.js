@@ -14,7 +14,7 @@ async function getCategoryById(req, res) {
         	if(category)
 	    		res.status(200).json(category);
 	    	else 
-	    		res.status(404).json({ data:{} });
+	    		res.status(404).json({});
 		}
 		else
 	    	res.status(400).json({ message:'Invalid custID' });
@@ -71,8 +71,17 @@ async function createCategory(req, res) {
         }
 
         req.body.images = files;
+        
+        req.body.status = 'inactive';
+        req.body.desc = req.body.description;
+        if(req.body.isActive==true)
+        	req.body.status = 'active';
 
-        const category = await Category.create(...req.body);
+        delete req.body.description;
+        delete req.body.isActive;
+        delete req.body.isDefault;
+
+        const category = await Category.create({...req.body});
         if(category)
             res.status(200).json(category);
         else 

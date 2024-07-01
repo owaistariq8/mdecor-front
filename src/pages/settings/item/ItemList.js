@@ -90,9 +90,9 @@ export default function ItemList() {
   const [filterStatus, setFilterStatus] = useState([]);
   const { items, filterBy, page, rowsPerPage, isLoading, initial } = useSelector((state) => state.item);
 
-  // useLayoutEffect(() => {
-  //     dispatch(getItems());
-  // }, [dispatch]);
+  useLayoutEffect(() => {
+      dispatch(getItems());
+  }, [dispatch]);
 
   useEffect(() => {
     if (initial) {

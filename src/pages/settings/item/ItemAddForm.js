@@ -11,7 +11,7 @@ import { Card, Grid, Stack, Container, Box } from '@mui/material';
 import { PATH_SETTING } from '../../../routes/paths';
 // slice
 import { addItem } from '../../../redux/slices/settings/item';
-import { getActiveItemCategories, resetActiveItemCategories } from '../../../redux/slices/settings/itemCategory';
+import { getItemCategories, resetItemCategories } from '../../../redux/slices/settings/itemCategory';
 // components
 import { useSnackbar } from '../../../components/snackbar';
 // assets
@@ -27,15 +27,15 @@ export default function ItemAddForm() {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { activeItemCategories } = useSelector((state) => state.itemCategory);
+  const { itemCategories } = useSelector((state) => state.itemCategory);
 
-  // useLayoutEffect(() => {
-  //   dispatch(getActiveItemCategories());
-  //   return () =>{
-  //     dispatch(resetActiveItemCategories());
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [dispatch]);
+  useLayoutEffect(() => {
+    dispatch(getItemCategories());
+    return () =>{
+      dispatch(resetItemCategories());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   const ItemSchema = Yup.object().shape({
     name: Yup.string().min(2).max(50).required('Name is required!'),
@@ -99,7 +99,7 @@ export default function ItemAddForm() {
                 <RHFAutocomplete
                   name="itemCategory" 
                   label="Item Category"
-                  options={activeItemCategories}
+                  options={itemCategories}
                   getOptionLabel={(option) => option?.name || ''}
                   isOptionEqualToValue={(option, value) => option._id === value._id}
                   renderOption={(props, option) => (<li {...props} key={option.key}> {option.name || ''}</li>)}
