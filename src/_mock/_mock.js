@@ -51,12 +51,9 @@ const _mock = {
     price: (index) => price[index],
   },
   image: {
-    cover: (index) =>
-      `https://api-dev-minimal-v4.vercel.app/assets/images/covers/cover_${index + 1}.jpg`,
-    product: (index) =>
-      `https://api-dev-minimal-v4.vercel.app/assets/images/products/product_${index + 1}.jpg`,
-    avatar: (index) =>
-      `https://api-dev-minimal-v4.vercel.app/assets/images/avatars/avatar_${index + 1}.jpg`,
+    cover: (index) => `/assets/images/avatars/avatar_${index + 1}.jpg`,
+    product: (index) => `/favicon.svg`,
+    avatar: (index) => `/assets/images/avatars/avatar_${index + 1}.jpg`,
   },
 };
 

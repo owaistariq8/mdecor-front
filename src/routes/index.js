@@ -157,6 +157,7 @@ export default function Router() {
           <DashboardLayout />
         </AuthGuard>
       ),
+      children: [ { element: <Dashboard />, index: true }]
     },
 
     

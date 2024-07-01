@@ -8,7 +8,7 @@ import { bgGradient } from '../../utils/cssStyles';
 export const StyledRoot = styled('main')(() => ({
   height: '100%',
   display: 'flex',
-  flexDirection: 'column', justifyContent:'center'
+  flexDirection: 'row', justifyContent:'center'
   // position: 'relative',
 }));
 

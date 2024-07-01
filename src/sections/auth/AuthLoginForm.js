@@ -75,38 +75,18 @@ export default function AuthLoginForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3} sx={{ mt: 1, mb:1 }}>
-        {!!errors?.afterSubmit && <Alert sx={{width:'380px'}} severity="error">{errors?.afterSubmit?.message}</Alert>}
+      <Stack spacing={2} sx={{mt:1}}>
+        {!!errors?.afterSubmit?.message && <Alert severity="error">Invalid username or password</Alert>}
         <RHFTextField  type="email"  name="email" label="Email address*" autoComplete="email"  inputRef={inputRef}
           inputProps={{ style: { textTransform: 'lowercase' } }}
         />
         <RHFPasswordField name="password" id="password" label="Password*" autoComplete="current-password" />
-        <LoadingButton fullWidth color="secondary" size="large" type="submit" variant="contained" loading={isSubmitSuccessful || isSubmitting}>
-          Login
-        </LoadingButton>
+        <LoadingButton fullWidth size="large" type="submit" variant="contained" 
+                      loading={isSubmitSuccessful || isSubmitting}>Login</LoadingButton>
       </Stack>
       <Stack direction="row" justifyContent="space-between" sx={{ my: 2 }}>
-        <Link component={RouterLink} to={PATH_AUTH.register} variant="body2" color="inherit" underline="always" >
-          Create Account
-        </Link>
-        <Link component={RouterLink} to={PATH_AUTH.resetPassword} variant="body2" color="inherit" underline="always" >
-         Forgot password?
-        </Link>
-      </Stack>
-      <Divider
-        sx={{
-          mt: 2,
-          typography: 'overline',
-          color: 'text.disabled',
-          '&::before, ::after': {
-            borderTopStyle: 'solid',
-          },
-        }}
-      >
-        SCAN QR CODE TO SIGN UP
-      </Divider>
-      <Stack alignItems="center" sx={{ my: 2 }}>
-        <QRCodeCanvas value={window.location.origin + PATH_AUTH.register} />
+        <Link component={RouterLink} to={PATH_AUTH.register} variant="body2" color="inherit" underline="always" >Create Account</Link>
+        <Link component={RouterLink} to={PATH_AUTH.resetPassword} variant="body2" color="inherit" underline="always" >Forgot password?</Link>
       </Stack>
     </FormProvider>
   );

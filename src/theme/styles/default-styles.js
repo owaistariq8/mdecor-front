@@ -167,11 +167,11 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // @root - GeneralAppPage - dashboard
 
 export const StyledContainer = styled(Container)(({ theme }) => ({
-  backgroundImage: `url(../../assets/background/Howick_elements_bg_2.svg)`,
+  backgroundImage: `url(../../favicon.svg)`,
   backgroundRepeat: 'no-repeat',
   backgroundPositionY: 'center',
   backgroundPositionX: 'left',
-  backgroundSize: '100%',
+  backgroundSize: '100px',
   backgroundBlendMode: 'multiply',
   backgroundOpacity: 0.9,
   backgroundAttachment: 'fixed',

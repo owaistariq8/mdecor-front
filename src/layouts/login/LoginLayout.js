@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 // @mui
-import { Typography, Stack , Grid} from '@mui/material';
+import { Typography, Stack , Grid, Divider} from '@mui/material';
+import { QRCodeCanvas } from 'qrcode.react';
 // components
 import Logo from '../../components/logo';
 //
 import { CONFIG } from '../../config-global';
 //
 import { StyledRoot, StyledContent } from './styles';
+import { PATH_AUTH } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +21,11 @@ export default function LoginLayout({ children, title }) {
   return (
     <StyledRoot>
       <StyledContent>
-        <Grid sx={{ display: 'flex', justifyContent: 'center'}} alignItems="center" spacing={2} container >
+        <Grid justifyContent='center' columnGap={5} container >
+          <Grid item textAlign='center' sx={{p: {sm:5, md:10}}} >
+            <Typography variant='subtitle2' mb={1}>Scan QR to Sign Up</Typography>
+            <QRCodeCanvas size={250} value={window.location.origin + PATH_AUTH.register} />
+          </Grid>
           <Grid item textAlign='right'>
             <Logo disabledLink />
             {title &&
@@ -28,9 +34,9 @@ export default function LoginLayout({ children, title }) {
               <Typography variant="body2" sx={{fontStyle:'italic', color:'gray', fontSize:'small', mt:-1}}>V{CONFIG.VERSION}</Typography>
             </>
             }
+            <Stack> {children} </Stack>
           </Grid>
         </Grid>
-        <Stack> {children} </Stack>
       </StyledContent>
     </StyledRoot>
   );

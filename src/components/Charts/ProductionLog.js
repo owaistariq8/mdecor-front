@@ -15,7 +15,7 @@ ProductionLog.propTypes = {
 
 export default function ProductionLog({ title, subheader, chart, ...other }) {
   const { colors, categories, series, options } = chart;
-  const [seriesData, setSeriesData] = useState('28-June-2023');
+  const [seriesData, setSeriesData] = useState('28-June-2024');
 
   const chartOptions = useChart({
     colors,
@@ -29,7 +29,7 @@ export default function ProductionLog({ title, subheader, chart, ...other }) {
     <Card {...other}>
       <CardHeader
         title={title}
-        subheader="Operator 1 - LFNT/Min: 0.017543859649122806"
+        // subheader="Operator 1 - LFNT/Min: 0.017543859649122806"
         action={
           <CustomSmallSelect
             value={seriesData}

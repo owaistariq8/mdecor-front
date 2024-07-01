@@ -12,14 +12,13 @@ import { CustomAvatar } from '../custom-avatar';
 
 // ----------------------------------------------------------------------
 
-HowickOperators.propTypes = {
+OperatorsWidget.propTypes = {
   list: PropTypes.array,
   title: PropTypes.string,
   subheader: PropTypes.string,
 };
 
-export default function HowickOperators({ title, subheader, list }) {
-  const { spContacts } = useSelector((state) => state.contact);
+export default function OperatorsWidget({ title, subheader, list }) {
   return (
     <Card>
       <CardHeader 
@@ -32,8 +31,8 @@ export default function HowickOperators({ title, subheader, list }) {
       <Divider />
       <Box sx={{ overflowY: 'auto', maxHeight: '410px' }}>
         <Stack sx={{ p: 2 }}>
-          {spContacts.map((operator, index) => (
-            <OperatorItem key={operator._id || index} operator={operator} index={index} />
+          {list.map((item, index) => (
+            <OperatorItem key={item.id || index} operator={item} index={index} />
           ))}
         </Stack>
       </Box>
@@ -45,30 +44,29 @@ export default function HowickOperators({ title, subheader, list }) {
 
 OperatorItem.propTypes = {
   operator: PropTypes.shape({
-    _id: PropTypes.string,
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    produced: PropTypes.number,
+    id: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    avatar: PropTypes.string,
+    product: PropTypes.string,
   }),
   index: PropTypes.number,
 };
 
 function OperatorItem({ operator, index }) {
-  const fullName = `${operator?.firstName || ''} ${operator?.lastName || ''}`;
-
   return (
-    <Stack key={operator._id} direction="row" alignItems="center" spacing={1} sx={{padding:'10px 0px', borderTop:'1px solid #e9e9e9' }}>
-      <CustomAvatar name={fullName} />
-
+    <Stack key={operator.id} direction="row" alignItems="center" spacing={1} sx={{padding:'10px 0px', borderTop:'1px solid #e9e9e9' }}>
+      <CustomAvatar name={operator.name} />
       <Box sx={{ flexGrow: 1}}>
-        <Typography variant="subtitle2">{fullName}</Typography>
+        <Typography variant="subtitle2">{operator.name}</Typography>
         <Typography variant="caption" sx={{display: 'flex', alignItems: 'center', color: 'text.secondary'}}>
-          <Iconify icon="mdi:account-arrow-up" width={16} color="green" />
-            {operator.produced}
+          <Iconify icon="mdi:pin" width={16} color="green" />
+            {operator.description}
         </Typography>
       </Box>
 
       <LogoAvatar
+        src={operator.product}
         sx={{
           p: 1,
           width: 40,
