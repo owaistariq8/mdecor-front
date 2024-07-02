@@ -50,8 +50,8 @@ import { ICONS } from '../../../constants/icons/default-icons';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
-  { id: 'description',visibility: 'xs1', label: 'Description', align: 'left' },
-  { id: 'status', label: 'Active', align: 'center' },
+  { id: 'desc',visibility: 'xs1', label: 'Description', align: 'left' },
+  { id: 'isActive', label: 'Active', align: 'center' },
 ];
 
 // ----------------------------------------------------------------------

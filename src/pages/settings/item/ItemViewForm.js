@@ -54,7 +54,7 @@ export default function RoleViewForm() {
     () => ({
       name: item?.name,
       description: item?.description || '',
-      active: item?.active,
+      isActive: item?.isActive,
       createdAt: item?.createdAt || '',
       createdByFullName: item?.createdBy?.name || '',
       createdIP: item?.createdIP || '',

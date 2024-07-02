@@ -40,7 +40,7 @@ export default function ItemAddForm() {
   const ItemSchema = Yup.object().shape({
     name: Yup.string().min(2).max(50).required('Name is required!'),
     itemCategory: Yup.object().required('Category is required!'),
-    description: Yup.string().max(10000),
+    desc: Yup.string().max(10000),
     stockQuantity: Yup.number().max(1000),
     status: Yup.string(),
     isActive: Yup.boolean(),
@@ -50,9 +50,8 @@ export default function ItemAddForm() {
     () => ({
       name: '',
       itemCategory:null,
-      description: '',
+      desc: '',
       stockQuantity:0,
-      status:'active',
       image:'',
       isActive: true,
     }),
@@ -108,7 +107,7 @@ export default function ItemAddForm() {
                   <RHFTextField type='number' name="price" label="Price" />
                   <RHFTextField type='number' name="stockQuantity" label="Stock Quantity" />
                 </Box>
-                <RHFTextField name="description" label="Description" minRows={8} multiline />
+                <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
               <AddFormButtons isActive isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>

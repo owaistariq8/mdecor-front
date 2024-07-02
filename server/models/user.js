@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  firstName: { type: String },
+  firstName: { type: String, required: true },
   lastName: { type: String },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
@@ -52,6 +51,7 @@ const userSchema = new mongoose.Schema({
     maxlength: 1024,
     unique: true
   },
+  isActive:{ type: Boolean, required: true, default:true },
   createdAt: { type: Date, required: true, default: Date.now },
   updatedAt: { type: Date, required: true, default: Date.now },
 }, {

@@ -6,13 +6,8 @@ const categorySchema = new mongoose.Schema({
   desc:String,
   type:String,
   images:[{ type: mongoose.Schema.Types.ObjectId , ref: 'File' }],
-  // status : { 
-  //   type: String,
-  //   enum: ['active', 'inactive', 'deleted'],
-  //   default: 'active',
-  // }, // active,deleted
-  active:{type:Boolean, required: true, default:true},
-  _default:{type:Boolean, required: true, default:false},
+  isActive:{type:Boolean, required: true, default:true},
+  isDefault:{type:Boolean, required: true, default:false},
   createdAt: { type: Date, required: true, default: Date.now },
   updatedAt: { type: Date, required: true, default: Date.now },
 }, {

@@ -9,12 +9,7 @@ const itemSchema = new mongoose.Schema({
   price:Number,
   stockQuantity:Number,
   images:[{ type: mongoose.Schema.Types.ObjectId , ref: 'File' }],
-  // status : { 
-  //   type: String,
-  //   enum: ['active', 'inactive', 'deleted'],
-  //   default: 'active',
-  // }, // active,deleted
-  active:{type:Boolean, required: true, default:true},
+  isActive:{type:Boolean, required: true, default:true},
   createdAt: { type: Date, required: true, default: Date.now },
   updatedAt: { type: Date, required: true, default: Date.now },
 }, {

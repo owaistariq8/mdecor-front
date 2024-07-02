@@ -6,8 +6,8 @@ import { BUTTONS, DIALOGS } from '../../constants/default-constants';
 import { RHFSwitch } from '../hook-form';
 
 AddFormButtons.propTypes = {
-  active: PropTypes.bool,
-  _default: PropTypes.bool,
+  isActive: PropTypes.bool,
+  isDefault: PropTypes.bool,
   disableDelete: PropTypes.bool,
   
   isSubmitting: PropTypes.bool,
@@ -16,8 +16,8 @@ AddFormButtons.propTypes = {
 
 export default function AddFormButtons(
   {
-    active,
-    _default,
+    isActive,
+    isDefault,
     disableDelete,
     
     isSubmitting,
@@ -30,8 +30,8 @@ export default function AddFormButtons(
     <Box py={2}>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item display="flex">
-          {active !==undefined && <RHFSwitch checked={active} name="active" label="Active" /> }
-          {_default !==undefined && <RHFSwitch checked={_default} name="_default" label="Default" /> }
+          {isActive !==undefined && <RHFSwitch checked={isActive} name="isActive" label="Active" /> }
+          {isDefault !==undefined && <RHFSwitch checked={isDefault} name="isDefault" label="Default" /> }
           {disableDelete !==undefined && <RHFSwitch name="disableDelete" label="DisableDelete" /> }
         </Grid>
         <Grid item>

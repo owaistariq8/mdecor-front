@@ -54,8 +54,8 @@ export default function ItemCategoryViewForm() {
     () => ({
       name: itemCategory?.name,
       desc: itemCategory?.desc || '',
-      active: itemCategory?.active,
-      _default: itemCategory?._default,
+      isActive: itemCategory?.isActive,
+      isDefault: itemCategory?.isDefault,
       createdAt: itemCategory?.createdAt || '',
       createdByFullName: itemCategory?.createdBy?.name || '',
       createdIP: itemCategory?.createdIP || '',
@@ -72,7 +72,7 @@ export default function ItemCategoryViewForm() {
       <StyledCardContainer><Cover name={itemCategory?.name} generalSettings/></StyledCardContainer>
       <Card sx={{ p: 2 }}>
         <Grid>
-          <ViewFormTopBar isActive={defaultValues.active} isDefault={defaultValues._default} onBackLink={handleBacklink} onEdit={handleEdit} onDelete={onDelete} />
+          <ViewFormTopBar isActive={defaultValues.isActive} isDefault={defaultValues.isDefault} onBackLink={handleBacklink} onEdit={handleEdit} onDelete={onDelete} />
           <Grid container sx={{mt:2}}>
             <ViewFormField isLoading={isLoading} sm={12} heading="Name" param={defaultValues.name} />
             <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.desc} />
