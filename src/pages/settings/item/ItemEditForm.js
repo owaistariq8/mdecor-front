@@ -31,6 +31,7 @@ export default function ItemEditForm() {
   const { activeItemCategories } = useSelector((state) => state.itemCategory);
 
   useLayoutEffect(() => {
+    console.log('hiiiiii')
     dispatch(getActiveItemCategories());
     return () =>{
       dispatch(resetActiveItemCategories());

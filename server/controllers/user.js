@@ -151,7 +151,6 @@ async function resetPassword(req, res) {
 
         await User.updateOne({ email }, { password: newPassword });
         res.status(200).json({ message : 'Password updated successfully' });
-	 	
 
     } catch (err) {
         console.log('Exception controllers/user.js => resetPassword => ', err);

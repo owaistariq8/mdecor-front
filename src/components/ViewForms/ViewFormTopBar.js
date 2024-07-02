@@ -77,11 +77,11 @@ function ViewFormTopBar({
       <Grid item  sx={{ ml:'auto', mt:0.5}}>
         <StyledStack>
           {onEdit && 
-            <IconTooltip title="Edit" onClick={onEdit} color={theme.palette.primary.main} icon="mdi:pencil-outline"/>
+            <IconTooltip title="Edit" onClick={onEdit} color={theme.palette.primary.main} icon="tabler:edit"/>
           }
 
           {onDelete &&
-            <IconTooltip title="Archive" onClick={onDeleteConfirm} color={theme.palette.error.dark} icon="mdi:archive" />
+            <IconTooltip title="Delete" onClick={onDeleteConfirm} color={theme.palette.error.dark} icon="tabler:trash" />
           }
         </StyledStack>
 

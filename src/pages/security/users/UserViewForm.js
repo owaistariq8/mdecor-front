@@ -68,6 +68,7 @@ export default function UserViewForm() {
       religion: user?.religion,
       roles: user?.roles,
       status: user?.status || '',
+      isActive: user?.isActive,
       createdByFullName: user?.createdBy?.name,
       createdAt: user?.createdAt,
       createdIP: user?.createdIP,
@@ -84,7 +85,7 @@ export default function UserViewForm() {
       <StyledCardContainer><Cover name={defaultValues.name || 'User Detail'}/></StyledCardContainer>
         <Card sx={{ p: 3 }}>
           <Grid container sx={{display:{ md:'flex', sm: 'block' }, justifyContent:{md: 'space-between'}}} >
-            <ViewFormTopBar isActive={defaultValues.status==="active"} onBackLink={handleBackLink} onDelete={handleDelete} onEdit={handleEdit} />
+            <ViewFormTopBar isActive={defaultValues.isActive} onBackLink={handleBackLink} onDelete={handleDelete} onEdit={handleEdit} />
             <ViewFormField isLoading={isLoading} sm={6} heading="First Name" param={defaultValues?.firstName} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Last Name" param={defaultValues?.lastName} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Phone" param={defaultValues?.phone} />
