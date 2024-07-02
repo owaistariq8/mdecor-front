@@ -12,7 +12,7 @@ const s3 = new AWS.S3({
 const s3UploadAsync = promisify(s3.upload).bind(s3);
 
 
-async function checkFileHeader(path) {
+async function checkFileHeader(path) { 
   let params = {
     Bucket: process.env.AWS_S3_BUCKET,
     Key: path
