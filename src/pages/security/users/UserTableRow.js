@@ -36,7 +36,7 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }) {
-  const { login, email, name, roles, phone, createdAt, contact, isActive, isOnline, status } = row;
+  const { firstName, lastName, email, roles, phone, createdAt, contact, isActive, isOnline, status } = row;
 
   const smScreen = useScreenSize('sm')
   const lgScreen = useScreenSize('lg')
@@ -44,33 +44,17 @@ export default function UserTableRow({
   return (
       <TableRow hover selected={selected} >
           <Stack direction="row" alignItems="center">
-            <CustomAvatar name={name} alt={name}
+            <CustomAvatar name={`${firstName} ${lastName}`} alt={`${firstName} ${lastName}`}
               BadgeProps={{
                 badgeContent: <BadgeStatus status={isOnline?"online":"offline"} />,
               }}
               sx={{ p:2, ml: 1, my: 0.5, width: '30px', height: '30px' }}
             />
-            <LinkTableCell align="left" onClick={onViewRow} param={name} />
+            <LinkTableCell align="left" onClick={onViewRow} param={`${firstName} ${lastName}`} />
           </Stack>
         { smScreen && <TableCell align="left">{email || ''}</TableCell>}
         { smScreen && <TableCell align="left">{phone || ''}</TableCell>}
-        { lgScreen && 
-          <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-            {roles.map((obj, index) => (obj.roleType === 'SuperAdmin' ? <Chip key={index} label={obj.name} sx={{m:0.2}} color='secondary' /> : <Chip  key={index} label={obj.name} sx={{m:0.2}} />))}
-          </TableCell>
-        }
-        <TableCell align="left">
-          {contact?.firstName && <StyledTooltip
-            placement="top" 
-            title={contact?.formerEmployee ? ICONS.FORMEREMPLOYEE.heading:ICONS.NOTFORMEREMPLOYEE.heading} 
-            disableFocusListener tooltipcolor={contact?.formerEmployee ? ICONS.FORMEREMPLOYEE.color:ICONS.NOTFORMEREMPLOYEE.color} 
-            color={contact?.formerEmployee ? ICONS.FORMEREMPLOYEE.color:ICONS.NOTFORMEREMPLOYEE.color}
-          >
-            <Iconify icon={ICONS.FORMEREMPLOYEE.icon} sx={{mr:1, height: 20, width: 20 }}/>
-          </StyledTooltip>}
-            {`${contact?.firstName || ''} ${contact?.lastName || '' }`}
-        </TableCell>
-        <TableCell align="center"><Switch checked={status==='active'} disabled size="small" /></TableCell>
+        <TableCell align="center"><Switch checked={isActive} disabled size="small" /></TableCell>
         <TableCell align="right">{fDate(createdAt)}</TableCell>
       </TableRow>
   );

@@ -16,7 +16,6 @@ import FormProvider, { RHFTextField } from '../../components/hook-form';
 
 export default function AuthRegisterForm() {
   const { register } = useAuthContext();
-
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
@@ -29,6 +28,7 @@ export default function AuthRegisterForm() {
 
   const defaultValues = {
     firstName: '',
+    lastName:'',
     email: '',
     password: '',
     phone: '',
@@ -49,7 +49,7 @@ export default function AuthRegisterForm() {
   const onSubmit = async (data) => {
     try {
       if (register) {
-        await register(data.name, data.email, data.password, data.phone);
+        await register(data.firstName, data.lastName, data.email, data.password, data.phone);
       }
     } catch (error) {
       console.error(error);

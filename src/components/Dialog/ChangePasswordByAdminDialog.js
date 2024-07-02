@@ -100,7 +100,8 @@ function ChangePasswordByAdminDialog() {
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} >
       <DialogContent dividers sx={{py:2}}>
           <Box rowGap={2} display="grid">
-              <RHFTextField name="name" label="Name" value={user?.name || '' } disabled />
+              <RHFTextField name="firstName" label="First Name" value={user?.firstName || '' } disabled />
+              <RHFTextField name="lastName" label="Last Name" value={user?.lastName || '' } disabled />
               <RHFTextField name="login" label="Login" value={user?.login || '' } disabled />
               <RHFTextField name="email" label="Email" value={user?.email || ''} disabled />
 

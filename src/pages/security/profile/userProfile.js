@@ -73,7 +73,8 @@ export default function UserProfile() {
     () => ({
       customer: user?.customer?.name || '',
       contact: `${user?.contact?.firstName || '' } ${user?.contact?.lastName || '' }` || '',
-      name: user?.name || '',
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
       phone: user?.phone || '',
       email: user?.email || '',
       roles: user?.roles || [],
@@ -114,7 +115,7 @@ export default function UserProfile() {
                 )
               }
             />
-            <ViewFormField sm={6} heading="Full Name" param={defaultValues?.name} />
+            <ViewFormField sm={6} heading="Full Name" param={`${defaultValues?.firstName} ${defaultValues?.lastName}`} />
             <ViewFormField sm={6} heading="Phone" param={defaultValues?.phone} />
             <ViewFormField sm={12} heading="email" param={defaultValues?.email} />
             <ViewFormField

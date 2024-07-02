@@ -184,7 +184,8 @@ async function login(req, res) {
 			            sessionId:session.session.sessionId,
 			            user: {
 			              email: user.email,
-			              name: user.name,
+			              firstName:user.firstName,
+			              lastName:user.lastName,
 			              customer: user?.customer?._id,
 			              roles: user.roles,
 			            }

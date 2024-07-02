@@ -30,7 +30,7 @@ export default function NavDocs() {
         },
       }}
     >
-        <Typography gutterBottom variant="subtitle1">Hi, {user?.name || ''}</Typography>
+        <Typography gutterBottom variant="subtitle1">Hi, {user?.firstName || ''} {user?.lastName || ''}</Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary', pb:1 }}>Know more about our products and services</Typography>
     </Stack>
   );

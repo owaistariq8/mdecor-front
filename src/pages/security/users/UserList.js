@@ -46,11 +46,11 @@ import { StyledCardHeader } from '../../../components/settings/styles';
 const ROLE_OPTIONS = ['Administrator', 'Normal User', 'Guest User', 'Restriced User'];
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
+  { id: 'firstName lastName', label: 'Name', align: 'left' },
   { id: 'email', visibility: 'xs1', label: 'Email', align: 'left' },
   { id: 'phone', visibility: 'xs2', label: 'Phone Number', align: 'left' },
-  { id: 'roles.name.[]', visibility: 'md1', label: 'Roles', align: 'left' },
-  { id: 'contact.firstName', label: 'Contact', align: 'left' },
+  // { id: 'roles.name.[]', visibility: 'md1', label: 'Roles', align: 'left' },
+  // { id: 'contact.firstName', label: 'Contact', align: 'left' },
   { id: 'isActive', label: 'Active', align: 'center' },
   { id: 'createdAt', label: 'Created At', align: 'right' },
 ];
@@ -242,7 +242,7 @@ function applyFilter({ inputData, comparator, filterName }) {
 
       inputData = inputData.filter(
         (_user) =>
-          _user?.name?.toString().toLowerCase().indexOf(filterName) >= 0 ||
+          `${_user?.firstName} ${_user?.lastName}`?.toString().toLowerCase().indexOf(filterName) >= 0 ||
           _user?.email?.toString().toLowerCase().indexOf(filterName) >= 0 ||
           _user?.phone?.toString().toLowerCase().indexOf(filterName) >= 0 ||
           fDate(_user?.createdAt)?.toLowerCase().indexOf(filterName) >= 0

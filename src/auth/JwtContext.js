@@ -85,7 +85,8 @@ export function AuthProvider({ children }) {
         const user = {}
         user.customer = localStorage.getItem('customer')
         user.email = localStorage.getItem('email')
-        user.name = localStorage.getItem('name')
+        user.firstName = localStorage.getItem('firstName')
+        user.lastName = localStorage.getItem('lastName')
         const userId = localStorage.getItem('userId');
 
         dispatch({
@@ -125,7 +126,8 @@ export function AuthProvider({ children }) {
     const clearAllPersistedStates = useCallback( async () => {
       try {
           setSession(null);
-          localStorage.removeItem('name');
+          localStorage.removeItem('firstName');
+          localStorage.removeItem('lastName');
           localStorage.removeItem('email');
           localStorage.removeItem('userId');
           localStorage.removeItem('userRoles');
@@ -148,10 +150,10 @@ export function AuthProvider({ children }) {
     localStorage.setItem("customer", user?.customer);
     // const rolesArrayString = JSON.stringify(user.roles);
     localStorage.setItem('email', user.email);
-    localStorage.setItem('name', user.name);
+    localStorage.setItem('firstName', user.firstName);
+    localStorage.setItem('lastName', user.lastName);
     localStorage.setItem('userId', userId);
     // localStorage.setItem('userRoles', rolesArrayString);
-    console.log(response.data)
     setSession(accessToken);
     dispatch({
       type: 'LOGIN',
@@ -162,9 +164,10 @@ export function AuthProvider({ children }) {
 
   
   // REGISTER
-  const register = useCallback(async (name, email, password, phone) => {
+  const register = useCallback(async (firstName, lastName, email, password, phone) => {
     const response = await axios.post(`${CONFIG.SERVER_URL}users/signup`, {
-      name,
+      firstName,
+      lastName,
       email,
       password,
       phone

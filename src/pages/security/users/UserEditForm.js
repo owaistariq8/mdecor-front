@@ -50,6 +50,7 @@ export default function UserEditForm() {
       status: user?.status? {_id:user.status, label:user.status} : null,
       roles: user?.roles || null,
       password: user?.password || '',
+      isActive:user?.isActive,
       createdByFullName: user?.createdBy?.name,
       createdAt: user?.createdAt,
       createdIP: user?.createdIP,
@@ -130,7 +131,7 @@ export default function UserEditForm() {
                   // renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
                 />
               </Box>
-              <AddFormButtons isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+              <AddFormButtons isActive={defaultValues.isActive} isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Stack>
             </Card>
           </Grid>

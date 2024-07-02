@@ -105,33 +105,10 @@ export default function UserChangePassword() {
           <Grid item xs={12} md={12}>
             <Card sx={{ p: 3}}>
               <Stack spacing={3} alignItems="flex-end" sx={{ pb: 3 }}>
-                <RHFTextField
-                  name="name"
-                  label="Name"
-                  type="name"
-                  autoComplete="name"
-                  value={user?.name || '' }
-                  disabled
-                />
-
-                <RHFTextField
-                  name="login"
-                  label="Login"
-                  type="email"
-                  autoComplete="email"
-                  value={user?.login || '' }
-                  disabled
-                />
-                
-                <RHFTextField
-                  name="email"
-                  label="Email"
-                  type="email"
-                  autoComplete="email"
-                  value={user?.email || ''}
-                  disabled
-                />
-
+                <RHFTextField name="firstName" label="First Name" value={user?.firstName || '' } disabled />
+                <RHFTextField name="lastName" label="Last Name" value={user?.lastName || '' } disabled />
+                <RHFTextField name="login" label="Login" value={user?.login || '' } disabled />
+                <RHFTextField name="email" label="Email" value={user?.email || ''} disabled />
                 { isAllAccessAllowed && <Grid container item sm={12} md={12} sx={{ display: { md: 'flex'}, justifyContent: 'space-between' }} > 
                   <LoadingButton disabled={isLoadingResetPasswordEmail} loading={isLoadingResetPasswordEmail} onClick={senResetPasswordLink} size="small" variant="contained" color='primary' sx={{ ml: 'auto', mr: 1, my:-1 }} >
                     <StyledTooltip title="Send reset Password email" placement="top" disableFocusListener tooltipcolor={theme.palette.primary.dark} color={theme.palette.text}  >

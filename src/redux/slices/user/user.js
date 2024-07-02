@@ -77,12 +77,12 @@ const slice = createSlice({
 
     // SET USER PROPERTIES
     setSecurityUserProperties(state, userData){
-      const { UserId, User } = userData;
-      state.userId = UserId;
-      state.userEmail = User.email;
-      state.userLogin = User.login;
-      state.userName = User.name;
-      state.userRoles = User.roles;
+      const { userId, user } = userData;
+      state.userId = userId;
+      state.userEmail = user.email;
+      state.userLogin = user.login;
+      state.userName = user.firstName;
+      state.userRoles = user.roles;
     },
 
     // GET users

@@ -95,7 +95,8 @@ export function AuthProvider({ children }) {
     createAsyncThunk('auth/login', async (credentials, { dispatch }) => {
       localStorage.removeItem('userId');
       // localStorage.removeItem('email');
-      localStorage.removeItem('name');
+      localStorage.removeItem('firstName');
+      localStorage.removeItem('lastName');
       localStorage.removeItem('userRoles');
       localStorage.removeItem('accessToken');
 
@@ -105,7 +106,8 @@ export function AuthProvider({ children }) {
 
       // const rolesArrayString = JSON.stringify(user.roles);
       localStorage.setItem('email', user.email);
-      localStorage.setItem('name', user.name);
+      localStorage.setItem('firstName', user.firstName);
+      localStorage.setItem('lastName', user.lastName);
       localStorage.setItem('userId', userId);
       // localStorage.setItem('userRoles', rolesArrayString);
       setSession(accessToken);

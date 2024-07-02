@@ -51,7 +51,8 @@ export default function UserProfileEditForm() {
     () => ({
       customer: user?.customer || null,
       contact: user?.contact || null,
-      name: user?.name || '',
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
       phone: user?.phone || '+64 ',
       email: user?.email || '',
       roles: user?.roles || [],
@@ -148,8 +149,8 @@ useEffect(() => {
                 renderOption={(props, option) => (<li  {...props} key={option?._id}>{option?.firstName || ''}{' '}{option?.lastName || ''}</li>)}
               />
 
-              <RHFTextField name="name" label="Full Name*" />
-
+              <RHFTextField name="firstName" label="First Name*" />
+              <RHFTextField name="lastName" label="Last Name" />
               <RHFPhoneInput name="phone" label="Phone Number"  />
             </Box>
 

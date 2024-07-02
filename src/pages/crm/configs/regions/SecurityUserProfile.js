@@ -45,7 +45,6 @@ import ViewFormEditDeleteButtons from '../../../../components/ViewForms/ViewForm
 export default function UserProfile() {
   const { customer } = useSelector((state) => state.customer);
   const { contact } = useSelector((state) => state.contact);
-  const { user, initial, isLoading} = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -90,7 +89,8 @@ export default function UserProfile() {
     () => ({
       customer: user?.customer?.name || '',
       contact: user?.contact?.firstName || '',
-      name: user?.name || '',
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
       phone: user?.phone || '',
       email: user?.email || '',
       login: user?.login || '',
@@ -117,7 +117,7 @@ export default function UserProfile() {
         >
           <Cover
             name={defaultValues?.name}
-            photoURL={user.name === 'HOWICK LTD.' ? <LogoAvatar /> : <CustomAvatar />}
+            photoURL={user.firstName === 'HOWICK LTD.' ? <LogoAvatar /> : <CustomAvatar />}
             icon="ph:users-light"
           />
 
