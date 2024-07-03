@@ -43,13 +43,13 @@ async function getRoles(req, res) {
 async function createRole(req, res) {
 	try {
 
-        const role = await Role.create(...req.body);
+        const role = await Role.create({...req.body});
         if(role)
             res.status(200).json(role);
         else 
 			return res.status(404).json({ message : 'Role Not found' });
     } catch (err) {
-        console.log('Exception controllers/role.js => updateRole => ', err);
+        console.log('Exception controllers/role.js => createRole => ', err);
     	res.status(500).json({ message:'Internal Server Error' });
     }
 }
