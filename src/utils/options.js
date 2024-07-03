@@ -5,14 +5,14 @@ export const religionOptions = [
     { _id: 'buddhism', label: 'Buddhism' },
     { _id: 'judaism', label: 'Judaism' },
     { _id: 'sikhism', label: 'Sikhism' },
-    { _id: 'others', label: 'Others' }
+    { _id: 'other', label: 'Others' }
   ];
   
   export const genderOptions = [
     { _id: 'male', label: 'Male' },
     { _id: 'female', label: 'Female' },
     { _id: 'transgender', label: 'Transgender' },
-    { _id: 'others', label: 'Others' }
+    { _id: 'other', label: 'Others' }
   ];
   
   export const userStatusOptions = [

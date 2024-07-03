@@ -406,7 +406,7 @@ export const ICONS = {
   },
   // security settings
   SECURITY_ROLES: {
-    icon: 'ph:user-list-bold',
+    icon: 'eos-icons:role-binding',
     heading: 'User Roles',
   },
   SIGNIN_LOGS: {

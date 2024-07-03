@@ -247,7 +247,20 @@ export function  updateUser(param, id) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
-      const response = await axios.patch(`${CONFIG.SERVER_URL}users/update/${id}`, param);
+      const data = {
+        firstName: param?.firstName,
+        lastName: param?.lastName,
+        phone: param?.phone,
+        mobile: param?.mobile,
+        email: param?.email,
+        gender: param?.gender?._id,
+        religion: param?.religion?._id,
+        roles: param?.roles,
+        status: param?.status?._id,
+        isActive:param?.isActive
+      }
+
+      const response = await axios.patch(`${CONFIG.SERVER_URL}users/update/${id}`, data);
       return response;
     } catch (error) {
       console.error(error);

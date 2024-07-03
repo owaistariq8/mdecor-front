@@ -25,26 +25,21 @@ export default function RoleEditForm() {
   const navigate = useNavigate();
 
   const EditRoleSchema = Yup.object().shape({
-    name: Yup.string().min(2).max(50).required('Name Field is required!'),
-    description: Yup.string().max(10000),
-    roleType: Yup.object().nullable().required('Role Type'),
-    allModules: Yup.boolean(),
-    allWriteAccess: Yup.boolean(),
+    name: Yup.string().min(2).max(50).required('Role Name is required!'),
+    desc: Yup.string().max(10000),
+    roleType:  Yup.object().nullable().required('Role Type is required!'),
     isActive: Yup.boolean(),
-    isDefault: Yup.boolean(),
     disableDelete: Yup.boolean(),
   });
+
 
   const defaultValues = useMemo(
     () => ({
       name: role?.name || '',
-      roleType: userRoleTypes.find((uRole)=> uRole.value === role.roleType ) || null, 
-      description: role?.description || '',
-      isActive: role?.isActive || false,
-      isDefault: role?.isDefault || false,
-      allModules: role?.allModules || false,
-      allWriteAccess: role?.allWriteAccess || false,
+      desc: role?.desc || '',
+      roleType: role.roleType || null, 
       disableDelete: role?.disableDelete || false,
+      isActive: role?.isActive || false,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -61,7 +56,7 @@ export default function RoleEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const toggleCancel = () => navigate(PATH_SETTING.role.view(role._id));
+  const toggleCancel = () => navigate(PATH_SETTING.role.list);
 
   const onSubmit = async (data) => {
     try {
@@ -84,9 +79,7 @@ export default function RoleEditForm() {
           <Grid item xs={18} md={12}>
             <Card sx={{ p: 3 }}>
               <Stack spacing={3}>
-
                 <RHFTextField name="name" label="Name*" />
-
                 <RHFAutocomplete
                   name="roleType" 
                   label="Role Type*"
@@ -95,16 +88,9 @@ export default function RoleEditForm() {
                   isOptionEqualToValue={(option, value) => option.name === value.name}
                   renderOption={(props, option) => ( <li {...props} key={option.key}>{option?.name || ''} </li>)}
                 />
-
                 <RHFTextField name="description" label="Description" minRows={8} multiline />
-
-                <Grid display="flex">
-                  <RHFSwitch name="isActive" label="Active" />
-                  <RHFSwitch name="isDefault" label="Default" />
-                  <RHFSwitch name="disableDelete" label="Disable Delete" />
-                </Grid>
               </Stack>
-              <AddFormButtons settingPage isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+              <AddFormButtons isActive disableDelete isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>
           </Grid>
         </Grid>

@@ -14,6 +14,7 @@ import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFSwitch, RHFTextField, RHFPasswordField, RHFAutocomplete, RHFPhoneInput } from '../../../components/hook-form';
 // slice
 import { addUser } from '../../../redux/slices/user/user';
+import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/user/role';
 import { addUserSchema } from '../../schemas/user';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 import { genderOptions, religionOptions, userStatusOptions } from '../../../utils/options';
@@ -27,13 +28,13 @@ export default function UserAddForm() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  // useLayoutEffect(() => {
-  //   dispatch(getActiveRoles());
-  //   return () =>{
-  //     dispatch(resetActiveRoles());
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [dispatch]);
+  useLayoutEffect(() => {
+    dispatch(getActiveRoles());
+    return () =>{
+      dispatch(resetActiveRoles());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   const defaultValues = useMemo(
     () => ({

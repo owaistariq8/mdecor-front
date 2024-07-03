@@ -47,9 +47,11 @@ import PageCover from '../../../../components/Defaults/PageCover';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
+  { id: 'desc',visibility: 'xs1', label: 'Description', align: 'left' },
   { id: 'roleType',visibility: 'xs1', label: 'Role Type', align: 'left' },
   { id: 'isActive', label: 'Active', align: 'center' },
   { id: 'createdAt', label: 'Created At', align: 'right' },
+  { id: '', label: 'Action', align: 'right' },
 ];
 
 // ----------------------------------------------------------------------
@@ -85,7 +87,6 @@ export default function RoleList() {
   const navigate = useNavigate();
   const [filterName, setFilterName] = useState('');
   const [tableData, setTableData] = useState([]);
-  const [openConfirm, setOpenConfirm] = useState(false);
   const { roles, filterBy, page, rowsPerPage, isLoading, initial } = useSelector((state) => state.role);
 
   useLayoutEffect(() => {
@@ -109,14 +110,6 @@ export default function RoleList() {
   const denseHeight = 60;
   const isFiltered = filterName !== '';
   const isNotFound = (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length);
-
-  const handleOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
-
-  const handleCloseConfirm = () => {
-    setOpenConfirm(false);
-  };
 
   const debouncedSearch = useRef(debounce((value) => {
     dispatch(ChangePage(0))
@@ -160,26 +153,9 @@ export default function RoleList() {
       console.log('Error:', error);
     }
   };
-
-  const handleDeleteRows = (selectedRows) => {
-    const deleteRows = tableData.filter((row) => !selectedRows.includes(row._id));
-    setSelected([]);
-    setTableData(deleteRows);
-
-    if (page > 0) {
-      if (selectedRows.length === dataInPage.length) {
-        setPage(page - 1);
-      } else if (selectedRows.length === dataFiltered.length) {
-        setPage(0);
-      } else if (selectedRows.length > dataInPage.length) {
-        const newPage = Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) - 1;
-        setPage(newPage);
-      }
-    }
-  };
-
-  const handleViewRow = (id) => {
-    navigate(PATH_SETTING.role.view(id));
+  
+  const handleEditRow = (id) => {
+    navigate(PATH_SETTING.role.edit(id));
   };
 
   const handleResetFilter = () => {
@@ -206,41 +182,9 @@ export default function RoleList() {
             onRowsPerPageChange={onChangeRowsPerPage}
           />}
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-            <TableSelectedAction
-              numSelected={selected.length}
-              rowCount={tableData.length}
-              onSelectAllRows={(checked) =>
-                onSelectAllRows(
-                  checked,
-                  tableData.map((row) => row._id)
-                )
-              }
-              action={
-                <Tooltip title="Delete">
-                  <IconButton color="primary" onClick={handleOpenConfirm}>
-                    <Iconify icon="eva:trash-2-outline" />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
-
             <Scrollbar>
               <Table size="small" sx={{ minWidth: 360 }}>
-                <TableHeadCustom
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  // rowCount={tableData.length}
-                  // numSelected={selected.length}
-                  onSort={onSort}
-                  // onSelectAllRows={(checked) =>
-                  //   onSelectAllRows(
-                  //     checked,
-                  //     tableData.map((row) => row._id)
-                  //   )
-                  // }
-                />
-
+                <TableHeadCustom order={order} orderBy={orderBy} headLabel={TABLE_HEAD} onSort={onSort}/>
                 <TableBody>
                   {(isLoading ? [...Array(rowsPerPage)] : dataFiltered)
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -252,7 +196,8 @@ export default function RoleList() {
                           selected={selected.includes(row._id)}
                           onSelectRow={() => onSelectRow(row._id)}
                           onDeleteRow={() => handleDeleteRow(row._id)}
-                          onViewRow={() => handleViewRow(row._id)}
+                          onEditRow={()=> handleEditRow(row._id)}
+                          // onViewRow={() => handleViewRow(row._id)}
                           style={index % 2 ? { background: 'red' } : { background: 'green' }}
                         />
                       ) : (
@@ -276,28 +221,6 @@ export default function RoleList() {
         </TableCard>
       </Container>
 
-      <ConfirmDialog
-        open={openConfirm}
-        onClose={handleCloseConfirm}
-        title="Delete"
-        content={
-          <>
-            Are you sure want to Archive <strong> {selected.length} </strong> items?
-          </>
-        }
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              handleDeleteRows(selected);
-              handleCloseConfirm();
-            }}
-          >
-            Delete
-          </Button>
-        }
-      />
     </>
   );
 }

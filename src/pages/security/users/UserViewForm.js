@@ -17,6 +17,7 @@ import ViewFormField from '../../../components/ViewForms/ViewFormField';
 import { useSnackbar } from '../../../components/snackbar';
 import ChangePasswordByAdminDialog from '../../../components/Dialog/ChangePasswordByAdminDialog';
 import PageCover from '../../../components/Defaults/PageCover';
+import { genderOptions, religionOptions, userStatusOptions } from '../../../utils/options';
 
 // ----------------------------------------------------------------------
 
@@ -63,10 +64,10 @@ export default function UserViewForm() {
       phone: user?.phone || '',
       mobile: user?.mobile || '',
       email: user?.email || '',
-      gender: user?.gender || '',
-      religion: user?.religion,
+      gender: genderOptions.some((sex)=> user?.gender === sex._id) || null,
+      religion: religionOptions.some((rel)=> user?.religion === rel._id) || null,
+      status: userStatusOptions.some((stat)=> user?.status === stat._id) ||  null,
       roles: user?.roles,
-      status: user?.status || '',
       isActive: user?.isActive,
       createdByFullName: user?.createdBy?.name,
       createdAt: user?.createdAt,
@@ -90,8 +91,8 @@ export default function UserViewForm() {
             <ViewFormField isLoading={isLoading} sm={6} heading="Last Name" param={defaultValues?.lastName} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Phone" param={defaultValues?.phone} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Email" param={defaultValues?.email} />
-            <ViewFormField isLoading={isLoading} sm={6} heading="Religion" param={defaultValues?.religion} />
-            <ViewFormField isLoading={isLoading} sm={6} heading="Gender" param={defaultValues?.gender} />
+            <ViewFormField isLoading={isLoading} sm={6} heading="Religion" param={defaultValues?.religion?.label} />
+            <ViewFormField isLoading={isLoading} sm={6} heading="Gender" param={defaultValues?.gender?.label} />
           </Grid>
         </CardContent>
       </Card>

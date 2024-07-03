@@ -31,8 +31,8 @@ const userSchema = new mongoose.Schema({
   documents : [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
   religion : { 
     type: String,
-    enum: ['muslim', 'cristian', 'hindu', 'sikh','other'],
-    default: 'muslim',
+    enum: ['islam', 'christianity', 'hinduism', 'buddhism','judaism','sikhism','other'],
+    default: 'islam',
   }, // Muslim,Cristian,Hindu,Sikh
   gender : { 
     type: String,

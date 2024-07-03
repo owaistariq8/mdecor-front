@@ -3,12 +3,14 @@ const Joi = require('joi');
 
 const roleSchema = new mongoose.Schema({
   name:String,
-  permissions:[{ type: mongoose.Schema.Types.ObjectId, ref: 'Permission' }],
-  status : { 
+  desc:String,
+  roleType : { 
     type: String,
-    enum: ['active', 'inactive', 'deleted'],
-    default: 'active',
-  }, // active,deleted
+    enum: ['SuperAdmin', 'SalesManager', 'Operator', 'Customer'],
+    default: 'Customer',
+  }, 
+  isActive:{ type: Boolean, required: true, default: true },
+  disableDelete:{ type: Boolean, required: true, default: false },
   createdAt: { type: Date, required: true, default: Date.now },
   updatedAt: { type: Date, required: true, default: Date.now },
 }, {

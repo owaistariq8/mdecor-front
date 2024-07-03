@@ -17,17 +17,10 @@ const initialState = {
   activeRoles: [],
   role: null,
   userRoleTypes: [
-              { name: 'Super Admin', value: 'SuperAdmin'},
-              { name: 'Developer', value: 'Developer'},
+              { name: 'Adminstrator', value: 'SuperAdmin'},
               { name: 'Sales Manager', value: 'SalesManager'},
-              { name: 'Sales Engineer', value: 'SalesEngineer'},
-              { name: 'Technical Manager', value: 'TechnicalManager'},
-              { name: 'Technician', value: 'Technician'},
-              // { name: 'Global Manager', value: 'GlobalManager'},
-              // { name: 'Regional Manager', value: 'RegionalManager'},
-              // { name: 'Support Manager', value: 'SupportManager'},
-              { name: 'API Access', value: 'APIAccess'},
-              { name: 'Email Access', value: 'EmailAccess'},
+              { name: 'Operator', value: 'Operator'},
+              { name: 'Customer', value: 'Customer'},
             ],
   filterBy: '',
   page: 0,
@@ -152,11 +145,10 @@ export function addRole(params) {
     try {
       const data = {
         name: params.name,
+        desc: params.desc,
         roleType: params?.roleType?.value,
-        description: params.description,
-        disableDelete: params.disableDelete,
         isActive: params.isActive,
-        isDefault: params.isDefault,
+        disableDelete: params.disableDelete,
       }
       const response = await axios.post(`${CONFIG.SERVER_URL}roles/`, data);
       dispatch(slice.actions.setResponseMessage('Role Saved successfully'));
@@ -176,14 +168,12 @@ export function updateRole(id, params) {
     try {
       const data = {
         name: params.name,
-        roleType: params.roleType.value,
-        description: params.description,
-        // allModules:  params.allModules,
-        // allWriteAccess: params.allWriteAccess,
-        disableDelete: params.disableDelete,
+        desc: params.desc,
+        roleType: params?.roleType?.value,
         isActive: params.isActive,
-        isDefault: params.isDefault,
+        disableDelete: params.disableDelete,
       }
+      
       await axios.patch(`${CONFIG.SERVER_URL}roles/${id}`, data);
       dispatch(slice.actions.setResponseMessage('Role updated successfully'));
     } catch (error) {

@@ -20,11 +20,8 @@ import AddFormButtons from '../../../../components/DocumentForms/AddFormButtons'
 import PageCover from '../../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
-RoleAddForm.propTypes = {
-  currentRole: PropTypes.object,
-};
 
-export default function RoleAddForm({ currentRole }) {
+export default function RoleAddForm() {
 
   const { userRoleTypes } = useSelector((state) => state.role);
   const navigate = useNavigate();
@@ -32,28 +29,22 @@ export default function RoleAddForm({ currentRole }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const AddRoleSchema = Yup.object().shape({
-    name: Yup.string().min(2).max(50).required('Name Field is required!'),
-    description: Yup.string().max(10000),
-    roleType:  Yup.object().nullable().required().label('Role Type'),
-    allModules: Yup.boolean(),
-    allWriteAccess: Yup.boolean(),
+    name: Yup.string().min(2).max(50).required('Role Name is required!'),
+    desc: Yup.string().max(10000),
+    roleType:  Yup.object().nullable().required('Role Type is required!'),
     isActive: Yup.boolean(),
-    isDefault: Yup.boolean(),
     disableDelete: Yup.boolean(),
   });
   const defaultValues = useMemo(
     () => ({
       name: '',
+      desc: '',
       roleType: null,
-      description: '',
       isActive: true,
-      isDefault: false,
-      allModules: false,
-      allWriteAccess: false,
       disableDelete: false,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentRole]
+    []
   );
 
   const methods = useForm({
@@ -98,9 +89,9 @@ export default function RoleAddForm({ currentRole }) {
                   isOptionEqualToValue={(option, value) => option.name === value.name}
                   renderOption={(props, option) => (<li {...props} key={option.key}> {option.name || ''}</li>)}
                 />
-                <RHFTextField name="description" label="Description" minRows={8} multiline />
+                <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
-              <AddFormButtons isActive isDefault disableDelete isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+              <AddFormButtons isActive disableDelete isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>
           </Grid>
         </Grid>

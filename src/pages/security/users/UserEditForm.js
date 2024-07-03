@@ -30,12 +30,12 @@ export default function UserEditForm() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  // useLayoutEffect(() => {
-  //   dispatch(getActiveRoles());
-  //   return ()=>{ 
-  //     dispatch(resetActiveRoles()); 
-  //   }
-  // }, [dispatch]);
+  useLayoutEffect(() => {
+    dispatch(getActiveRoles());
+    return ()=>{ 
+      dispatch(resetActiveRoles()); 
+    }
+  }, [dispatch]);
 
   const defaultValues = useMemo(
     () => ({
@@ -44,9 +44,9 @@ export default function UserEditForm() {
       phone: user?.phone || '',
       mobile: user?.mobile || '',
       email: user?.email || '',
-      gender: user?.gender? {_id:user.gender, label:user.gender} : null,
-      religion: user?.religion? {_id:user.religion, label:user.religion} : null,
-      status: user?.status? {_id:user.status, label:user.status} : null,
+      gender: genderOptions.some((sex)=> user?.gender === sex._id) || null,
+      religion: religionOptions.some((rel)=> user?.religion === rel._id) || null,
+      status: userStatusOptions.some((stat)=> user?.status === stat._id) ||  null,
       roles: user?.roles || null,
       password: user?.password || '',
       isActive:user?.isActive,
@@ -79,7 +79,7 @@ export default function UserEditForm() {
       reset();
       await navigate(PATH_SECURITY.user.view(user._id));
     } catch (error) {
-      enqueueSnackbar(error, { variant: `error` });
+      enqueueSnackbar(error?.message, { variant: `error` });
       console.log('Error:', error);
     }
   };
