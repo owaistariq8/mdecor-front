@@ -108,17 +108,15 @@ async function createUser(req, res) {
         
         if (existingUser) 
     		return res.status(400).json({  message : 'User already exists' });
-        
 
         const hash = await bcryptHash(req.body.password, 10);
+        
         let user = await User.create({
         	...req.body,
-        	password: hash
+        	password: hash,
+        	accessToken:generateTokenString()
         })
 
-        let session = await manageSession(req, user.id);
-    	user.accessToken = await createToken({ id : user.id, email : user.email, sessID : session.session.sessionId });
-		user = await user.save();
 		if(user) {
     		res.status(200).json( user );
 		}
@@ -174,6 +172,15 @@ async function logout(req, res) {
 	}
 }
 
+function generateTokenString() {
+	const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  	let token = "";
+
+	for (let i = 0; i < length; i++) 
+		token += chars.charAt(Math.floor(Math.random() * chars.length));
+
+	return token;
+}
 
 async function forgetPassword(req, res) {
   	
@@ -182,13 +189,7 @@ async function forgetPassword(req, res) {
 
 	    if (user ) {
 
-		  	const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		  	let token = "";
-
-			for (let i = 0; i < length; i++) 
-				token += chars.charAt(Math.floor(Math.random() * chars.length));
-			  
-	    	user.accessToken = token;
+	    	user.accessToken = generateTokenString();
 	    	await user.save();
 
 	      	const link = `${process.env.SET_PASSWORD_LINK}${token}/${user._id}`;
