@@ -37,6 +37,7 @@ import { deleteRole, getRoles,
   ChangeRowsPerPage,
   ChangePage,
   setFilterBy,
+  getRole,
  } from '../../../../redux/slices/user/role';
 import { fDate } from '../../../../utils/formatTime';
 import TableCard from '../../../../components/ListTableTools/TableCard';
@@ -47,7 +48,7 @@ import PageCover from '../../../../components/Defaults/PageCover';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
-  { id: 'desc',visibility: 'xs1', label: 'Description', align: 'left' },
+  // { id: 'desc',visibility: 'xs1', label: 'Description', align: 'left' },
   { id: 'roleType',visibility: 'xs1', label: 'Role Type', align: 'left' },
   { id: 'isActive', label: 'Active', align: 'center' },
   { id: 'createdAt', label: 'Created At', align: 'right' },
@@ -154,14 +155,18 @@ export default function RoleList() {
     }
   };
   
-  const handleEditRow = (id) => {
-    navigate(PATH_SETTING.role.edit(id));
+  const handleEditRow = async (id) => {
+    await dispatch(getRole(id));
+    await navigate(PATH_SETTING.role.edit(id));
   };
 
   const handleResetFilter = () => {
     dispatch(setFilterBy(''))
     setFilterName('');
   };
+
+  // console.log("roles:::",roles);
+
 
   return (
     <>

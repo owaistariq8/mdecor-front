@@ -11,7 +11,7 @@ import {  PATH_SETTING } from '../../../../routes/paths';
 // components
 import { useSnackbar } from '../../../../components/snackbar';
 import FormProvider, { RHFTextField, RHFSwitch, RHFAutocomplete } from '../../../../components/hook-form';
-import { getRole, updateRole } from '../../../../redux/slices/user/role';
+import { getRole, getRoles, updateRole } from '../../../../redux/slices/user/role';
 import AddFormButtons from '../../../../components/DocumentForms/AddFormButtons';
 import PageCover from '../../../../components/Defaults/PageCover';
 
@@ -37,7 +37,7 @@ export default function RoleEditForm() {
     () => ({
       name: role?.name || '',
       desc: role?.desc || '',
-      roleType: role.roleType || null, 
+      roleType: userRoleTypes.find((type)=> type?.value === role?.roleType) || null, 
       disableDelete: role?.disableDelete || false,
       isActive: role?.isActive || false,
     }),
@@ -61,8 +61,8 @@ export default function RoleEditForm() {
   const onSubmit = async (data) => {
     try {
       await dispatch(updateRole(role._id, data));
-      dispatch(getRole(role._id));
-      navigate(PATH_SETTING.role.view(role._id));
+      await dispatch(getRoles());
+      await navigate(PATH_SETTING.role.list);
       enqueueSnackbar('Role updated Successfully!');
       reset();
     } catch ( err ) {
@@ -84,11 +84,11 @@ export default function RoleEditForm() {
                   name="roleType" 
                   label="Role Type*"
                   options={userRoleTypes}
-                  getOptionLabel={(option) => option.name}
-                  isOptionEqualToValue={(option, value) => option.name === value.name}
+                  getOptionLabel={(option) => option.name || ''}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
                   renderOption={(props, option) => ( <li {...props} key={option.key}>{option?.name || ''} </li>)}
                 />
-                <RHFTextField name="description" label="Description" minRows={8} multiline />
+                <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
               <AddFormButtons isActive disableDelete isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
             </Card>
