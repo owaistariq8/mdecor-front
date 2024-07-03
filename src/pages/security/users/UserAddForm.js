@@ -75,8 +75,8 @@ export default function UserAddForm() {
       navigate(PATH_SECURITY.user.view(response.data.user._id));
       enqueueSnackbar('User Added Successfully');
     } catch (error) {
-        enqueueSnackbar(error, { variant: `error` });
-        console.log('Error:', error);
+        enqueueSnackbar(error?.message, { variant: `error` });
+        console.log('Error:', error?.message);
     }
   };
 

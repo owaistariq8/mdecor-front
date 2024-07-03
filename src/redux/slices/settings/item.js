@@ -17,6 +17,7 @@ const initialState = {
   filterBy: '',
   page: 0,
   rowsPerPage: 100,
+  addFileDialog:false,
 };
 
 const slice = createSlice({
@@ -102,6 +103,11 @@ const slice = createSlice({
     ChangePage(state, action) {
       state.page = action.payload;
     },
+
+    // SET ADD FILE DIALOG
+    setItemAddFileDialog(state, action) {
+      state.addFileDialog = action.payload;
+    },
   },
 });
 
@@ -116,6 +122,7 @@ export const {
   setFilterBy,
   ChangeRowsPerPage,
   ChangePage,
+  setItemAddFileDialog
 } = slice.actions;
 // ----------------------------------------------------------------------
 
@@ -130,7 +137,7 @@ export function addItem(params) {
         price: params.price,
         stockQuantity: params.stockQuantity,
         status: params.status,
-        image: params.image,
+        images: params.images,
         isActive: params.isActive,
       }
 
@@ -257,3 +264,43 @@ export function deleteItem(id) {
     }
   };
 }
+
+export function addItemFiles(id, data) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.patch(`${CONFIG.SERVER_URL}items/${id}/files`,data);
+      dispatch(slice.actions.addMachineServiceRecordFilesSuccess());
+    } catch (error) {
+      console.error(error);
+      dispatch(slice.actions.hasError(error.Message));
+      throw error;
+    }
+  };
+
+}
+
+export function downloadFile(id, fileId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    const response = await axios.get(`${CONFIG.SERVER_URL}items/${id}/files/${fileId}/download/` );
+    return response;
+  };
+}
+
+export function deleteFile(id, fileId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.patch(`${CONFIG.SERVER_URL}items/${id}/files/${fileId}` , 
+      {
+          isArchived: true, 
+      });
+      dispatch(slice.actions.setResponseMessage(response.data));
+    } catch (error) {
+      console.error(error);
+      dispatch(slice.actions.hasError(error.Message));
+      throw error;
+    }
+  };
+  }
