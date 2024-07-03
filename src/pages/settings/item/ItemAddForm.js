@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useLayoutEffect, useMemo } from 'react';
+import { useCallback, useLayoutEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -15,9 +15,10 @@ import { getItemCategories, resetItemCategories } from '../../../redux/slices/se
 // components
 import { useSnackbar } from '../../../components/snackbar';
 // assets
-import FormProvider, { RHFAutocomplete, RHFTextField } from '../../../components/hook-form';
+import FormProvider, { RHFAutocomplete, RHFTextField, RHFUpload } from '../../../components/hook-form';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 import PageCover from '../../../components/Defaults/PageCover';
+import { validateImageFileType } from '../../../components/file-thumbnail';
 
 // ----------------------------------------------------------------------
 
@@ -42,6 +43,12 @@ export default function ItemAddForm() {
     desc: Yup.string().max(10000),
     stockQuantity: Yup.number().max(1000),
     status: Yup.string(),
+    images: Yup.mixed().required('Item image is required!')
+    .test(
+      'fileType',
+      'Only the following formats are accepted: .jpeg, .jpg, gif, .bmp, .webp',
+      validateImageFileType
+    ).nullable(true),
     isActive: Yup.boolean(),
   });
 
@@ -51,7 +58,7 @@ export default function ItemAddForm() {
       itemCategory:null,
       desc: '',
       stockQuantity:0,
-      image:'',
+      images:null,
       isActive: true,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,9 +72,13 @@ export default function ItemAddForm() {
 
   const {
     reset,
+    watch,
+    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+
+  const { images } = watch();
 
   const onSubmit = async (data) => {
     try {
@@ -80,6 +91,22 @@ export default function ItemAddForm() {
       console.error( error );
     }
   };
+
+  const handleDropMultiFile = useCallback(
+    async (acceptedFiles) => {
+      const docFiles = images || [];
+      
+      const newFiles = acceptedFiles.map((file, index) => 
+          Object.assign(file, {
+            preview: URL.createObjectURL(file)
+          })
+        
+      );
+      setValue('images', [...docFiles, ...newFiles], { shouldValidate: true });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ images ]
+  );
 
   const toggleCancel = () => navigate(PATH_SETTING.item.list);
 
@@ -104,6 +131,16 @@ export default function ItemAddForm() {
                   <RHFTextField type='number' name="price" label="Price" />
                   <RHFTextField type='number' name="stockQuantity" label="Stock Quantity" />
                 </Box>
+                <RHFUpload multiple  thumbnail 
+                  name="images" imagesOnly
+                  onDrop={handleDropMultiFile}
+                  onRemove={(inputFile) =>
+                    images && images.length > 1 ?
+                    setValue('images', images?.filter((file) => file !== inputFile), { shouldValidate: true })
+                    :setValue('images', '', { shouldValidate: true })
+                  }
+                  onRemoveAll={() => setValue('images', '', { shouldValidate: true })}
+                />
                 <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
               <AddFormButtons isActive isSubmitting={isSubmitting} toggleCancel={toggleCancel} />

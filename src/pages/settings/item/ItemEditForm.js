@@ -51,7 +51,6 @@ export default function ItemEditForm() {
       itemCategory:item?.itemCategory,
       desc: item?.desc,
       stockQuantity:item?.stockQuantity,
-      image:item?.image,
       isActive: item?.isActive,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

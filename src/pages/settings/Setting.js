@@ -26,12 +26,11 @@ export default function Setting() {
 
   const linkItemCategory = () => navigate(PATH_SETTING.item_category.list);
   const linkItem = () => navigate(PATH_SETTING.item.list);
-
   const linkRole = () => navigate(PATH_SETTING.role.list);
   
 return (
     <Container maxWidth={false}>
-      <PageCover title='Settings' setting/>
+      <PageCover title='Settings'/>
       <Box
           rowGap={1}
           columnGap={4}

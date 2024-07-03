@@ -1,5 +1,7 @@
 // ----------------------------------------------------------------------
 
+import { allowedImageExtensions, maxFiles } from "../../constants/file-constants";
+
 // Define more types here
 const FORMAT_PDF = ['pdf'];
 const FORMAT_TEXT = ['txt', 'odt', 'ott', 'rtf', 'csv'];
@@ -14,6 +16,7 @@ const FORMAT_IMG_VISIBBLE = ['png','jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp', '
 const FORMAT_IMG = [ 'png','jpg', 'jpeg', 'gif', 'bmp', 'svg', 'webp', 'ico', 'jpe', 'exr', 'hdr', 'pbm', 'pfm', 'pgm', 'pict', 'ppm', 'sgi', 'tga', 'dds', 'cr2', 'dng', 'heic', 'heif', 'jp2', 'nef', 'orf', 'pef', 'raf', 'rw2',];
 const FORMAT_VIDEO = ['m4v', 'avi', 'mpg', 'mp4', 'webm'];
 const iconUrl = (icon) => `/assets/icons/files/${icon}.svg`;
+
 // ----------------------------------------------------------------------
 
 export function fileFormat(fileUrl, rows ) {
@@ -158,3 +161,35 @@ export function fileData(file) {
     // file: { ...file.file, lastModified: file.lastModified, },
   };
 }
+
+
+export const validateImageFileType = (value, options) => {
+  const { path, createError } = options;
+  if (value && Array.isArray(value)) {
+    if (value.length > 20) {
+      return createError({
+        message: `Maximum ${ Number(maxFiles?.value) || 20 } files can be uploaded at a time.`,
+        path,
+        value,
+      });
+    }
+    const invalidFiles = value.filter((file) => {
+      const fileExtension = file?.name?.split('.').pop().toLowerCase();
+      return !allowedImageExtensions.includes(fileExtension);
+    });
+    if (invalidFiles.length > 0) {
+      const invalidFileNames = invalidFiles.map((file) => file.name).join(', ');
+      return createError({
+        message: `Invalid file(s) detected: ${invalidFileNames}`,
+        path,
+        value,
+      });
+    }
+    return true;
+  }
+  return createError({
+    message: 'File is required!',
+    path,
+    value,
+  });
+};
