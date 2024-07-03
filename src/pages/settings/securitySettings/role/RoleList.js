@@ -38,11 +38,10 @@ import { deleteRole, getRoles,
   ChangePage,
   setFilterBy,
  } from '../../../../redux/slices/user/role';
-import { Cover } from '../../../../components/Defaults/Cover';
 import { fDate } from '../../../../utils/formatTime';
 import TableCard from '../../../../components/ListTableTools/TableCard';
-import { StyledCardContainer } from '../../../../theme/styles/default-styles';
 import { ICONS } from '../../../../constants/icons/default-icons';
+import PageCover from '../../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -191,10 +190,7 @@ export default function RoleList() {
   return (
     <>
       <Container maxWidth={false}>
-        <StyledCardContainer>
-          <Cover name={ICONS.SECURITY_ROLES.heading} icon={ICONS.SECURITY_ROLES.icon} generalSettings />
-        </StyledCardContainer>
-
+        <PageCover title={ICONS.SECURITY_ROLES.heading} setting /> 
         <TableCard>
           <RoleListTableToolbar
             filterName={filterName}

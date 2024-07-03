@@ -39,6 +39,7 @@ import TableCard from '../../../../components/ListTableTools/TableCard';
 import { fDate } from '../../../../utils/formatTime';
 import { useSnackbar } from '../../../../components/snackbar';
 import { exportCSV } from '../../../../utils/exportCSV';
+import PageCover from '../../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -178,9 +179,7 @@ export default function CustomerList({ isArchived }) {
 
   return (
     <Container maxWidth={false}>
-        <StyledCardContainer>
-          <Cover icon='mdi:users' name={FORMLABELS.COVER.CUSTOMERS}   />
-        </StyledCardContainer>
+      <PageCover title='Customers' />
       <TableCard >
         <CustomerListTableToolbar
           filterName={filterName}

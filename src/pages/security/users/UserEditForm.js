@@ -17,8 +17,7 @@ import { getActiveRoles, resetActiveRoles } from '../../../redux/slices/user/rol
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 import { editUserSchema } from '../../schemas/user';
 import { genderOptions, religionOptions, userStatusOptions } from '../../../utils/options';
-import { StyledCardContainer } from '../../../theme/styles/default-styles';
-import { Cover } from '../../../components/Defaults/Cover';
+import PageCover from '../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -76,9 +75,9 @@ export default function UserEditForm() {
 
   const onSubmit = async (data) => {
     try {
-      dispatch(updateUser(data, user._id));
+      await dispatch(updateUser(data, user._id));
       reset();
-      navigate(PATH_SECURITY.user.view(user._id));
+      await navigate(PATH_SECURITY.user.view(user._id));
     } catch (error) {
       enqueueSnackbar(error, { variant: `error` });
       console.log('Error:', error);
@@ -89,11 +88,11 @@ export default function UserEditForm() {
 
   return (
     <Container maxWidth={false}>
-      <StyledCardContainer><Cover name="Edit User"/></StyledCardContainer>
+      <PageCover title='Edit User' />
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Grid container >
           <Grid item xs={12} md={12}>
-            <Card sx={{ p: 3 }}>
+            <Card sx={{ p: 3}}>
             <Stack  spacing={2} >
               <Box rowGap={2} columnGap={2} display="grid" gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }} >
                 <RHFTextField name="firstName" label="First Name*" />

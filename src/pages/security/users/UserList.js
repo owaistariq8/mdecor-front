@@ -36,8 +36,7 @@ import {
 import { fDate } from '../../../utils/formatTime';
 // constants
 import TableCard from '../../../components/ListTableTools/TableCard';
-import { StyledCardContainer } from '../../../theme/styles/default-styles';
-import { StyledCardHeader } from '../../../components/settings/styles';
+import PageCover from '../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -156,7 +155,7 @@ export default function UserList() {
 
   return (
       <Container maxWidth={false}>
-        <StyledCardContainer><Cover icon="ph:users-light" name="Users" /></StyledCardContainer>
+        <PageCover title='Users List' />
         <TableCard>
           <UserTableToolbar
             isFiltered={isFiltered}

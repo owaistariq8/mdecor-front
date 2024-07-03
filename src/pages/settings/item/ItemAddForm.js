@@ -17,8 +17,7 @@ import { useSnackbar } from '../../../components/snackbar';
 // assets
 import FormProvider, { RHFAutocomplete, RHFTextField } from '../../../components/hook-form';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
-import { Cover } from '../../../components/Defaults/Cover';
-import { StyledCardContainer } from '../../../theme/styles/default-styles';
+import PageCover from '../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -86,9 +85,7 @@ export default function ItemAddForm() {
 
   return (
     <Container maxWidth={false}>
-      <StyledCardContainer>
-        <Cover name="New Item" />
-      </StyledCardContainer>
+      <PageCover title="New Item" setting />   
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={18} md={12}>

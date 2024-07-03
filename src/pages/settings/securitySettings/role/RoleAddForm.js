@@ -17,9 +17,7 @@ import { useSnackbar } from '../../../../components/snackbar';
 // assets
 import FormProvider, { RHFTextField, RHFSwitch, RHFAutocomplete } from '../../../../components/hook-form';
 import AddFormButtons from '../../../../components/DocumentForms/AddFormButtons';
-import { Cover } from '../../../../components/Defaults/Cover';
-import { StyledCardContainer } from '../../../../theme/styles/default-styles';
-import { StyledCard } from '../../../../components/settings/styles';
+import PageCover from '../../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 RoleAddForm.propTypes = {
@@ -85,9 +83,7 @@ export default function RoleAddForm({ currentRole }) {
 
   return (
     <Container maxWidth={false}>
-      <StyledCardContainer>
-        <Cover name="New Role" />
-      </StyledCardContainer>
+      <PageCover title='New Role' setting />
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={18} md={12}>

@@ -12,8 +12,7 @@ import { useSnackbar } from '../../../components/snackbar';
 import ViewFormAudit from '../../../components/ViewForms/ViewFormAudit';
 import ViewFormField from '../../../components/ViewForms/ViewFormField';
 import ViewFormTopBar from '../../../components/ViewForms/ViewFormTopBar';
-import { StyledCardContainer } from '../../../theme/styles/default-styles';
-import { Cover } from '../../../components/Defaults/Cover';
+import PageCover from '../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -68,10 +67,10 @@ export default function RoleViewForm() {
   
   return (
     <Container maxWidth={false}>
-      <StyledCardContainer><Cover name={item?.name} generalSettings/></StyledCardContainer>
+      <PageCover title={item?.name} handleBacklink={handleBacklink} backIcon setting /> 
       <Card sx={{ p: 2 }}>
         <Grid>
-          <ViewFormTopBar onBackLink={handleBacklink} onEdit={handleEdit} onDelete={onDelete} />
+          <ViewFormTopBar onEdit={handleEdit} onDelete={onDelete} />
           <Grid container sx={{mt:2}}>
             <ViewFormField isLoading={isLoading} sm={12} heading="Name" param={defaultValues.name} />
             <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.desc} />

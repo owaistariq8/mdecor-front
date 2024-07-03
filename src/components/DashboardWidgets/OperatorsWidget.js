@@ -39,29 +39,27 @@ export default function OperatorsWidget({ title, subheader, list }) {
 
 OperatorItem.propTypes = {
   operator: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    description: PropTypes.string,
-    avatar: PropTypes.string,
-    product: PropTypes.string,
+    _id: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string
   }),
   index: PropTypes.number,
 };
 
 function OperatorItem({ operator, index }) {
   return (
-    <Stack key={operator.id} direction="row" alignItems="center" spacing={1} sx={{padding:'10px 0px', borderTop:'1px solid #e9e9e9' }}>
-      <CustomAvatar name={operator.name} />
+    <Stack key={operator._id} direction="row" alignItems="center" spacing={1} sx={{padding:'10px 0px', borderTop:'1px solid #e9e9e9' }}>
+      <CustomAvatar name={`${operator.firstName} ${operator.lastName}`} />
       <Box sx={{ flexGrow: 1}}>
-        <Typography variant="subtitle2">{operator.name}</Typography>
+        <Typography variant="subtitle2">{`${operator.firstName} ${operator.lastName}`}</Typography>
         <Typography variant="caption" sx={{display: 'flex', alignItems: 'center', color: 'text.secondary'}}>
-          <Iconify icon="mdi:pin" width={16} color="green" />
-            {operator.description}
+          {/* <Iconify icon="mdi:pin" width={16} color="green" />
+            {operator.description} */}
         </Typography>
       </Box>
 
       <LogoAvatar
-        src={operator.product}
+        src='/favicon.svg'
         sx={{
           p: 1,
           width: 40,

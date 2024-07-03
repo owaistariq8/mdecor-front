@@ -49,12 +49,12 @@ function ViewFormTopBar({
     <Grid container justifyContent="space-between" sx={{pb:1, px:0.5}}>
       <Grid item sx={{display:'flex', mt:0.5,mr:1}}>
         <StyledStack>
-          {onBackLink &&
+          {/* {onBackLink &&
             <>
               <IconTooltip title='Back' onClick={onBackLink} color={theme.palette.primary.main} icon="mdi:arrow-left" />
               <Divider orientation="vertical" flexItem />
             </>
-          }
+          } */}
           
           {isActive!==undefined &&
             <IconTooltip

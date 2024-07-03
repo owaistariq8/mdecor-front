@@ -45,6 +45,7 @@ import { fDate } from '../../../utils/formatTime';
 import TableCard from '../../../components/ListTableTools/TableCard';
 import { StyledCardContainer } from '../../../theme/styles/default-styles';
 import { ICONS } from '../../../constants/icons/default-icons';
+import PageCover from '../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -188,11 +189,8 @@ export default function ItemCategoryList() {
 
   return (
     <>
-      <Container maxWidth={false}>
-        <StyledCardContainer>
-          <Cover name={ICONS.ITEM_CATEGORY.heading} icon={ICONS.ITEM_CATEGORY.icon} generalSettings />
-        </StyledCardContainer>
-
+      <Container maxWidth>
+        <PageCover title={ICONS.ITEM_CATEGORY.heading} setting /> 
         <TableCard>
           <ItemCategoryListTableToolbar
             filterName={filterName}

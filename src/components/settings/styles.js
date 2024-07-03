@@ -13,13 +13,20 @@ export const StyledWrap = styled(Box)(() => ({
 
 // ----------------------------------------------------------------------
 
-export const StyledCardHeader = styled(({ ...props }) => (
+export const StyledCardHeader = styled(({ subheader, ...props }) => (
   <CardHeader {...props}  
-    titleTypographyProps={{ variant: 'h4', color: '#fff' }}
+    titleTypographyProps={{ variant: subheader?'h6':'h4', color: subheader?'text.disabled':'#fff' }}
     subheaderTypographyProps={{ color: '#fff'}}  />
-))(({ theme }) => ({
-  background: theme.palette.primary.dark,
-  padding:16,
+))(({ subheader, theme }) => ({
+  background: subheader?'#fff':theme.palette.primary.dark,
+  padding:subheader?'10px 16px':16,
+  borderBottom:subheader?'1px solid lightgray':'',
+  '.MuiCardHeader-avatar':{
+    alignSelf:'start'
+  },
+  '.MuiCardHeader-action':{
+    margin:0
+  }
 }));
 
 

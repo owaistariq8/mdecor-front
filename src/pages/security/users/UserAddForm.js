@@ -17,8 +17,7 @@ import { addUser } from '../../../redux/slices/user/user';
 import { addUserSchema } from '../../schemas/user';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 import { genderOptions, religionOptions, userStatusOptions } from '../../../utils/options';
-import { StyledCardContainer } from '../../../theme/styles/default-styles';
-import { Cover } from '../../../components/Defaults/Cover';
+import PageCover from '../../../components/Defaults/PageCover';
 
 export default function UserAddForm() {
 
@@ -48,7 +47,8 @@ export default function UserAddForm() {
       roles: null,
       status: {_id:'active', label:'Active'},
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      isActive:true
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -70,11 +70,10 @@ export default function UserAddForm() {
 
   const onSubmit = async (data) => {
     try {
-      const message = "User Added Successfully";
       const response = await dispatch(addUser(data));
       reset();
       navigate(PATH_SECURITY.user.view(response.data.user._id));
-      enqueueSnackbar(message);
+      enqueueSnackbar('User Added Successfully');
     } catch (error) {
         enqueueSnackbar(error, { variant: `error` });
         console.log('Error:', error);
@@ -85,7 +84,7 @@ export default function UserAddForm() {
 
   return (
   <Container maxWidth={false}>
-    <StyledCardContainer><Cover name="Add New User "/></StyledCardContainer>
+    <PageCover title='New User' />
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
@@ -130,7 +129,7 @@ export default function UserAddForm() {
               />
             
             </Box>
-            <AddFormButtons isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
+            <AddFormButtons isActive isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
           </Stack>
           </Card>
         </Grid>

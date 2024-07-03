@@ -2,7 +2,7 @@ import { useLayoutEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // @mui
-import { Card, Container, Grid } from '@mui/material';
+import { Card, CardContent, CardHeader, Container, Grid } from '@mui/material';
 // routes
 import { PATH_SECURITY } from '../../../routes/paths';
 // slices
@@ -14,10 +14,9 @@ import {
 } from '../../../redux/slices/user/user';
 import ViewFormTopBar from '../../../components/ViewForms/ViewFormTopBar';
 import ViewFormField from '../../../components/ViewForms/ViewFormField';
-import { Cover } from '../../../components/Defaults/Cover';
 import { useSnackbar } from '../../../components/snackbar';
-import { StyledCardContainer } from '../../../theme/styles/default-styles';
 import ChangePasswordByAdminDialog from '../../../components/Dialog/ChangePasswordByAdminDialog';
+import PageCover from '../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -82,8 +81,9 @@ export default function UserViewForm() {
   return (
     <>
     <Container maxWidth={false}>
-      <StyledCardContainer><Cover name={defaultValues.name || 'User Detail'}/></StyledCardContainer>
-        <Card sx={{ p: 3 }}>
+      <PageCover title={`${defaultValues.firstName} ${defaultValues.lastName}`} handleBackLink={handleBackLink} backIcon />
+      <Card>
+        <CardContent>
           <Grid container sx={{display:{ md:'flex', sm: 'block' }, justifyContent:{md: 'space-between'}}} >
             <ViewFormTopBar isActive={defaultValues.isActive} onBackLink={handleBackLink} onDelete={handleDelete} onEdit={handleEdit} />
             <ViewFormField isLoading={isLoading} sm={6} heading="First Name" param={defaultValues?.firstName} />
@@ -93,9 +93,10 @@ export default function UserViewForm() {
             <ViewFormField isLoading={isLoading} sm={6} heading="Religion" param={defaultValues?.religion} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Gender" param={defaultValues?.gender} />
           </Grid>
-        </Card>
-      </Container>
-      <ChangePasswordByAdminDialog />
+        </CardContent>
+      </Card>
+    </Container>
+    <ChangePasswordByAdminDialog />
     </>
   );
 }

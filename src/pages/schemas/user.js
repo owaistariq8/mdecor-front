@@ -16,6 +16,7 @@ export const addUserSchema = Yup.object().shape({
     gender: Yup.object().label('Gender').nullable(),
     roles: Yup.array().label('Roles').nullable(),
     status: Yup.object(),
+    isActive: Yup.boolean()
   });
 
   export const editUserSchema = Yup.object().shape({
@@ -27,4 +28,5 @@ export const addUserSchema = Yup.object().shape({
     gender: Yup.object().label('Gender').nullable(),
     roles: Yup.array().label('Roles').nullable(),
     status: Yup.object(),
+    isActive: Yup.boolean()
   });

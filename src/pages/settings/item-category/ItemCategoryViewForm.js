@@ -2,9 +2,10 @@ import { useLayoutEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 // @mui
-import { Card, Container, Grid } from '@mui/material';
+import { Button, Card, CardContent, CardHeader, Container, Grid, IconButton } from '@mui/material';
 // redux
 import { deleteItemCategory, getItemCategory } from '../../../redux/slices/settings/itemCategory';
+import { getItems } from '../../../redux/slices/settings/item';
 // paths
 import { PATH_SETTING } from '../../../routes/paths';
 // components
@@ -12,8 +13,7 @@ import { useSnackbar } from '../../../components/snackbar';
 import ViewFormAudit from '../../../components/ViewForms/ViewFormAudit';
 import ViewFormField from '../../../components/ViewForms/ViewFormField';
 import ViewFormTopBar from '../../../components/ViewForms/ViewFormTopBar';
-import { StyledCardContainer } from '../../../theme/styles/default-styles';
-import { Cover } from '../../../components/Defaults/Cover';
+import PageCover from '../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -27,9 +27,11 @@ export default function ItemCategoryViewForm() {
  
   useLayoutEffect(() => {
     dispatch(getItemCategory(id));
+    dispatch(getItems(id))
   }, [id, dispatch]);
 
   const { itemCategory, isLoading} = useSelector((state) => state.itemCategory);
+  const { items } = useSelector((state) => state.itemCategory);
 
   const onDelete = async () => {
     try {
@@ -69,16 +71,21 @@ export default function ItemCategoryViewForm() {
 
   return (
     <Container maxWidth={false}>
-      <StyledCardContainer><Cover name={itemCategory?.name} generalSettings/></StyledCardContainer>
-      <Card sx={{ p: 2 }}>
-        <Grid>
-          <ViewFormTopBar isActive={defaultValues.isActive} isDefault={defaultValues.isDefault} onBackLink={handleBacklink} onEdit={handleEdit} onDelete={onDelete} />
-          <Grid container sx={{mt:2}}>
-            <ViewFormField isLoading={isLoading} sm={12} heading="Name" param={defaultValues.name} />
-            <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.desc} />
-            <ViewFormAudit defaultValues={defaultValues} />
+      <PageCover title={defaultValues.name} handleBackLink={handleBacklink} backIcon setting />
+      <Card>
+        <CardContent>
+          <Grid>
+            <ViewFormTopBar isActive={defaultValues.isActive} isDefault={defaultValues.isDefault} onBackLink={handleBacklink} onEdit={handleEdit} onDelete={onDelete} />
+            <Grid container sx={{mt:2}}>
+              <ViewFormField isLoading={isLoading} sm={12} heading="Name" param={defaultValues.name} />
+              <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.desc} />
+              <ViewFormAudit defaultValues={defaultValues} />
+            </Grid>
           </Grid>
-        </Grid>
+        </CardContent>
+      </Card>
+      <Card>
+        {/* {items.length()} @@@@@@@@@@ */}
       </Card>
     </Container>
   );

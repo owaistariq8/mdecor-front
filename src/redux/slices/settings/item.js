@@ -171,11 +171,20 @@ export function updateItem(id, params) {
 }
 // ----------------------------------------------------------------------
 
-export function getItems() {
+export function getItems(categoryId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}items`);
+      
+      const params = {
+        isActive:true,
+      }
+
+      if(categoryId){
+        params.category=categoryId;
+      }
+
+      const response = await axios.get(`${CONFIG.SERVER_URL}items`,{params});
       dispatch(slice.actions.getItemsSuccess(response.data));
       dispatch(slice.actions.setResponseMessage('Item loaded successfully'));
 

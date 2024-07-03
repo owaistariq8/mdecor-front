@@ -6,6 +6,7 @@ import { StyledBg, StyledContainer, StyledGlobalCard } from '../../theme/styles/
 // sections
 // assets & hooks
 import { useDispatch, useSelector } from '../../redux/store';
+import { getUsers } from '../../redux/slices/user/user';
 import ProductionLog from '../../components/Charts/ProductionLog';
 import OperatorsWidget from '../../components/DashboardWidgets/OperatorsWidget';
 import { _appAuthors } from '../../_mock/arrays';
@@ -17,6 +18,11 @@ import { CONFIG } from '../../config-global';
 export default function Dashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { users, isLoading } = useSelector((state) => state.user);
+
+  useLayoutEffect(()=>{
+    dispatch(getUsers());
+  },[dispatch])
 
   return (
     <StyledContainer maxWidth={false}>
@@ -54,7 +60,7 @@ export default function Dashboard() {
             </Grid>
             <Grid item xs={12} lg={4}>
               <Grid item>
-                <OperatorsWidget title="Users" list={_appAuthors} />
+                <OperatorsWidget title="Operators" list={users} />
               </Grid>
             </Grid>
             </Grid>

@@ -13,8 +13,7 @@ import { useSnackbar } from '../../../../components/snackbar';
 import FormProvider, { RHFTextField, RHFSwitch, RHFAutocomplete } from '../../../../components/hook-form';
 import { getRole, updateRole } from '../../../../redux/slices/user/role';
 import AddFormButtons from '../../../../components/DocumentForms/AddFormButtons';
-import { Cover } from '../../../../components/Defaults/Cover';
-import { StyledCardContainer } from '../../../../theme/styles/default-styles';
+import PageCover from '../../../../components/Defaults/PageCover';
 
 // ----------------------------------------------------------------------
 
@@ -79,9 +78,7 @@ export default function RoleEditForm() {
 
   return (
     <Container maxWidth={false}>
-      <StyledCardContainer>
-        <Cover name={role?.name} />
-      </StyledCardContainer>
+      <PageCover title={role?.name} setting />
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={4}>
           <Grid item xs={18} md={12}>

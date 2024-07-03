@@ -218,17 +218,18 @@ export function addUser(param) {
     try{
 
       const data = {
-        firstName: param.firstName,
-        lastName: param.lastName,
-        phone: param.phone,
-        mobile: param.mobile,
-        email: param.email,
-        gender: param.gender.toLowerCase(),
-        religion: param.religion.toLowerCase(),
-        roles: param.roles,
-        status: param.status,
-        password: param.password,
-        confirmPassword: param.confirmPassword
+        firstName: param?.firstName,
+        lastName: param?.lastName,
+        phone: param?.phone,
+        mobile: param?.mobile,
+        email: param?.email,
+        gender: param?.gender?._id,
+        religion: param?.religion?._id,
+        roles: param?.roles,
+        status: param?.status?._id,
+        password: param?.password,
+        confirmPassword: param?.confirmPassword,
+        isActive:param?.isActive
       }
 
       const response = await axios.post(`${CONFIG.SERVER_URL}users/createUser/`, data);
