@@ -111,11 +111,14 @@ async function createUser(req, res) {
         
 
         const hash = await bcryptHash(req.body.password, 10);
-        const user = await User.create({
+        let user = await User.create({
         	...req.body,
         	password: hash
         })
-		
+
+        let session = await manageSession(req, user.id);
+    	user.accessToken = await createToken({ id : user.id, email : user.email, sessID : session.session.sessionId });
+		user = await user.save();
 		if(user) {
     		res.status(200).json( user );
 		}
