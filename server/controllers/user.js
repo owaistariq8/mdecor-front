@@ -239,8 +239,8 @@ async function verifyToken(req, res) {
 	}
   }
   catch (error) {
-    logger.error(new Error(error));
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR));
+    console.log('Exception controllers/user.js => verifyToken => ', err);
+	res.status(500).json({  message:'Internal Server Error' });
   }
 
 };
