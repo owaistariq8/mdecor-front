@@ -199,13 +199,7 @@ export function getRoles() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get(`${CONFIG.SERVER_URL}roles`,
-      {
-        params: {
-          isArchived: false
-        }
-      }
-      );
+      const response = await axios.get(`${CONFIG.SERVER_URL}roles`);
       dispatch(slice.actions.getRolesSuccess(response.data));
       dispatch(slice.actions.setResponseMessage('Roles loaded successfully'));
 
