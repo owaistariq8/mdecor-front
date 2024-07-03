@@ -6,7 +6,7 @@ async function getCustomerById(req, res) {
 		const custID = req.params.id;
 
 		if(mongoose.Types.ObjectId.isValid(custID)) {
-        	const customer = await Customer.findById(custID);
+        	const customer = await Customer.findById(custID).populate('sites');
         	if(customer)
 	    		res.status(200).json(customer);
 	    	else 
@@ -27,7 +27,7 @@ async function getCustomers(req, res) {
 		const query = req.query;
 
 		if(query && typeof query == 'object') {
-        	const customers = await Customer.find(query);
+        	const customers = await Customer.find(query).populate('sites');
     		res.status(200).json(customers);
 		}
 		else

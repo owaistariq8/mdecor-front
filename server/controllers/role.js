@@ -10,7 +10,7 @@ async function getRoleById(req, res) {
         	if(role)
 	    		res.status(200).json( role );
 	    	else 
-	    		res.status(404).json({ });
+	    		res.status(404).json({ message:'Role Not Found' });
 		}
 		else
 	    	res.status(400).json({ message:'Invalid roleId' });

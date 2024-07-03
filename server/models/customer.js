@@ -5,7 +5,7 @@ const customerSchema = new mongoose.Schema({
     name: { type: String , required: true },
     website: { type: String },
     type: { type: String },
-    site: { type: mongoose.Schema.Types.ObjectId , ref: 'Site' },
+    sites: [{ type: mongoose.Schema.Types.ObjectId , ref: 'Site' }],
     status: String,
     contact: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }],
     createdAt: { type: Date, required: true, default: Date.now },
