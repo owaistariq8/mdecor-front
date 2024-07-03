@@ -322,7 +322,6 @@ async function manageSession(req, userId) {
 
   } catch (err) {
     console.error('Error saving to session storage: ', err);
-    return next(new Error('Error creating user session'));
   }
 }
 
