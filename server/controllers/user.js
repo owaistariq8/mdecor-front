@@ -85,9 +85,20 @@ async function signup(req, res) {
         console.log(userObj, session);
     	userObj.accessToken = await createToken({ id : userObj.id, email : userObj.email, sessID : session.session.sessionId });
     	const user = await userObj.save();
-		
+		const data = {
+     		accessToken:user.accessToken,
+            userId: user.id,
+            sessionId:session.session.sessionId,
+            user: {
+              email: user.email,
+              firstName:user.firstName,
+              lastName:user.lastName,
+              customer: user?.customer?._id,
+              roles: user.roles,
+            }
+ 		}
 		if(user) {
-    		res.status(200).json( user );
+    		res.status(200).json( data );
 		}
 		else
 	    	res.status(404).json({  message : 'Unable to create user' });
