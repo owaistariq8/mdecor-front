@@ -347,8 +347,10 @@ async function updateUser(req, res) {
 		if(!mongoose.Types.ObjectId.isValid(req.params.id)) 
 			return res.status(400).json({  message : 'Invalid request' });
 
-		const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcryptHash(req.body.password, salt);
+		if(req.body.password) {
+			const salt = await bcrypt.genSalt(10);
+	        req.body.password = await bcryptHash(req.body.password, salt);
+		}
 
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if(user)
