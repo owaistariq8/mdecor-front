@@ -140,7 +140,7 @@ async function processFile(file) {
 
   const fileName = name+"-"+new Date().getTime();
   const s3Data = await uploadFileS3(fileName, 'uploads', base64fileData, fileExt);
-
+  console.log("s3Data",s3Data);
   fs.unlinkSync(file.path);
   
   if (!s3Data || s3Data === '') {
