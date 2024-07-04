@@ -16,10 +16,10 @@ router.post('/', auth, (req, res, next) => {
 
       if (err instanceof multer.MulterError) {
         console.log(err);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err._message);
+        res.status(500).send(err._message);
       } else if (err) {
         console.log(err);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR));
+        res.status(500).send(err.message);
       } else {
         next();
       }
@@ -31,10 +31,10 @@ router.patch('/update/:id', auth, (req, res, next) => {
 
       if (err instanceof multer.MulterError) {
         console.log(err);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err._message);
+        res.status(500).send(err._message);
       } else if (err) {
         console.log(err);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR));
+        res.status(500).send(err.message);
       } else {
         next();
       }

@@ -95,7 +95,7 @@ export default function ItemAddForm() {
   const handleDropMultiFile = useCallback(
     async (acceptedFiles) => {
       const docFiles = images || [];
-      
+      console.log(acceptedFiles);
       const newFiles = acceptedFiles.map((file, index) => 
           Object.assign(file, {
             preview: URL.createObjectURL(file)

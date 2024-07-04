@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { uploadFileS3 } = require('../services/aws');
 
 const { File } = require('../models/file');
+const { processFile } = require('./category');
 const path = require('path');
 const fs = require('fs');
 
@@ -49,14 +50,17 @@ async function createItem(req, res) {
 	try {
 
 		let files = [];
-		if(Array.isArray(req.files) && req.files.length>0) {
-            for(const file of req.files) {
+		console.log("req.files",req.files.images);
+		if(Array.isArray(req.files.images) && req.files.images.length>0) {
+            for(const file of req.files.images) {
 				if(!file || !file.originalname) {
 					console.log('Invalid File')
 					return res.status(400).send("Image file not valid");
 				}
 
 				let fileObj = {}
+
+				console.log("file",file);
 
 				const processedFile = await processFile(file);
 
@@ -71,6 +75,8 @@ async function createItem(req, res) {
         }
 
         req.body.images = files;
+		console.log("req.files",req.body.images);
+
         const item = await Item.create({...req.body});
         if(item)
             res.status(200).json(item);

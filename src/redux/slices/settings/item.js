@@ -140,6 +140,11 @@ export function addItem(params) {
               formData.append('images', image);
             }
           });
+        } 
+        else if(key === 'itemCategory') {
+          // Append other key-value pairs to formData
+          console.log(params[key]);
+          formData.append('category', params[key]._id);
         } else {
           // Append other key-value pairs to formData
           formData.append(key, params[key]);
