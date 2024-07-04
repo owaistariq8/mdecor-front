@@ -151,7 +151,7 @@ async function processFile(file) {
       fileName,
       name,
       fileExt,
-      s3FilePath: s3Data.Key, 
+      s3FilePath: s3Data, 
       type: file.mimetype,
       physicalPath: file.path,
     };

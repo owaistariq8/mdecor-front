@@ -29,7 +29,7 @@ const fileUpload = multer({
       let fileExt = ext.slice(1);
       if(fileExt)
         fileExt = fileExt.toLowerCase()
-      cb(null, file.originalname);
+      cb(null, new Date().getTime()+'.'+fileExt);
     }
   }),
   fileFilter: (req, file, cb) => {
