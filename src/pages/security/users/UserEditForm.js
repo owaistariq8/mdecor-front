@@ -75,6 +75,7 @@ export default function UserEditForm() {
 
   const onSubmit = async (data) => {
     try {
+      console.log("data::",data)
       await dispatch(updateUser(data, user._id));
       reset();
       await navigate(PATH_SECURITY.user.view(user._id));
@@ -122,12 +123,13 @@ export default function UserEditForm() {
                   isOptionEqualToValue={(option, value) => option?._id === value?._id || null}
                 />
                 <RHFAutocomplete
+                  multiple
                   name="roles"
                   label="Roles"
                   options={ activeRoles }
                   getOptionLabel={(option) => `${option?.name || ''} `}
                   isOptionEqualToValue={(option, value) => option?._id === value?._id}
-                  // renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
+                  renderOption={(props, option, { selected }) => ( <li {...props}> <Checkbox checked={selected} />{option?.name || ''}</li> )}
                 />
               </Box>
               <AddFormButtons isActive={defaultValues.isActive} isSubmitting={isSubmitting} toggleCancel={toggleCancel} />

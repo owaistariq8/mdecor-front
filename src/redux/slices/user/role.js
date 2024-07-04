@@ -208,7 +208,6 @@ export function getActiveRoles() {
       const response = await axios.get(`${CONFIG.SERVER_URL}roles`,
       {
         params: {
-          isArchived: false,
           isActive: true,
         }
       }

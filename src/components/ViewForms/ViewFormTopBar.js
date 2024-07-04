@@ -11,6 +11,7 @@ import ConfirmDialog from '../confirm-dialog';
 import useResponsive from '../../hooks/useResponsive';
 import IconTooltip from '../Icons/IconTooltip';
 import { ICONS } from '../../constants/icons/default-icons';
+import SkeletonViewFormField from '../skeleton/SkeletonViewFormField';
 
 function ViewFormTopBar({
   isLoading,
@@ -48,60 +49,65 @@ function ViewFormTopBar({
   
   return (
     <Grid container justifyContent="space-between" sx={{pb:1, px:0.5}}>
-      <Grid item sx={{display:'flex', mt:0.5,mr:1}}>
-        <StyledStack>
-          {/* {onBackLink &&
-            <>
-              <IconTooltip title='Back' onClick={onBackLink} color={theme.palette.primary.main} icon="mdi:arrow-left" />
-              <Divider orientation="vertical" flexItem />
-            </>
-          } */}
-          
-          {isActive!==undefined &&
-            <IconTooltip
-              title={isActive?ICONS.ACTIVE.heading:ICONS.INACTIVE.heading}
-              color={isActive?ICONS.ACTIVE.color:ICONS.INACTIVE.color}
-              icon={isActive?ICONS.ACTIVE.icon:ICONS.INACTIVE.icon}
-            />
-          }
+      {isLoading?(
+          <SkeletonViewFormField />
+        ) : (
+          <>
+            <Grid item sx={{display:'flex', mt:0.5,mr:1}}>
+              <StyledStack>
+                {/* {onBackLink &&
+                  <>
+                    <IconTooltip title='Back' onClick={onBackLink} color={theme.palette.primary.main} icon="mdi:arrow-left" />
+                    <Divider orientation="vertical" flexItem />
+                  </>
+                } */}
+                
+                {isActive!==undefined &&
+                  <IconTooltip
+                    title={isActive?ICONS.ACTIVE.heading:ICONS.INACTIVE.heading}
+                    color={isActive?ICONS.ACTIVE.color:ICONS.INACTIVE.color}
+                    icon={isActive?ICONS.ACTIVE.icon:ICONS.INACTIVE.icon}
+                  />
+                }
 
-          {isDefault!==undefined &&
-            <IconTooltip
-              title={isDefault?ICONS.DEFAULT.heading:ICONS.NOT_DEFAULT.heading}
-              color={isDefault?ICONS.DEFAULT.color:ICONS.NOT_DEFAULT.color}
-              icon={isDefault?ICONS.DEFAULT.icon:ICONS.NOT_DEFAULT.icon}
-            />
-          }
-        </StyledStack>
-      </Grid>
+                {isDefault!==undefined &&
+                  <IconTooltip
+                    title={isDefault?ICONS.DEFAULT.heading:ICONS.NOT_DEFAULT.heading}
+                    color={isDefault?ICONS.DEFAULT.color:ICONS.NOT_DEFAULT.color}
+                    icon={isDefault?ICONS.DEFAULT.icon:ICONS.NOT_DEFAULT.icon}
+                  />
+                }
+              </StyledStack>
+            </Grid>
 
-      <Grid item  sx={{ ml:'auto', mt:0.5}}>
-        <StyledStack>
-        
-          {onUpdatePassword && 
-            <IconTooltip title="Update Password" onClick={onUpdatePassword} color={theme.palette.primary.main} icon="tabler:fingerprint"/>
-          }
+            <Grid item  sx={{ ml:'auto', mt:0.5}}>
+              <StyledStack>
+                {onUpdatePassword && 
+                  <IconTooltip title="Update Password" onClick={onUpdatePassword} color={theme.palette.primary.main} icon="tabler:fingerprint"/>
+                }
 
-          {onEdit && 
-            <IconTooltip title="Edit" onClick={onEdit} color={theme.palette.info.dark} icon="tabler:edit"/>
-          }
+                {onEdit && 
+                  <IconTooltip title="Edit" onClick={onEdit} color={theme.palette.info.dark} icon="tabler:edit"/>
+                }
 
-          {onDelete &&
-            <IconTooltip title="Delete" onClick={onDeleteConfirm} color={theme.palette.error.dark} icon="tabler:trash" />
-          }
-        </StyledStack>
-
-        <ConfirmDialog open={openConfirm} onClose={onDeleteConfirm} title="Archive"
-          content="Are you sure you want to Archive?"
-          action={
-            <LoadingButton variant="contained" color="error" loading={(isSubmitSuccessful || isSubmitting) && isLoading}
-              disabled={isSubmitting} onClick={handleSubmit(onDelete)}
-            >
-              Archive
-            </LoadingButton>
-          }
-        />
-      </Grid>
+                {onDelete &&
+                  <IconTooltip title="Delete" onClick={onDeleteConfirm} color={theme.palette.error.dark} icon="tabler:trash" />
+                }
+              </StyledStack>
+              <ConfirmDialog open={openConfirm} onClose={onDeleteConfirm} title="Archive"
+                content="Are you sure you want to Archive?"
+                action={
+                  <LoadingButton variant="contained" color="error" loading={(isSubmitSuccessful || isSubmitting) && isLoading}
+                    disabled={isSubmitting} onClick={handleSubmit(onDelete)}
+                  >
+                    Archive
+                  </LoadingButton>
+                }
+              />
+            </Grid>
+          </>
+        )
+      }
     </Grid>
   );
 }

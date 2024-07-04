@@ -225,7 +225,7 @@ export function addUser(param) {
         email: param?.email,
         gender: param?.gender?._id,
         religion: param?.religion?._id,
-        roles: param?.roles,
+        roles: param.roles.map(role => role?._id ),
         status: param?.status?._id,
         password: param?.password,
         confirmPassword: param?.confirmPassword,
@@ -255,7 +255,7 @@ export function  updateUser(param, id) {
         email: param?.email,
         gender: param?.gender?._id,
         religion: param?.religion?._id,
-        roles: param?.roles,
+        roles: param.roles.map(role => role?._id ),
         status: param?.status?._id,
         isActive:param?.isActive
       }
@@ -351,7 +351,7 @@ export function sendResetPasswordEmail(email) {
       const data = {
         email
       }
-      const response = await axios.post(`${CONFIG.SERVER_URL}forgetPassword`,data);
+      const response = await axios.post(`${CONFIG.SERVER_URL}users/forgetPassword`,data);
       dispatch(slice.actions.resetLoadingResetPasswordEmail());
       return response; 
     } catch (error) {

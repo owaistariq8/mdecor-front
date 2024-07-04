@@ -130,18 +130,23 @@ export function addItem(params) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const data = {
-        name: params.name,
-        category: params.itemCategory,
-        description: params.description,
-        price: params.price,
-        stockQuantity: params.stockQuantity,
-        status: params.status,
-        images: params.images,
-        isActive: params.isActive,
-      }
+      
+      const formData = new FormData();
+      Object.keys(params).forEach(key => {
+        if (key === 'images' && Array.isArray(params[key])) {
+          // Handle images array separately
+          params[key].forEach((image, index) => {
+            if (image) {
+              formData.append('images', image);
+            }
+          });
+        } else {
+          // Append other key-value pairs to formData
+          formData.append(key, params[key]);
+        }
+      });
 
-      const response = await axios.post(`${CONFIG.SERVER_URL}items/`, data);
+      const response = await axios.post(`${CONFIG.SERVER_URL}items/`, formData);
       dispatch(slice.actions.setResponseMessage('Item Saved successfully'));
       return response;
     } catch (error) {
@@ -164,7 +169,6 @@ export function updateItem(id, params) {
         price: params.price,
         stockQuantity: params.stockQuantity,
         status: params.status,
-        image: params.image,
         isActive: params.isActive
       }
       await axios.patch(`${CONFIG.SERVER_URL}items/${id}`, data);
@@ -265,11 +269,26 @@ export function deleteItem(id) {
   };
 }
 
-export function addItemFiles(id, data) {
+export function addItemFiles(id, params) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.patch(`${CONFIG.SERVER_URL}items/${id}/files`,data);
+      const formData = new FormData();
+      Object.keys(params).forEach(key => {
+        if (key === 'images' && Array.isArray(params[key])) {
+          // Handle images array separately
+          params[key].forEach((image, index) => {
+            if (image) {
+              formData.append('images', image);
+            }
+          });
+        } else {
+          // Append other key-value pairs to formData
+          formData.append(key, params[key]);
+        }
+      });
+      
+      const response = await axios.patch(`${CONFIG.SERVER_URL}items/${id}/files`,formData);
       dispatch(slice.actions.addMachineServiceRecordFilesSuccess());
     } catch (error) {
       console.error(error);
