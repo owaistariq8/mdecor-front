@@ -149,7 +149,7 @@ async function resetPassword(req, res) {
 		const salt = await bcrypt.genSalt(10);
         const newPassword = await bcrypt.hash(req.body.password, salt);
 
-        const email = req.params.email;
+        const email = req.body.email;
         const user = await User.findOne({ email });
 
         if (!user) 

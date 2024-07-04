@@ -59,7 +59,7 @@ function ChangePasswordByAdminDialog() {
 
   const senResetPasswordLink = async () => {
     try{
-      await dispatch(sendResetPasswordEmail(user?.login));
+      await dispatch(sendResetPasswordEmail(user?.email));
       await dispatch(resetLoadingResetPasswordEmail());
       await dispatch(setChangePasswordByAdminDialog(false));
       await enqueueSnackbar('Email Sent Successfully!');
@@ -71,6 +71,7 @@ function ChangePasswordByAdminDialog() {
 
   const onSubmit = async (data) => {
     try {
+      data.email = user?.email;
       await dispatch(userPasswordUpdate(data));
       reset();
       dispatch(setChangePasswordByAdminDialog(false));

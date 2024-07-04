@@ -68,7 +68,7 @@ export default function UserChangePassword() {
 
   const senResetPasswordLink = async () => {
     try{
-      await dispatch(sendResetPasswordEmail(user?.login))
+      await dispatch(sendResetPasswordEmail(user?.email))
       await dispatch(resetLoadingResetPasswordEmail())
       await enqueueSnackbar('Email sent successfully!');
     }catch(e){
