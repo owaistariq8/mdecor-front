@@ -9,17 +9,17 @@ const fs = require('fs');
 
 async function getItemById(req, res) {
 	try {
-		const custID = req.params.id;
+		const itemId = req.params.id;
 
-		if(mongoose.Types.ObjectId.isValid(custID)) {
-        	const item = await Item.findById(custID);
+		if(mongoose.Types.ObjectId.isValid(itemId)) {
+        	const item = await Item.findById(itemId).populate('images');
         	if(item)
 	    		res.status(200).json(item);
 	    	else 
 	    		res.status(404).json({});
 		}
 		else
-	    	res.status(400).json({ message:'Invalid custID' });
+	    	res.status(400).json({ message:'Invalid itemId' });
 
     } catch (err) {
         console.log('Exception controllers/item.js => getItemById => ', err);
