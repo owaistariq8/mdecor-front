@@ -32,17 +32,18 @@ function ChangePasswordByAdminDialog() {
 
   const { isAllAccessAllowed } = useAuthContext();
   const ChangePassWordSchema = Yup.object().shape({
-    newPassword: Yup.string()
+    password: Yup.string()
       .min(6, 'Password must be at least 6 characters')
       .max(18, 'Password must be less than 18 characters')
       .required('New Password is required'),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+      confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
   });
 
 
   const defaultValues = {
-    newPassword: '',
-    confirmNewPassword: '',
+    email:user?.email,
+    password: '',
+    confirmPassword: '',
   };
 
   const methods = useForm({
@@ -70,7 +71,7 @@ function ChangePasswordByAdminDialog() {
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(userPasswordUpdate(data, user._id, true));
+      await dispatch(userPasswordUpdate(data));
       reset();
       dispatch(setChangePasswordByAdminDialog(false));
       enqueueSnackbar('Password has been updated Successfully!');
@@ -100,13 +101,14 @@ function ChangePasswordByAdminDialog() {
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} >
       <DialogContent dividers sx={{py:2}}>
           <Box rowGap={2} display="grid">
-              <RHFTextField name="firstName" label="First Name" value={user?.firstName || '' } disabled />
+              
+              {/* <RHFTextField name="firstName" label="First Name" value={user?.firstName || '' } disabled />
               <RHFTextField name="lastName" label="Last Name" value={user?.lastName || '' } disabled />
-              <RHFTextField name="login" label="Login" value={user?.login || '' } disabled />
+              <RHFTextField name="login" label="Login" value={user?.login || '' } disabled /> */}
               <RHFTextField name="email" label="Email" value={user?.email || ''} disabled />
 
               <RHFTextField
-                name="newPassword"
+                name="password"
                 label="New Password"
                 type={showNewPassword ? 'text' : 'password'}
                 InputProps={{
@@ -121,7 +123,7 @@ function ChangePasswordByAdminDialog() {
                 autoComplete="current-password"
               />
               <RHFTextField
-                name="confirmNewPassword"
+                name="confirmPassword"
                 label="Confirm Password"
                 type={showConfirmPassword ? 'text' : 'password'}
                 InputProps={{

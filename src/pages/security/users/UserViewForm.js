@@ -86,7 +86,7 @@ export default function UserViewForm() {
       <Card>
         <CardContent>
           <Grid container sx={{display:{ md:'flex', sm: 'block' }, justifyContent:{md: 'space-between'}}} >
-            <ViewFormTopBar isActive={defaultValues.isActive} onBackLink={handleBackLink} onDelete={handleDelete} onEdit={handleEdit} />
+            <ViewFormTopBar isActive={defaultValues.isActive} onBackLink={handleBackLink} onUpdatePassword={handleUpdatePassword} onDelete={handleDelete} onEdit={handleEdit} />
             <ViewFormField isLoading={isLoading} sm={6} heading="First Name" param={defaultValues?.firstName} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Last Name" param={defaultValues?.lastName} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Phone" param={defaultValues?.phone} />

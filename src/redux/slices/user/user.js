@@ -326,13 +326,11 @@ export function deleteUser(id) {
 }
 //------------------------------------------------------------------------------
 
-export function userPasswordUpdate(data, Id, isAdmin) {
+export function userPasswordUpdate(data) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try{
-      
-
-      const response = await axios.patch(`${CONFIG.SERVER_URL}users/updatePassword/${Id}`);
+      const response = await axios.post(`${CONFIG.SERVER_URL}users/resetPassword`,data);
       if(regEx.test(response.status)){
         dispatch(slice.actions.setResponseMessage(response.data));
       }

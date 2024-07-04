@@ -19,6 +19,7 @@ function ViewFormTopBar({
   isDefault,
   isRequired,
   onBackLink,
+  onUpdatePassword,
   onEdit,
   onDelete,
 }) {
@@ -76,8 +77,13 @@ function ViewFormTopBar({
 
       <Grid item  sx={{ ml:'auto', mt:0.5}}>
         <StyledStack>
+        
+          {onUpdatePassword && 
+            <IconTooltip title="Update Password" onClick={onUpdatePassword} color={theme.palette.primary.main} icon="tabler:fingerprint"/>
+          }
+
           {onEdit && 
-            <IconTooltip title="Edit" onClick={onEdit} color={theme.palette.primary.main} icon="tabler:edit"/>
+            <IconTooltip title="Edit" onClick={onEdit} color={theme.palette.info.dark} icon="tabler:edit"/>
           }
 
           {onDelete &&
@@ -109,6 +115,7 @@ ViewFormTopBar.propTypes = {
   isRequired: PropTypes.bool,
   
   onBackLink: PropTypes.func,
+  onUpdatePassword: PropTypes.func,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
 };
