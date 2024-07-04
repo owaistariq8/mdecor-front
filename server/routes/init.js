@@ -9,6 +9,7 @@ const customers = require('./customers');
 const roles = require('./roles');
 const categories = require('./categories');
 const items = require('./items');
+const orders = require('./orders');
 
 
 module.exports = function(app) {
@@ -35,6 +36,7 @@ module.exports = function(app) {
   app.use('/roles', roles);
   app.use('/categories', categories);
   app.use('/items', items);
+  app.use('/orders', orders);
 
 
 }
