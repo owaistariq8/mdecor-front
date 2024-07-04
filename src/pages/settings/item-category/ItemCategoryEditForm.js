@@ -67,7 +67,7 @@ export default function ItemCategoryEditForm() {
       enqueueSnackbar('Item Category updated successfully!');
       navigate(PATH_SETTING.item_category.list);
     } catch ( error ) {
-      enqueueSnackbar( error, { variant: `error` });
+      enqueueSnackbar( error?.message, { variant: `error` });
       console.error( error );
     }
   };

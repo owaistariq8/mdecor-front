@@ -123,15 +123,22 @@ export function addItemCategory(params) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const data = {
-        name: params.name,
-        desc: params.desc,
-        image: params.image,
-        active: params.active,
-        default: params.default,
-      }
+      const formData = new FormData();
+      Object.keys(params).forEach(key => {
+        if (key === 'images' && Array.isArray(params[key])) {
+          // Handle images array separately
+          params[key].forEach((image, index) => {
+            if (image) {
+              formData.append('images', image);
+            }
+          });
+        } else {
+          // Append other key-value pairs to formData
+          formData.append(key, params[key]);
+        }
+      });
 
-      const response = await axios.post(`${CONFIG.SERVER_URL}categories/`, data);
+      const response = await axios.post(`${CONFIG.SERVER_URL}categories/`, formData);
       dispatch(slice.actions.setResponseMessage('Item Category Saved successfully'));
       return response;
     } catch (error) {
@@ -151,9 +158,8 @@ export function updateItemCategory(id, params) {
       const data = {
         name: params.name,
         desc: params.desc,
-        image: params.image,
-        active: params.active,
-        default: params.default,
+        isActive: params.isActive,
+        isDefault: params.isDefault,
       }
       await axios.patch(`${CONFIG.SERVER_URL}categories/update/${id}`, data);
       dispatch(slice.actions.setResponseMessage('Item Category updated successfully'));
@@ -189,7 +195,7 @@ export function getActiveItemCategories() {
       const response = await axios.get(`${CONFIG.SERVER_URL}categories`,
       {
         params: {
-          active: true,
+          isActive: true,
         }
       }
       );
@@ -238,3 +244,55 @@ export function deleteItemCategory(id) {
     }
   };
 }
+
+export function addItemCategoryFiles(id, params) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const formData = new FormData();
+      Object.keys(params).forEach(key => {
+        if (key === 'images' && Array.isArray(params[key])) {
+          // Handle images array separately
+          params[key].forEach((image, index) => {
+            if (image) {
+              formData.append('images', image);
+            }
+          });
+        } else {
+          // Append other key-value pairs to formData
+          formData.append(key, params[key]);
+        }
+      });
+      
+      const response = await axios.patch(`${CONFIG.SERVER_URL}categories/${id}/files`,formData);
+      dispatch(slice.actions.addMachineServiceRecordFilesSuccess());
+    } catch (error) {
+      console.error(error);
+      dispatch(slice.actions.hasError(error.Message));
+      throw error;
+    }
+  };
+
+}
+
+export function downloadFile(id, fileId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    const response = await axios.get(`${CONFIG.SERVER_URL}categories/${id}/files/${fileId}/download/` );
+    return response;
+  };
+}
+
+export function deleteFile(id, fileId) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.patch(`${CONFIG.SERVER_URL}categories/${id}/files/${fileId}`);
+      dispatch(slice.actions.setResponseMessage(response.data));
+    } catch (error) {
+      console.error(error);
+      dispatch(slice.actions.hasError(error.Message));
+      throw error;
+    }
+  };
+  }

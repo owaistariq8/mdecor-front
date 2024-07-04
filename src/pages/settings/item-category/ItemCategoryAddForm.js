@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // form
@@ -14,10 +14,11 @@ import { addItemCategory } from '../../../redux/slices/settings/itemCategory';
 // components
 import { useSnackbar } from '../../../components/snackbar';
 // assets
-import FormProvider, { RHFTextField } from '../../../components/hook-form';
+import FormProvider, { RHFTextField, RHFUpload } from '../../../components/hook-form';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 import { Cover } from '../../../components/Defaults/Cover';
 import { StyledCardContainer } from '../../../theme/styles/default-styles';
+import { validateImageFileType } from '../../../components/file-thumbnail';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +30,12 @@ export default function ItemCategoryAddForm() {
   const CategorySchema = Yup.object().shape({
     name: Yup.string().min(2).max(50).required('Name is required!'),
     desc: Yup.string().max(10000),
+    images: Yup.mixed().required('Category image is required!')
+    .test(
+      'fileType',
+      'Only the following formats are accepted: .jpeg, .jpg, gif, .bmp, .webp',
+      validateImageFileType
+    ).nullable(true),
     isActive: Yup.boolean(),
     isDefault: Yup.boolean(),
   });
@@ -37,7 +44,7 @@ export default function ItemCategoryAddForm() {
     () => ({
       name: '',
       desc: '',
-      image:'',
+      images:[],
       isActive: true,
       isDefault: false,
     }),
@@ -52,9 +59,13 @@ export default function ItemCategoryAddForm() {
 
   const {
     reset,
+    watch,
+    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+
+  const { images } = watch();
 
   const onSubmit = async (data) => {
     try {
@@ -63,10 +74,27 @@ export default function ItemCategoryAddForm() {
       enqueueSnackbar('Item Category added successfully!');
       navigate(PATH_SETTING.item_category.list);
     } catch ( error ) {
-      enqueueSnackbar( error, { variant: `error` });
+      enqueueSnackbar( error?.message, { variant: `error` });
       console.error( error );
     }
   };
+
+  const handleDropMultiFile = useCallback(
+    async (acceptedFiles) => {
+      const docFiles = images || [];
+      
+      const newFiles = acceptedFiles.map((file, index) => 
+          Object.assign(file, {
+            preview: URL.createObjectURL(file)
+          })
+        
+      );
+      setValue('images', [...docFiles, ...newFiles], { shouldValidate: true });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ images ]
+  );
+
 
   const toggleCancel = () => navigate(PATH_SETTING.item_category.list);
 
@@ -81,6 +109,16 @@ export default function ItemCategoryAddForm() {
             <Card sx={{ p:3, pb:1 }}>
               <Stack spacing={2}>
                 <RHFTextField name="name" label="Name" />
+                <RHFUpload multiple  thumbnail 
+                  name="images" imagesOnly
+                  onDrop={handleDropMultiFile}
+                  onRemove={(inputFile) =>
+                    images && images.length > 1 ?
+                    setValue('images', images?.filter((file) => file !== inputFile), { shouldValidate: true })
+                    :setValue('images', '', { shouldValidate: true })
+                  }
+                  onRemoveAll={() => setValue('images', '', { shouldValidate: true })}
+                />
                 <RHFTextField name="desc" label="Description" minRows={8} multiline />
               </Stack>
               <AddFormButtons isActive isDefault isSubmitting={isSubmitting} toggleCancel={toggleCancel} />

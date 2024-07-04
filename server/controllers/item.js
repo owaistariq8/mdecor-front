@@ -12,7 +12,7 @@ async function getItemById(req, res) {
 		const itemId = req.params.id;
 
 		if(mongoose.Types.ObjectId.isValid(itemId)) {
-        	const item = await Item.findById(itemId).populate('images');
+        	const item = await Item.findById(itemId).populate('images').populate('category');
         	if(item)
 	    		res.status(200).json(item);
 	    	else 
@@ -33,7 +33,7 @@ async function getItems(req, res) {
 		const query = req.query;
 
 		if(query && typeof query == 'object') {
-        	const items = await Item.find(query);
+        	const items = await Item.find(query).populate('category');
     		res.status(200).json(items);
 		}
 		else

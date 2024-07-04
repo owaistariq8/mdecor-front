@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useLayoutEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +10,7 @@ import { Card, Grid, Stack, Container, Box } from '@mui/material';
 // ROUTES
 import { PATH_SETTING } from '../../../routes/paths';
 // slice
-import { updateItem } from '../../../redux/slices/settings/item';
+import { getItem, resetItem, updateItem } from '../../../redux/slices/settings/item';
 import { getActiveItemCategories, resetActiveItemCategories } from '../../../redux/slices/settings/itemCategory';
 // components
 import { useSnackbar } from '../../../components/snackbar';
@@ -22,40 +22,50 @@ import PageCover from '../../../components/Defaults/PageCover';
 // ----------------------------------------------------------------------
 
 export default function ItemEditForm() {
+
+  const { id } = useParams();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { item } = useSelector((state) => state.item);
+  const { item, isLoading } = useSelector((state) => state.item);
   const { activeItemCategories } = useSelector((state) => state.itemCategory);
 
   useLayoutEffect(() => {
+    dispatch(getItem(id));
     dispatch(getActiveItemCategories());
     return () =>{
+      dispatch(resetItem());
       dispatch(resetActiveItemCategories());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [id, dispatch]);
 
-  const ItemSchema = Yup.object().shape({
-    name: Yup.string().min(2).max(50).required('Name is required!'),
-    itemCategory: Yup.object().required('Category is required!'),
-    desc: Yup.string().max(10000),
-    stockQuantity: Yup.number().max(1000),
-    isActive: Yup.boolean(),
-  });
 
   const defaultValues = useMemo(
     () => ({
-      name: item?.name,
-      itemCategory:item?.itemCategory,
-      desc: item?.desc,
-      stockQuantity:item?.stockQuantity,
-      isActive: item?.isActive,
+      name: item?.name || '',
+      category:item?.category?.name || '',
+      price:item?.price || null,
+      stockQuantity:item?.stockQuantity || null,
+      desc: item?.desc || '',
+      isActive: item?.isActive
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [item]
+    [ ]
   );
+
+
+
+  const ItemSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required!').min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
+    category: Yup.object().nullable().required('Category is required!'),
+    price: Yup.number().nullable().required('Price is required').min(1, 'Price can\'t be 0'),
+    stockQuantity: Yup.number().nullable().min(0, 'Quantity must be at least 0').max(1000, 'Quantity must be less than 1000'),
+    desc: Yup.string().nullable().max(10000, 'Description must be less than 10000 characters'),
+    isActive: Yup.boolean(),
+  });
 
   const methods = useForm({
     resolver: yupResolver(ItemSchema),
@@ -75,7 +85,7 @@ export default function ItemEditForm() {
       enqueueSnackbar('Item updated successfully!');
       navigate(PATH_SETTING.item.view(item._id));
     } catch ( error ) {
-      enqueueSnackbar( error, { variant: `error` });
+      enqueueSnackbar( error?.message, { variant: `error` });
       console.error( error );
     }
   };
@@ -90,17 +100,17 @@ export default function ItemEditForm() {
           <Grid item xs={18} md={12}>
             <Card sx={{ p:3, pb:1 }}>
               <Stack spacing={2}>
-                <RHFTextField name="name" label="Name" />
+                <RHFTextField name="name" label="Name*" />
                 <RHFAutocomplete
-                  name="itemCategory" 
-                  label="Item Category"
+                  name="category" 
+                  label="Item Category*"
                   options={activeItemCategories}
                   getOptionLabel={(option) => option?.name || ''}
                   isOptionEqualToValue={(option, value) => option._id === value._id}
                   renderOption={(props, option) => (<li {...props} key={option.key}> {option.name || ''}</li>)}
                 />
                 <Box rowGap={2} columnGap={2} display="grid" gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }} >
-                  <RHFTextField name="price" label="Price" />
+                  <RHFTextField name="price" label="Price*" />
                   <RHFTextField name="stockQuantity" label="Stock Quantity" />
                 </Box>
                 <RHFTextField name="desc" label="Description" minRows={8} multiline />

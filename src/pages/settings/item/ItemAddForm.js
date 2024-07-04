@@ -11,7 +11,7 @@ import { Card, Grid, Stack, Container, Box } from '@mui/material';
 import { PATH_SETTING } from '../../../routes/paths';
 // slice
 import { addItem } from '../../../redux/slices/settings/item';
-import { getItemCategories, resetItemCategories } from '../../../redux/slices/settings/itemCategory';
+import { getActiveItemCategories, getItemCategories, resetActiveItemCategories, resetItemCategories } from '../../../redux/slices/settings/itemCategory';
 // components
 import { useSnackbar } from '../../../components/snackbar';
 // assets
@@ -27,38 +27,37 @@ export default function ItemAddForm() {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { itemCategories } = useSelector((state) => state.itemCategory);
+  const { activeItemCategories } = useSelector((state) => state.itemCategory);
 
   useLayoutEffect(() => {
-    dispatch(getItemCategories());
+    dispatch(getActiveItemCategories());
     return () =>{
-      dispatch(resetItemCategories());
+      dispatch(resetActiveItemCategories());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   const ItemSchema = Yup.object().shape({
-    name: Yup.string().min(2).max(50).required('Name is required!'),
-    itemCategory: Yup.object().required('Category is required!'),
-    desc: Yup.string().max(10000),
-    stockQuantity: Yup.number().max(1000),
-    status: Yup.string(),
-    images: Yup.mixed().required('Item image is required!')
-    .test(
-      'fileType',
-      'Only the following formats are accepted: .jpeg, .jpg, gif, .bmp, .webp',
-      validateImageFileType
-    ).nullable(true),
-    isActive: Yup.boolean(),
+    name: Yup.string().required('Name is required!').min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
+    category: Yup.object().nullable().required('Category is required!'),
+    price: Yup.number().nullable().required('Price is required!').min(1, 'Price can\'t be 0'),
+    stockQuantity: Yup.number().nullable().min(0, 'Quantity must be at least 0').max(1000, 'Quantity must be less than 1000'),
+    desc: Yup.string().nullable().max(10000, 'Description must be less than 10000 characters'),
+    images: Yup.mixed() .required('Image is required!')
+      .test('fileType', 'Only the following formats are accepted: .jpeg, .jpg, .gif, .bmp, .webp',
+        validateImageFileType
+      ).nullable(true),
+    isActive: Yup.boolean()
   });
 
   const defaultValues = useMemo(
     () => ({
       name: '',
-      itemCategory:null,
+      category:null,
       desc: '',
-      stockQuantity:0,
-      images:null,
+      price:null,
+      stockQuantity:null,
+      images:[],
       isActive: true,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,6 +79,7 @@ export default function ItemAddForm() {
 
   const { images } = watch();
 
+  
   const onSubmit = async (data) => {
     try {
       await dispatch(addItem(data));
@@ -87,7 +87,7 @@ export default function ItemAddForm() {
       enqueueSnackbar('Item added successfully!');
       navigate(PATH_SETTING.item.list);
     } catch ( error ) {
-      enqueueSnackbar( error, { variant: `error` });
+      enqueueSnackbar( error?.message, { variant: `error` });
       console.error( error );
     }
   };
@@ -118,18 +118,18 @@ export default function ItemAddForm() {
           <Grid item xs={18} md={12}>
             <Card sx={{ p:3, pb:1 }}>
               <Stack spacing={2}>
-                <RHFTextField name="name" label="Name" />
+                <RHFTextField name="name" label="Name*" />
                 <RHFAutocomplete
-                  name="itemCategory" 
-                  label="Item Category"
-                  options={itemCategories}
+                  name="category" 
+                  label="Item Category*"
+                  options={activeItemCategories}
                   getOptionLabel={(option) => option?.name || ''}
                   isOptionEqualToValue={(option, value) => option._id === value._id}
                   renderOption={(props, option) => (<li {...props} key={option.key}> {option.name || ''}</li>)}
                 />
                 <Box rowGap={2} columnGap={2} display="grid" gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }} >
-                  <RHFTextField type='number' name="price" label="Price" />
-                  <RHFTextField type='number' name="stockQuantity" label="Stock Quantity" />
+                  <RHFTextField name="price" label="Price*" />
+                  <RHFTextField name="stockQuantity" label="Stock Quantity" />
                 </Box>
                 <RHFUpload multiple  thumbnail 
                   name="images" imagesOnly

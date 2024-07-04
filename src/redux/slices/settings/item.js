@@ -130,23 +130,19 @@ export function addItem(params) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      
+
       const formData = new FormData();
       Object.keys(params).forEach(key => {
         if (key === 'images' && Array.isArray(params[key])) {
-          // Handle images array separately
           params[key].forEach((image, index) => {
             if (image) {
               formData.append('images', image);
             }
           });
         } 
-        else if(key === 'itemCategory') {
-          // Append other key-value pairs to formData
-          console.log(params[key]);
+        else if(key === 'category') {
           formData.append('category', params[key]._id);
         } else {
-          // Append other key-value pairs to formData
           formData.append(key, params[key]);
         }
       });
@@ -169,11 +165,10 @@ export function updateItem(id, params) {
     try {
       const data = {
         name: params.name,
-        itemCategory: params.itemCategory,
-        description: params.description,
+        category: params.category._id,
+        desc: params.desc,
         price: params.price,
         stockQuantity: params.stockQuantity,
-        status: params.status,
         isActive: params.isActive
       }
       await axios.patch(`${CONFIG.SERVER_URL}items/${id}`, data);
@@ -281,7 +276,6 @@ export function addItemFiles(id, params) {
       const formData = new FormData();
       Object.keys(params).forEach(key => {
         if (key === 'images' && Array.isArray(params[key])) {
-          // Handle images array separately
           params[key].forEach((image, index) => {
             if (image) {
               formData.append('images', image);

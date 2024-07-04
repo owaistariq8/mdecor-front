@@ -48,7 +48,7 @@ export default function RoleViewForm() {
   };
   
   const handleEdit = async () => {
-    navigate(PATH_SETTING.item.edit(item._id));
+    navigate(PATH_SETTING.item.edit(id));
   };
 
   const handleBacklink = async () => {
@@ -59,7 +59,7 @@ export default function RoleViewForm() {
     () => ({
       name: item?.name,
       desc: item?.desc || '',
-      category:item?.category || '',
+      category:item?.category?.name || '',
       images:item?.images || [],
       isActive: item?.isActive,
       createdAt: item?.createdAt || '',
@@ -150,15 +150,13 @@ export default function RoleViewForm() {
       <PageCover title={item?.name} handleBacklink={handleBacklink} backIcon setting /> 
       <Card sx={{ p: 2 }}>
         <Grid>
-          <ViewFormTopBar onEdit={handleEdit} onDelete={onDelete} />
+          <ViewFormTopBar isActive={defaultValues.isActive} onEdit={handleEdit} onDelete={onDelete} />
           <Grid container sx={{mt:2}}>
-            <ViewFormField isLoading={isLoading} sm={12} heading="Name" param={defaultValues.name} />
+            <ViewFormField isLoading={isLoading} sm={6} heading="Name" param={defaultValues.name} />
+            <ViewFormField isLoading={isLoading} sm={6} heading="Category" param={defaultValues.category} />
             <ViewFormField isLoading={isLoading} sm={12} heading="Description" param={defaultValues.desc} />
             <ViewFormAudit defaultValues={defaultValues} />
           </Grid>
-          {/* <Button onClick={handleAddItemFile}>Test</Button> */}
-          {/* <FormLabel content='Images' /> */}
-          
         </Grid>
       </Card>
       <Card sx={{mt:2}}>

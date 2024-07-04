@@ -7,15 +7,14 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, Alert, Typography, Divider } from '@mui/material';
+import { Link, Stack, Alert, Divider } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { QRCodeCanvas } from 'qrcode.react';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // auth
 import { useAuthContext } from '../../auth/useAuthContext';
 // components
-import FormProvider, { RHFTextField, RHFCheckbox, RHFPasswordField } from '../../components/hook-form';
+import FormProvider, { RHFTextField, RHFPasswordField } from '../../components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function AuthLoginForm() {
@@ -99,6 +98,18 @@ export default function AuthLoginForm() {
         <Link component={RouterLink} to={PATH_AUTH.register} variant="body2" color="inherit" underline="always" >Create Account</Link>
         <Link component={RouterLink} to={PATH_AUTH.resetPassword} variant="body2" color="inherit" underline="always" >Forgot password?</Link>
       </Stack>
+      <Divider
+        sx={{
+          my: 2.5,
+          typography: 'overline',
+          color: 'text.disabled',
+          '&::before, ::after': {
+            borderTopStyle: 'solid',
+          },
+        }}
+      >
+        OR
+      </Divider>
       <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
     </FormProvider>
   );

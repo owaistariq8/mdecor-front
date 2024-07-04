@@ -106,7 +106,7 @@ function MachineTransferDialog() {
         navigate(PATH_MACHINE.machines.view(machineId));
         handleMachineDialog()
       } catch (error) {
-        enqueueSnackbar( error, { variant: `error` });
+        enqueueSnackbar( error?.message, { variant: `error` });
         console.error(error);
       }
   };

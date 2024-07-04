@@ -65,7 +65,7 @@ export default function RoleAddForm() {
       enqueueSnackbar('Role Save Successfully!');
       navigate(PATH_SETTING.role.list);
     } catch ( error ) {
-      enqueueSnackbar( error, { variant: `error` });
+      enqueueSnackbar( error?.message, { variant: `error` });
       console.error( error );
     }
   };
