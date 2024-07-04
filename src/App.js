@@ -30,6 +30,8 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 // @mui
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+
+
 // Error Boundry
 import ErrorBoundary from './utils/ErrorBoundary';
 
@@ -54,11 +56,13 @@ import IdleManager from './components/idleManager';
 
 import Page500 from './pages/Page500';
 import { AuthProvider } from './auth/JwtContext';
+
 // import { WebSocketProvider } from './auth/WebSocketContext';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
+  
   return (
     <AuthProvider>
       <HelmetProvider>

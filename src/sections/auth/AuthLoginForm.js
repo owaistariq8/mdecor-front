@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import * as Yup from 'yup';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -73,6 +75,15 @@ export default function AuthLoginForm() {
     }
   };
 
+  const responseMessage = (response) => {
+    console.log(response);
+  };
+  const errorMessage = (error) => {
+    console.log(error);
+  };
+                              
+
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={2} sx={{mt:1}}>
@@ -88,6 +99,7 @@ export default function AuthLoginForm() {
         <Link component={RouterLink} to={PATH_AUTH.register} variant="body2" color="inherit" underline="always" >Create Account</Link>
         <Link component={RouterLink} to={PATH_AUTH.resetPassword} variant="body2" color="inherit" underline="always" >Forgot password?</Link>
       </Stack>
+      <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
     </FormProvider>
   );
 
