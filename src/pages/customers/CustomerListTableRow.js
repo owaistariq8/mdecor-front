@@ -36,18 +36,19 @@ export default function CustomerListTableRow({
   onViewRow,
   isArchived,
 }) {
-  const { code, firstName, lastName, phone, email, city, isActive, createdAt, type } = row;
+  const { code, firstName, lastName, phone, email, isActive, createdAt } = row;
   
-  const smScreen = useScreenSize('sm')
+  const smScreen = useScreenSize('sm');
+  const mdScreen = useScreenSize('md');
+  
   return (
     <StyledTableRow hover selected={selected}>
       <TableCellCustom onClick={onViewRow} param={code} />
       <TableCellCustom onClick={onViewRow} param={`${firstName} ${lastName}`} />
-      <TableCellCustom param={phone} />
-      <TableCellCustom param={email} />
-      <TableCellCustom param={city} />
+      {smScreen && <TableCellCustom param={phone} />}
+      {mdScreen && <TableCellCustom param={email} />}
       <TableCell align="center"><Switch checked={isActive} disabled size="small" /></TableCell>
-      <TableCell>{fDate(createdAt)}</TableCell>
+      {mdScreen && <TableCell>{fDate(createdAt)}</TableCell>}
     </StyledTableRow>
   );
 }

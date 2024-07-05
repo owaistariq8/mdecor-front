@@ -8,17 +8,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { Box, Card, Grid, Container, CardContent, Divider, CardActions } from '@mui/material';
 // slice
-import { addCustomer, getCustomer, resetCustomer } from '../../redux/slices/customer/customer';
+import { addCustomer, getCustomer, resetCustomer, updateCustomer } from '../../redux/slices/customer/customer';
 // routes
 import { PATH_CUSTOMERS } from '../../routes/paths';
 // components
 import { useSnackbar } from '../../components/snackbar';
-import FormProvider, {
-  RHFTextField,
-  RHFCountryAutocomplete,
-  RHFChipsInput,
-} from '../../components/hook-form';
-import { AddCustomerSchema } from '../schemas/customer';
+import FormProvider, { RHFTextField } from '../../components/hook-form';
+import { CustomerSchema } from '../schemas/customer';
 import PageCover from '../../components/Defaults/PageCover';
 import { StyledCardHeader } from '../../components/settings/styles';
 import AddFormButtons from '../../components/DocumentForms/AddFormButtons';
@@ -42,7 +38,7 @@ export default function CustomerEditForm() {
   
   const defaultValues = useMemo(
     () => ({
-      fullName: `${customer?.firstName || ''} ${customer?.lastName || ''}`,
+      code: customer?.code || '',
       firstName: customer?.firstName || '',
       lastName: customer?.lastName || '',
       type: customer?.type || '',
@@ -59,7 +55,7 @@ export default function CustomerEditForm() {
   );
 
   const methods = useForm({
-    resolver: yupResolver(AddCustomerSchema),
+    resolver: yupResolver(CustomerSchema),
     defaultValues,
   });
 
@@ -75,12 +71,12 @@ export default function CustomerEditForm() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await dispatch(addCustomer(data));
+      const response = await dispatch(updateCustomer(id, data));
       reset();
-      enqueueSnackbar('Customer added successfully!');
-      navigate(PATH_CUSTOMERS.customers.view(response.data.Customer._id));
+      enqueueSnackbar('Customer updated successfully!');
+      navigate(PATH_CUSTOMERS.customers.view(id));
     } catch (error) {
-      enqueueSnackbar(error, { variant: `error` });
+      enqueueSnackbar(error?.message, { variant: `error` });
     }
   };
 
@@ -97,15 +93,15 @@ export default function CustomerEditForm() {
                 gridTemplateColumns={{ sm: 'repeat(1, 1fr)', md: 'repeat(1, 1fr 5fr)' }}
                 sx={{mb:2}}
               >
-                <RHFTextField name="code" label='Code' />
-                <RHFTextField name="firstName" label='First Name' />
+                <RHFTextField name="code" label='Code*' />
+                <RHFTextField name="firstName" label='First Name*' />
               </Box>
               <Box
                 rowGap={2} columnGap={2} display="grid"
                 gridTemplateColumns={{ sm: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
               >
-                <RHFChipsInput name="lastName" label="Last Name"  />
-                <RHFChipsInput name="phone" label="Phone"  />
+                <RHFTextField name="lastName" label="Last Name"  />
+                <RHFTextField name="phone" label="Phone"  />
                 <RHFTextField name="email" label="Email" />
                 <RHFTextField name="website" label="Website" />
               </Box>  

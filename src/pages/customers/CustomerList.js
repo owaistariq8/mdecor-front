@@ -30,7 +30,7 @@ import ConfirmDialog from '../../components/confirm-dialog';
 // sections
 import CustomerListTableRow from './CustomerListTableRow';
 import CustomerListTableToolbar from './CustomerListTableToolbar';
-import { getCustomers, resetCustomers, ChangePage, ChangeRowsPerPage, setFilterBy, setExcludeReporting, getCustomer } from '../../redux/slices/customer/customer';
+import { getCustomers, resetCustomers, ChangePage, ChangeRowsPerPage, setFilterBy, getCustomer } from '../../redux/slices/customer/customer';
 import TableCard from '../../components/ListTableTools/TableCard';
 import { fDate } from '../../utils/formatTime';
 import { useSnackbar } from '../../components/snackbar';
@@ -42,11 +42,10 @@ import PageCover from '../../components/Defaults/PageCover';
 const TABLE_HEAD = [
   { id: 'code', label: 'Code', align: 'left' },
   { id: 'name', label: 'Name', align: 'left' },
-  { id: 'phone', label: 'Phone', align: 'left' },
-  { id: 'email', label: 'Email', align: 'left' },
-  { id: 'city', label: 'City', align: 'left' },
+  { id: 'phone', visibility:'xs1', label: 'Phone', align: 'left' },
+  { id: 'email', visibility:'sm', label: 'Email', align: 'left' },
   { id: 'isActive', label: 'Active', align: 'center' },
-  { id: 'createdAt', label: 'Created At', align: 'left' },
+  { id: 'createdAt', visibility:'sm', label: 'Created At', align: 'left' },
 ];
 
 // ----------------------------------------------------------------------

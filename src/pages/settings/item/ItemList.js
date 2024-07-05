@@ -50,7 +50,7 @@ import PageCover from '../../../components/Defaults/PageCover';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
-  { id: 'desc',visibility: 'xs1', label: 'Description', align: 'left' },
+  { id: 'desc', visibility: 'xs1', label: 'Description', align: 'left' },
   { id: 'category',visibility: 'xs1', label: 'Category', align: 'left' },
   { id: 'isActive', label: 'Active', align: 'center' },
 ];

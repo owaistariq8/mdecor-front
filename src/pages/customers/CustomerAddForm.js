@@ -18,7 +18,7 @@ import FormProvider, {
   RHFCountryAutocomplete,
   RHFChipsInput,
 } from '../../components/hook-form';
-import { AddCustomerSchema } from '../schemas/customer';
+import { CustomerSchema } from '../schemas/customer';
 import PageCover from '../../components/Defaults/PageCover';
 import { StyledCardHeader } from '../../components/settings/styles';
 import AddFormButtons from '../../components/DocumentForms/AddFormButtons';
@@ -33,23 +33,22 @@ export default function CustomerAddForm() {
 
   const defaultValues = useMemo(
     () => ({
-      // Customer detail
-      code:'',
+      code: '',
       firstName: '',
       lastName: '',
-      type:'',
-      email:'',
-      phone:'',
+      type: '',
+      phone: '',
+      email: '',
       website: '',
-      agent: null,
+      agent: {},
       isActive: true
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [ ]
   );
 
   const methods = useForm({
-    resolver: yupResolver(AddCustomerSchema),
+    resolver: yupResolver(CustomerSchema),
     defaultValues,
   });
 
@@ -68,9 +67,9 @@ export default function CustomerAddForm() {
       const response = await dispatch(addCustomer(data));
       reset();
       enqueueSnackbar('Customer added successfully!');
-      navigate(PATH_CUSTOMERS.customers.view(response.data.Customer._id));
+      navigate(PATH_CUSTOMERS.customers.view(response.data.customer._id));
     } catch (error) {
-      enqueueSnackbar(error, { variant: `error` });
+      enqueueSnackbar(error?.message, { variant: `error` });
     }
   };
 

@@ -79,7 +79,7 @@ export default function CustomerViewForm() {
             <ViewFormField isLoading={isLoading} sm={6} heading="Phone" param={defaultValues?.phone} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Email" param={defaultValues?.email} />
             <ViewFormField isLoading={isLoading} sm={6} heading="Website" param={defaultValues?.website} />
-            <ViewFormField isLoading={isLoading} sm={6} heading="Website" param={defaultValues?.agent?.name} />
+            <ViewFormField isLoading={isLoading} sm={6} heading="Agent" param={defaultValues?.agent?.name} />
         </Grid>
       </Card>
     </Container>

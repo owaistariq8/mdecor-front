@@ -6,7 +6,6 @@ import { CONFIG } from '../../../config-global';
 const initialState = {
   intial: false,
   customerTab: 'info',
-  customerEditFormFlag: false,
   responseMessage: null,
   success: false,
   isLoading: false,
@@ -37,11 +36,6 @@ const slice = createSlice({
     // SET CUSTOMER TAB
     setCustomerTab(state, action){
       state.customerTab = action.payload;
-    },
-
-    // SET TOGGLE
-    setCustomerEditFormVisibility(state, action){
-      state.customerEditFormFlag = action.payload;
     },
 
     // SET TOGGLE
@@ -121,7 +115,6 @@ export default slice.reducer;
 // Actions
 export const {
   setCustomerTab,
-  setCustomerEditFormVisibility,
   setResponseMessage,
   setFilterBy,
   setExcludeReporting,
@@ -190,51 +183,21 @@ export function deleteCustomer(id) {
 
 export function addCustomer(params) {
     return async (dispatch) => {
-      dispatch(slice.actions.resetCustomer());
       dispatch(slice.actions.startLoading());
       try {
         const data = {
-          name: params?.name,
+          code: params?.code,
+          firstName: params?.firstName,
+          lastName: params?.lastName,
+          type: params?.type,
+          phone: params?.phone,
+          email: params?.email,
           website: params?.website,
-          type: params.type,
-          site: {
-            name: params?.name,
-            phone: params?.phone || '',
-            email: params?.email,
-            address: {
-              street: params?.street,
-              suburb: params?.suburb,
-              city: params?.city,
-              postcode: params?.postcode,
-              country: params?.country?.label,
-              region: params?.region,
-            },
-          },
-          status: params.status,
+          isActive: params?.isActive,
         };
 
-        const contact = {}
-
-        if(params?.contactLastName){
-          contact.lastName = params?.contactLastName
-        }
-        if(params?.contactTitle){
-          contact.title = params?.contactTitle
-        }
-        if(params?.contactPhone?.contactNumber && params?.contactFirstName){
-          contact.phone = params?.contactPhone 
-        }
-        if(params?.contactEmail){
-          contact.email = params?.contactEmail
-        }
-        if(params?.contactFirstName){
-          contact.firstName = params?.contactFirstName
-          data.contact = contact
-        }
-
         const response = await axios.post(`${CONFIG.SERVER_URL}customers`, data);
-        return response
-        // dispatch(slice.actions.getCustomerSuccess(response.data.Customer));
+        return response;
       } catch (error) {
         console.error(error?.message);
         dispatch(slice.actions.hasError(error.Message));
@@ -247,27 +210,25 @@ export function addCustomer(params) {
 
 // --------------------------------------------------------------------------
 
-export function updateCustomer(params) {
+export function updateCustomer(id, params) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
       const data = {
-        id: params.id,
-        name: params?.name,
+        code: params?.code,
+        firstName: params?.firstName,
+        lastName: params?.lastName,
+        type: params?.type,
+        phone: params?.phone,
+        email: params?.email,
         website: params?.website,
-        type: params.type,
-        site: params.site?._id || null,
-        contact: params.contact?._id || null,
-        status: params.isActive,
+        isActive: params?.isActive,
       };
-      await axios.patch(`${CONFIG.SERVER_URL}customers/${params.id}`, data );
-      dispatch(getCustomer(params.id));
-      dispatch(slice.actions.setCustomerEditFormVisibility(false));
+      await axios.patch(`${CONFIG.SERVER_URL}customers/update/${id}`, data );
     } catch (error) {
       dispatch(slice.actions.stopLoading());
       console.error(error?.message);
       throw error;
-      // dispatch(slice.actions.hasError(error.Message));
     }
   };
 

@@ -42,12 +42,11 @@ async function getCustomers(req, res) {
 
 async function createCustomer(req, res) {
 	try {
-
-        const customer = await Customer.create(...req.body);
+        const customer = await Customer.create({...req.body});
         if(customer)
             res.status(200).json(customer);
         else 
-			return res.status(404).json({ message : 'Customer Not found' });
+			return res.status(404).json({ message : 'Unable to add customer' });
     } catch (err) {
         console.log('Exception controllers/customer.js => updateCustomer => ', err);
     	res.status(500).json({ message:'Internal Server Error' });
