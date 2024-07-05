@@ -38,51 +38,50 @@ export const customerPersistConfig = {
   key: 'customer',
   storage,
   keyPrefix: 'redux-',
-  blacklist: ['error', 'initial', 'responseMessage', 'customers']
+  blacklist: ['error', 'initial', 'responseMessage']
 };
 
 export const contactPersistConfig = {
   key: 'contact',
   storage,
   keyPrefix: 'redux-',
-  blacklist: ['error', 'initial', 'responseMessage', 'contacts']
+  blacklist: ['error', 'initial', 'responseMessage']
 };
 
 export const sitePersistConfig = {
   key: 'site',
   storage,
   keyPrefix: 'redux-',
-  blacklist: ['error', 'initial', 'responseMessage', 'sites']
+  blacklist: ['error', 'initial', 'responseMessage']
 };
 
 export const customerNotePersistConfig = {
   key: 'customerNote',
   storage,
   keyPrefix: 'redux-',
-  blacklist: ['error', 'initial', 'responseMessage', 'notes']
+  blacklist: ['error', 'initial', 'responseMessage']
 };
 
 export const userRolesPersistConfig = {
   key: 'role',
   storage,
   keyPrefix: 'redux-',
-  blacklist: ['error', 'initial', 'responseMessage', 'userRoleTypes']
+  blacklist: ['error', 'initial', 'responseMessage']
 };
 
 export const itemCategoryPersistConfig = {
   key: 'itemCategory',
   storage,
   keyPrefix: 'redux-',
-  blacklist: ['error', 'initial', 'responseMessage', 'itemCategory']
+  blacklist: ['error', 'initial', 'responseMessage']
 };
 
 export const itemPersistConfig = {
-  key: 'item',
+  key: 'user',
   storage,
   keyPrefix: 'redux-',
-  blacklist: ['error', 'initial', 'responseMessage', 'item']
+  blacklist: ['error', 'initial', 'responseMessage']
 };
-
 
 export const regionPersistConfig={
   key: 'region',

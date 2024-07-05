@@ -10,7 +10,7 @@ import { Card, Grid, Stack, Container, Box } from '@mui/material';
 // ROUTES
 import { PATH_SETTING } from '../../../routes/paths';
 // slice
-import { getItem, resetItem, updateItem } from '../../../redux/slices/settings/item';
+import { updateItem } from '../../../redux/slices/settings/item';
 import { getActiveItemCategories, resetActiveItemCategories } from '../../../redux/slices/settings/itemCategory';
 // components
 import { useSnackbar } from '../../../components/snackbar';
@@ -33,30 +33,26 @@ export default function ItemEditForm() {
   const { activeItemCategories } = useSelector((state) => state.itemCategory);
 
   useLayoutEffect(() => {
-    dispatch(getItem(id));
     dispatch(getActiveItemCategories());
     return () =>{
-      dispatch(resetItem());
       dispatch(resetActiveItemCategories());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, dispatch]);
+  }, [dispatch]);
 
 
   const defaultValues = useMemo(
     () => ({
       name: item?.name || '',
       category:item?.category?.name || '',
-      price:item?.price || null,
-      stockQuantity:item?.stockQuantity || null,
+      price:item?.price || 0,
+      stockQuantity:item?.stockQuantity || 0,
       desc: item?.desc || '',
       isActive: item?.isActive
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ ]
+    [item]
   );
-
-
 
   const ItemSchema = Yup.object().shape({
     name: Yup.string().required('Name is required!').min(2, 'Name must be at least 2 characters').max(50, 'Name must be less than 50 characters'),
@@ -67,6 +63,7 @@ export default function ItemEditForm() {
     isActive: Yup.boolean(),
   });
 
+  
   const methods = useForm({
     resolver: yupResolver(ItemSchema),
     defaultValues,
@@ -80,10 +77,10 @@ export default function ItemEditForm() {
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(updateItem(item._id, data));
+      await dispatch(updateItem(id, data));
       reset();
       enqueueSnackbar('Item updated successfully!');
-      navigate(PATH_SETTING.item.view(item._id));
+      // navigate(PATH_SETTING.item.view(item._id));
     } catch ( error ) {
       enqueueSnackbar( error?.message, { variant: `error` });
       console.error( error );
