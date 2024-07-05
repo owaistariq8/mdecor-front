@@ -52,11 +52,11 @@ export default function AuthRegisterForm() {
         await register(data.firstName, data.lastName, data.email, data.password, data.phone);
       }
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       reset();
       setError('afterSubmit', {
         ...error,
-        message: error.message,
+        message: error?.message,
       });
     }
   };

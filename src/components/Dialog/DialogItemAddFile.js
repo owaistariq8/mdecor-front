@@ -77,7 +77,7 @@ function DialogItemAddFile() {
       await enqueueSnackbar('Images uploaded successfully!');
     } catch (error) {
       enqueueSnackbar('Failed images upload', { variant: `error` });
-      console.error(error);
+      console.error(error?.message);
     }
   };
 

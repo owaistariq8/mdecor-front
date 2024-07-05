@@ -81,7 +81,7 @@ export default function AuthNewPasswordForm() {
       navigate(PATH_DASHBOARD.root);
     } catch (error) {
       enqueueSnackbar(Snacks.password_change_failed, { variant: `error` })
-      console.error(error);
+      console.error(error?.message);
     }
   };
 

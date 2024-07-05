@@ -81,7 +81,7 @@ function MachineStatusChangeDialog() {
         reset();
       } catch (error) {
         enqueueSnackbar( Snacks.machineStatusFailed, { variant: `error` });
-        console.error(error);
+        console.error(error?.message);
       }
   };
 

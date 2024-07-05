@@ -150,7 +150,7 @@ export function addConfig(data) {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -167,7 +167,7 @@ export function updateConfig(data,id) {
       dispatch(getConfigs());
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -191,7 +191,7 @@ export function getConfigs() {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   }
@@ -216,7 +216,7 @@ export function getActiveConfigs() {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   }
@@ -234,7 +234,7 @@ export function getConfig(id) {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -258,7 +258,7 @@ export function deleteConfig(id) {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };

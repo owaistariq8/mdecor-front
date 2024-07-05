@@ -130,7 +130,7 @@ export function unregister() {
         registration.unregister();
       })
       .catch((error) => {
-        console.error(error.message);
+        console.error(error?.message);
       });
   }
 }

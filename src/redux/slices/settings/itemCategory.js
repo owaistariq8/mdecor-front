@@ -219,7 +219,7 @@ export function getItemCategory(id) {
       const response = await axios.get(`${CONFIG.SERVER_URL}categories/${id}`);
       dispatch(slice.actions.getItemCategorySuccess(response.data));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
@@ -239,7 +239,7 @@ export function deleteItemCategory(id) {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -267,7 +267,7 @@ export function addItemCategoryFiles(id, params) {
       const response = await axios.patch(`${CONFIG.SERVER_URL}categories/${id}/files`,formData);
       dispatch(slice.actions.addMachineServiceRecordFilesSuccess());
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
@@ -290,7 +290,7 @@ export function deleteFile(id, fileId) {
       const response = await axios.patch(`${CONFIG.SERVER_URL}categories/${id}/files/${fileId}`);
       dispatch(slice.actions.setResponseMessage(response.data));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }

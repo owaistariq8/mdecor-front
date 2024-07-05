@@ -233,7 +233,7 @@ export function getRole(id) {
       dispatch(slice.actions.getRoleSuccess(response.data));
       // dispatch(slice.actions.setResponseMessage('User Loaded Successfuly'));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
@@ -258,7 +258,7 @@ export function deleteRole(id) {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };

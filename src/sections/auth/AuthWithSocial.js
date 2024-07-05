@@ -16,7 +16,7 @@ export default function AuthWithSocial() {
         loginWithGoogle();
       }
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
     }
   };
 
@@ -26,7 +26,7 @@ export default function AuthWithSocial() {
         loginWithGithub();
       }
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
     }
   };
 
@@ -36,7 +36,7 @@ export default function AuthWithSocial() {
         loginWithTwitter();
       }
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
     }
   };
 

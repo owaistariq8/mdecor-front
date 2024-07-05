@@ -235,7 +235,7 @@ export function addUser(param) {
       const response = await axios.post(`${CONFIG.SERVER_URL}users/createUser/`, data);
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -263,7 +263,7 @@ export function  updateUser(param, id) {
       const response = await axios.patch(`${CONFIG.SERVER_URL}users/update/${id}`, data);
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -281,7 +281,7 @@ export function getUsers(query) {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   }
@@ -300,7 +300,7 @@ export function getUser(id) {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -319,7 +319,7 @@ export function deleteUser(id) {
       }
       return response;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -336,7 +336,7 @@ export function userPasswordUpdate(data) {
       }
       return response; // eslint-disable-line
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };
@@ -356,7 +356,7 @@ export function sendResetPasswordEmail(email) {
       return response; 
     } catch (error) {
       dispatch(slice.actions.resetLoadingResetPasswordEmail());
-      console.error(error);
+      console.error(error?.message);
       throw error;
     }
   };

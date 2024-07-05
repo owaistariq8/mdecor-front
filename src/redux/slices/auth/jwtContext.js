@@ -82,7 +82,7 @@ export function AuthProvider({ children }) {
         dispatch(setInitial({ isAuthenticated: false, user: null, userId: null }));
       }
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(setInitial({ isAuthenticated: false, user: null, userId: null }));
     }
   }, [storageAvailable]);

@@ -449,7 +449,7 @@ export function getContact(customerID, id) {
       dispatch(slice.actions.getContactSuccess(response.data));
       // dispatch(slice.actions.setResponseMessage('Contacts Loaded Successfuly'));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
@@ -470,7 +470,7 @@ export function deleteContact(customerID, id) {
       );
       dispatch(slice.actions.setResponseMessage(response.data));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }

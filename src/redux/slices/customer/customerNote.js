@@ -227,7 +227,7 @@ export function getNote(customerId,noteId) {
       const response = await axios.get(`${CONFIG.SERVER_URL}crm/customers/${customerId}/notes/${noteId}`);
       dispatch(slice.actions.getNoteSuccess(response.data));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
@@ -245,7 +245,7 @@ export function deleteNote(customerId,id) {
       });
       dispatch(slice.actions.setResponseMessage(response.data));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }

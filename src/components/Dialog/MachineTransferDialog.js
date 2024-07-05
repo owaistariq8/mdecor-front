@@ -107,7 +107,7 @@ function MachineTransferDialog() {
         handleMachineDialog()
       } catch (error) {
         enqueueSnackbar( error?.message, { variant: `error` });
-        console.error(error);
+        console.error(error?.message);
       }
   };
 

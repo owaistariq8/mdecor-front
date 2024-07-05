@@ -91,25 +91,24 @@ async function signup(req, res) {
         	password: hash,
         })
 
-		
-		let session = await manageSession(req, userObj.id);
-    	userObj.accessToken = await createToken({ id : userObj.id, email : userObj.email, sessID : session.session.sessionId });
-    	const user = await userObj.save();
+		let session = await manageSession(req,userObj.id);
+		userObj.accessToken = await createToken({ id : userObj.id, email : userObj.email, sessID : session.session.sessionId });
+		userObj = await userObj.save();
 		const data = {
-     		accessToken:user.accessToken,
-            userId: user.id,
-            sessionId:session.session.sessionId,
-            user: {
-              email: user.email,
-              firstName:user.firstName,
-              lastName:user.lastName,
-              customer: user?.customer?._id,
-              roles: user.roles,
-            }
- 		}
-		if(user) {
-    		res.status(200).json( data );
+			accessToken:userObj.accessToken,
+			userId: userObj.id,
+			sessionId:session.session.sessionId,
+			user: {
+				email: userObj.email,
+				firstName:userObj.firstName,
+				lastName:userObj.lastName,
+				customer: userObj?.customer?._id,
+				roles: userObj.roles,
+			}
 		}
+
+		if(userObj)
+			res.status(200).json(data);
 		else
 	    	res.status(404).json({  message : 'Unable to create user' });
 

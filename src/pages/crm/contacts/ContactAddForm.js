@@ -177,7 +177,7 @@ export default function ContactAddForm({ isEdit, readOnly, currentContact }) {
       await reset();
     } catch (error) {
       enqueueSnackbar(error, { variant: `error` });
-      console.error(error);
+      console.error(error?.message);
     }
   };
 

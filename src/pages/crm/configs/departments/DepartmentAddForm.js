@@ -68,7 +68,7 @@ export default function DepartmentAddForm() {
       navigate(PATH_SETTING.departments.list);
     } catch (error) {
       enqueueSnackbar(error?.message, { variant: `error` });
-      console.error(error);
+      console.error(error?.message);
     }
   };
   return (

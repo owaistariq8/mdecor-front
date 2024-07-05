@@ -128,7 +128,7 @@ function VisitDialog({
         await onCreateUpdateEvent(data);
         await reset();
       } catch (error) {
-        console.error(error);
+        console.error(error?.message);
       }
     };
 

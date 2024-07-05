@@ -162,7 +162,7 @@ export function getCustomer(id) {
       const response = await axios.get(`${CONFIG.SERVER_URL}customers/${id}`);
       dispatch(slice.actions.getCustomerSuccess(response.data));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
@@ -182,7 +182,7 @@ export function deleteCustomer(id) {
       dispatch(slice.actions.setResponseMessage(response.data));
       // state.responseMessage = response.data;
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
@@ -239,7 +239,7 @@ export function addCustomer(params) {
         return response
         // dispatch(slice.actions.getCustomerSuccess(response.data.Customer));
       } catch (error) {
-        console.error(error);
+        console.error(error?.message);
         dispatch(slice.actions.hasError(error.Message));
         throw error;
       }
@@ -268,7 +268,7 @@ export function updateCustomer(params) {
       dispatch(slice.actions.setCustomerEditFormVisibility(false));
     } catch (error) {
       dispatch(slice.actions.stopLoading());
-      console.error(error);
+      console.error(error?.message);
       throw error;
       // dispatch(slice.actions.hasError(error.Message));
     }

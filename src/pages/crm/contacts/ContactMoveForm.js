@@ -69,7 +69,7 @@ export default function ContactMoveForm( ) {
       await navigate(PATH_CRM.customers.contacts.root(customerId))
     } catch (error) {
       enqueueSnackbar(error, { variant: `error` });
-      console.error(error);
+      console.error(error?.message);
     }
   };
 

@@ -211,7 +211,7 @@ export function addSite(params) {
         const response = await axios.post(`${CONFIG.SERVER_URL}crm/customers/${params.customer}/sites`, data);
         return response; 
       } catch (error) {
-        console.error(error);
+        console.error(error?.message);
         dispatch(slice.actions.hasError(error.Message));
         throw error;
       }
@@ -264,7 +264,7 @@ export function updateSite(params,customerId,Id) {
         dispatch(slice.actions.setSiteEditFormVisibility(false));
 
       } catch (error) {
-        console.error(error);
+        console.error(error?.message);
         dispatch(slice.actions.hasError(error.Message));
         throw error;
       }
@@ -300,7 +300,7 @@ export function createCustomerStiesCSV(customerID) {
           window.URL.revokeObjectURL(url);
           dispatch(slice.actions.setResponseMessage('Customer Sites CSV generated successfully'));
         }).catch((error) => {
-          console.error(error);
+          console.error(error?.message);
         });
       }
     } catch (error) {
@@ -403,7 +403,7 @@ export function getSite(customerID, id) {
       dispatch(slice.actions.getSiteSuccess(response.data));
       // dispatch(slice.actions.setResponseMessage('Sites Loaded Successfuly'));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
@@ -424,7 +424,7 @@ export function deleteSite(customerID, id) {
       );
       dispatch(slice.actions.setResponseMessage(response.data));
     } catch (error) {
-      console.error(error);
+      console.error(error?.message);
       dispatch(slice.actions.hasError(error.Message));
       throw error;
     }
