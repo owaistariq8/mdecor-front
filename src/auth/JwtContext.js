@@ -172,8 +172,16 @@ export function AuthProvider({ children }) {
       password,
       phone
     });
-    const user = response.data;
-    localStorage.setItem('accessToken', user?.accessToken);
+    
+    const { accessToken, user, userId} = response.data;
+    localStorage.setItem("customer", user?.customer);
+    // const rolesArrayString = JSON.stringify(user.roles);
+    localStorage.setItem('email', user.email);
+    localStorage.setItem('firstName', user.firstName);
+    localStorage.setItem('lastName', user.lastName);
+    localStorage.setItem('userId', userId);
+    // localStorage.setItem('userRoles', rolesArrayString);
+    setSession(accessToken);
 
     dispatch({
       type: 'REGISTER',
