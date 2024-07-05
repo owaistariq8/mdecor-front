@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/user');
+const { Customer } = require('../models/customer');
 const { Role } = require('../models/role');
 const { Session } = require('../models/session');
 const { delay } = require('../utils/misc');
@@ -77,12 +78,20 @@ async function signup(req, res) {
         
 
         const hash = await bcryptHash(req.body.password, 10);
-        let userObj = new User({
-        	...req.body,
-        	password: hash
+        const customerObj = new Customer({
+        	name:req.body.name
         })
+		
+		const customer = await customerObj.save();
+
+		let userObj = new User({
+        	...req.body,
+			customers: [customer._id],
+        	password: hash,
+        })
+
+		
 		let session = await manageSession(req, userObj.id);
-        console.log(userObj, session);
     	userObj.accessToken = await createToken({ id : userObj.id, email : userObj.email, sessID : session.session.sessionId });
     	const user = await userObj.save();
 		const data = {
