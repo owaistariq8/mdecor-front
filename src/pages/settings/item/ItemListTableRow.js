@@ -28,13 +28,14 @@ export default function RoleListTableRow({
   onEditRow,
   onViewRow,
 }) {
-  const { name, desc, isActive, createdAt } = row;
+  const { name, desc, category, isActive, createdAt } = row;
   const width = useWidth();
 
   return (
       <StyledTableRow hover selected={selected}>
         <LinkTableCell align="left" onClick={onViewRow} param={name} />
         {( width === 'lg' || width === 'xl' ) &&  <TableCell align="left"> {desc} </TableCell>}
+        {( width === 'lg' || width === 'xl' ) &&  <TableCell align="left"> {category?.name} </TableCell>}
         <TableCell align="center"><Switch checked={isActive} disabled size="small" /></TableCell>
       </StyledTableRow>
   );

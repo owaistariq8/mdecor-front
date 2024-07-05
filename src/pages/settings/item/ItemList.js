@@ -51,6 +51,7 @@ import PageCover from '../../../components/Defaults/PageCover';
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', align: 'left' },
   { id: 'desc',visibility: 'xs1', label: 'Description', align: 'left' },
+  { id: 'category',visibility: 'xs1', label: 'Category', align: 'left' },
   { id: 'isActive', label: 'Active', align: 'center' },
 ];
 
@@ -268,11 +269,13 @@ function applyFilter({ inputData, comparator, filterName, filterStatus }) {
     inputData = stabilizedThis.map((el) => el[0]);
 
     if (filterName) {
+      filterName = filterName.toLowerCase().trim();
       inputData = inputData.filter(
         (_item) =>
-          _item?.name?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-          _item?.itemCategory?.name?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0 ||
-          fDate(_item?.createdAt)?.toLowerCase().indexOf(filterName.toLowerCase()) >= 0
+          _item?.name?.toLowerCase().indexOf(filterName) >= 0 ||
+          _item?.desc?.toLowerCase().indexOf(filterName) >= 0 ||
+          _item?.category?.name?.toLowerCase().indexOf(filterName) >= 0 ||
+          fDate(_item?.createdAt)?.toLowerCase().indexOf(filterName) >= 0
       );
     }
   }

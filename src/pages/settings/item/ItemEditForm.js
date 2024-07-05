@@ -80,7 +80,7 @@ export default function ItemEditForm() {
       await dispatch(updateItem(id, data));
       reset();
       enqueueSnackbar('Item updated successfully!');
-      // navigate(PATH_SETTING.item.view(item._id));
+      navigate(PATH_SETTING.item.view(item._id));
     } catch ( error ) {
       enqueueSnackbar( error?.message, { variant: `error` });
       console.error( error );

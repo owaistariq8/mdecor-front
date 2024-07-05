@@ -87,7 +87,7 @@ function ViewFormTopBar({
                 }
 
                 {onEdit && 
-                  <IconTooltip title="Edit" onClick={onEdit} color={theme.palette.info.dark} icon="tabler:edit"/>
+                  <IconTooltip title="Edit" onClick={onEdit} color={theme.palette.primary.main} icon="tabler:edit"/>
                 }
 
                 {onDelete &&

@@ -18,24 +18,25 @@ import PageCover from '../../../components/Defaults/PageCover';
 import { StyledCardHeader } from '../../../components/settings/styles';
 import { ThumbnailDocButton } from '../../../components/Thumbnails';
 import { GalleryItem } from '../../../components/gallery/GalleryItem';
+import ItemsCardView from '../item/ItemsCardView';
 
 // ----------------------------------------------------------------------
 
 export default function ItemCategoryViewForm() {
+  const { id } = useParams();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
- 
-  const { id } = useParams();
- 
+  
+  const { itemCategory, isLoading} = useSelector((state) => state.itemCategory);
+  const { items } = useSelector((state) => state.item);
+  
   useLayoutEffect(() => {
     dispatch(getItemCategory(id));
     dispatch(getItems(id))
   }, [id, dispatch]);
 
-  const { itemCategory, isLoading} = useSelector((state) => state.itemCategory);
-  const { items } = useSelector((state) => state.itemCategory);
 
   const onDelete = async () => {
     try {
@@ -161,7 +162,7 @@ export default function ItemCategoryViewForm() {
           </Grid>
         </CardContent>
       </Card>
-      <Card sx={{mt:2}}>
+      {/* <Card sx={{mt:2}}>
         <StyledCardHeader subheader title="Images"/>
         <CardContent>
         <Box
@@ -188,11 +189,11 @@ export default function ItemCategoryViewForm() {
             {itemCategory?.isActive && <ThumbnailDocButton onClick={handleAddItemFile}/>}
           </Box>
         </CardContent>
-      </Card>
+      </Card> */}
       <Card sx={{mt:2}}>
         <StyledCardHeader subheader title="Items"/>
         <CardContent>
-            Items
+            <ItemsCardView items={items} />
         </CardContent>
       </Card>
     </Container>

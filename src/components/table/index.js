@@ -11,4 +11,5 @@ export { default as TableSelectedAction } from './TableSelectedAction';
 export { default as TablePaginationCustom } from './TablePaginationCustom';
 export { default as TablePaginationFilter } from './TablePaginationFilter';
 export { default as TableAddressRow } from './TableAddressRow';
+export { default as TableCellCustom } from './TabelCellCustom';
 
