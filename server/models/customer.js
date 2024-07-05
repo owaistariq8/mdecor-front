@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const customerSchema = new mongoose.Schema({
-    name: { type: String , required: true },
+    firstName: { type: String , required: true },
+    lastName: { type: String },
     website: { type: String },
     type: { type: String },
     sites: [{ type: mongoose.Schema.Types.ObjectId , ref: 'Site' }],

@@ -79,7 +79,8 @@ async function signup(req, res) {
 
         const hash = await bcryptHash(req.body.password, 10);
         const customerObj = new Customer({
-        	name:req.body.name
+        	firstName:req.body.firstName,
+			lastName:req.body.lastName
         })
 		
 		const customer = await customerObj.save();
