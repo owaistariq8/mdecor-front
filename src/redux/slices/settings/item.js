@@ -171,7 +171,7 @@ export function updateItem(id, params) {
         stockQuantity: params.stockQuantity,
         isActive: params.isActive
       }
-      await axios.patch(`${CONFIG.SERVER_URL}items/${id}`, data);
+      await axios.patch(`${CONFIG.SERVER_URL}items/update/${id}`, data);
       dispatch(slice.actions.setResponseMessage('Item updated successfully'));
     } catch (error) {
       console.log(error);

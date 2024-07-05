@@ -44,7 +44,7 @@ export default function ItemEditForm() {
   const defaultValues = useMemo(
     () => ({
       name: item?.name || '',
-      category:item?.category?.name || '',
+      category:item?.category || '',
       price:item?.price || 0,
       stockQuantity:item?.stockQuantity || 0,
       desc: item?.desc || '',
