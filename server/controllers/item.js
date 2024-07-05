@@ -13,7 +13,7 @@ async function getItemById(req, res) {
 
 		if(mongoose.Types.ObjectId.isValid(itemId)) {
         	// const item = await Item.findById(itemId).populate('File');
-			const item = await Item.findById(itemId).populate([{ path: 'File'}, { path: 'Category'}]);
+			const item = await Item.findById(itemId).populate([{ path: 'images'}, { path: 'category'}]);
 			
         	if(item)
 	    		res.status(200).json(item);
