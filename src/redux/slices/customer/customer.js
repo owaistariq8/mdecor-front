@@ -134,14 +134,11 @@ export const {
 
 // ----------------------------------------------------------------------
 
-export function getCustomers( query ) {
+export function getCustomers() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const params = { ...query };
-
-      const response = await axios.get(`${CONFIG.SERVER_URL}customers`, { params });
-
+      const response = await axios.get(`${CONFIG.SERVER_URL}customers/`);
       dispatch(slice.actions.getCustomersSuccess(response.data));
       // dispatch(slice.actions.setResponseMessage('Customers loaded successfully'));
     } catch (error) {

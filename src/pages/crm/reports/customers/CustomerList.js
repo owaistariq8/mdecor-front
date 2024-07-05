@@ -89,7 +89,7 @@ export default function CustomerList({ isArchived }) {
   }
 
   useEffect(() => {
-    dispatch(getCustomers( null, null, isArchived, cancelTokenSource ));
+    dispatch(getCustomers());
     return ()=> { dispatch( resetCustomers() ) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, isArchived ]);

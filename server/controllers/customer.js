@@ -27,7 +27,7 @@ async function getCustomers(req, res) {
 		const query = req.query;
 
 		if(query && typeof query == 'object') {
-        	const customers = await Customer.find(query).populate('sites');
+        	const customers = await Customer.find(query);
     		res.status(200).json(customers);
 		}
 		else
