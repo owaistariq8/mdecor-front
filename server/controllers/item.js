@@ -12,8 +12,7 @@ async function getItemById(req, res) {
 		const itemId = req.params.id;
 
 		if(mongoose.Types.ObjectId.isValid(itemId)) {
-        	// const item = await Item.findById(itemId).populate('File');
-			const item = await Item.findById(itemId).populate([{ path: 'images'}, { path: 'category'}]);
+			const item = await Item.findById(itemId).populate([{ path: 'images'}, { path: 'category', select:'_id name'}]);
 			
         	if(item)
 	    		res.status(200).json(item);
@@ -35,7 +34,7 @@ async function getItems(req, res) {
 		const query = req.query;
 
 		if(query && typeof query == 'object') {
-        	const items = await Item.find(query).populate('category');
+        	const items = await Item.find(query).populate([{ path: 'images'}, { path: 'category', select:'_id name'}]);
     		res.status(200).json(items);
 		}
 		else
@@ -52,7 +51,6 @@ async function createItem(req, res) {
 	try {
 
 		let files = [];
-		console.log("req.files",req.files.images);
 		if(Array.isArray(req.files.images) && req.files.images.length>0) {
             for(const file of req.files.images) {
 				if(!file || !file.originalname) {
@@ -61,8 +59,6 @@ async function createItem(req, res) {
 				}
 
 				let fileObj = {}
-
-				console.log("file",file);
 
 				const processedFile = await processFile(file);
 
@@ -77,7 +73,6 @@ async function createItem(req, res) {
         }
 
         req.body.images = files;
-		console.log("req.files",req.body.images);
 
         const item = await Item.create({...req.body});
         if(item)
