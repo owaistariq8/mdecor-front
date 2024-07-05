@@ -11,7 +11,6 @@ import { PATH_SETTING } from '../../../../routes/paths';
 import { useSnackbar } from '../../../../components/snackbar';
 import ViewFormAudit from '../../../../components/ViewForms/ViewFormAudit';
 import ViewFormField from '../../../../components/ViewForms/ViewFormField';
-import ViewFormEditDeleteButtons from '../../../../components/ViewForms/ViewFormEditDeleteButtons';
 
 // ----------------------------------------------------------------------
 
@@ -60,7 +59,7 @@ export default function RoleViewForm() {
   return (
     <Card sx={{ p: 2 }}>
       <Grid>
-        <ViewFormEditDeleteButtons
+        {/* <ViewFormEditDeleteButtons
           backLink={() => navigate(PATH_SETTING.role.list)}
           isDefault={defaultValues.isDefault}
           isActive={defaultValues.isActive}
@@ -68,7 +67,7 @@ export default function RoleViewForm() {
           handleEdit={handleEdit}
           onDelete={onDelete}
           settingPage
-        />
+        /> */}
         <Grid container sx={{mt:2}}>
           <ViewFormField isLoading={isLoading} sm={6} heading="Name" param={defaultValues.name} />
           <ViewFormField isLoading={isLoading} sm={12} heading="Role Type" param={defaultValues.roleType} />

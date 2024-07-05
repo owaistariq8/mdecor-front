@@ -70,7 +70,7 @@ export default function CustomerViewForm() {
 
   return (
     <Container maxWidth={false}>
-      <PageCover title={defaultValues.fullName} handleBackLink={handleBackLink} />
+      <PageCover title={defaultValues.fullName} handleBackLink={handleBackLink} customerId={id} />
       <Card sx={{ width: '100%', p: '1rem', mb:3 }}>
         <Grid container direction="row">
             <ViewFormTopBar isActive={defaultValues.isActive} onDelete={onDelete} onEdit={handleEdit} />

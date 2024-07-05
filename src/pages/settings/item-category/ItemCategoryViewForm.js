@@ -149,7 +149,7 @@ export default function ItemCategoryViewForm() {
 
   return (
     <Container maxWidth={false}>
-      <PageCover title={defaultValues.name} handleBackLink={handleBacklink} backIcon setting />
+      <PageCover title={defaultValues.name} handleBackLink={handleBacklink} setting />
       <Card>
         <CardContent>
           <Grid>

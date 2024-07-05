@@ -82,7 +82,7 @@ export default function UserViewForm() {
   return (
     <>
     <Container maxWidth={false}>
-      <PageCover title={`${defaultValues.firstName} ${defaultValues.lastName}`} handleBackLink={handleBackLink} backIcon />
+      <PageCover title={`${defaultValues.firstName} ${defaultValues.lastName}`} handleBackLink={handleBackLink} />
       <Card>
         <CardContent>
           <Grid container sx={{display:{ md:'flex', sm: 'block' }, justifyContent:{md: 'space-between'}}} >

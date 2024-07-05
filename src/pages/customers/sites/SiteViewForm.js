@@ -17,7 +17,6 @@ import { useSnackbar } from '../../../components/snackbar';
 // paths
 import ViewFormAudit from '../../../components/ViewForms/ViewFormAudit';
 import ViewFormField from '../../../components/ViewForms/ViewFormField';
-import ViewFormEditDeleteButtons from '../../../components/ViewForms/ViewFormEditDeleteButtons';
 import ViewPhoneComponent from '../../../components/ViewForms/ViewPhoneComponent';
 import { PATH_CUSTOMERS } from '../../../routes/paths';
 
@@ -96,14 +95,14 @@ export default function SiteViewForm({ handleMap }) {
   return (
     <Grid sx={{ mt: 1 }}>
       <Grid container justifyContent="flex-end">
-        <ViewFormEditDeleteButtons
+        {/* <ViewFormEditDeleteButtons
           isActive={defaultValues?.isActive}
           handleEdit={customer?.isArchived ? undefined : handleEdit}
           onDelete={customer?.isArchived ? undefined : onDelete}
           // sites={sites}
           mainSite={customer.mainSite?._id === site?._id}
         // handleMap={handleMap}
-        />
+        /> */}
       </Grid>
       <Grid container>
         <ViewFormField isLoading={isLoading} sm={12} heading="Name" param={defaultValues?.name} />

@@ -1,23 +1,45 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Card, CardContent, IconButton } from '@mui/material';
+import { Button, Card, CardContent, Grid, IconButton, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { PATH_SETTING } from '../../routes/paths';
+import { PATH_CUSTOMERS, PATH_SETTING } from '../../routes/paths';
 import Iconify from '../iconify';
 import { StyledCardHeader } from '../settings/styles';
+// import IconButtonTooltip from '../Icons/IconButton';
 
-const PageCover = ({title, setting, backIcon, handleBackLink}) => 
+const PageCover = ({title, setting, customerId, handleBackLink}) =>{
+
+  const navigate = useNavigate();
+  
+  const handleSiteLink = ()=>{
+    navigate(PATH_CUSTOMERS.customers.sites.root(customerId));
+  }
+  
+  const handleCustomerLink = ()=>{
+    navigate(PATH_CUSTOMERS.customers.view(customerId));
+  }
+
+  return (
     <Card sx={{my:2}}>
-      <StyledCardHeader avatar={backIcon && <BackButton onClick={handleBackLink} />} action={setting && <SettingButton />} title={title}/>
-      <CardContent sx={{maxHeight:30, px:0, py:0}}>{` `}</CardContent>
-    </Card>;
+      <StyledCardHeader avatar={handleBackLink && <BackButton onClick={handleBackLink} />} action={setting && <SettingButton />} title={title}/>
+      <CardContent sx={{maxHeight:customerId?55:0, px:2, py:1}}>
+        {customerId && 
+          <Grid item display='flex' gap={1}>
+            <Button variant='contained' onClick={handleCustomerLink} startIcon={<Iconify icon="tabler:info-circle"/>}> Information</Button>
+            <Button variant='contained' onClick={handleSiteLink} startIcon={<Iconify icon="tabler:current-location"/>}> Sites</Button>
+          </Grid>
+        }
+      </CardContent>
+    </Card>
+  )
+} 
 
 export default PageCover;
 
 PageCover.propTypes = {
   title: PropTypes.string,
   setting: PropTypes.bool,
-  backIcon: PropTypes.bool,
+  customerId: PropTypes.string,
   handleBackLink: PropTypes.func
 }
 

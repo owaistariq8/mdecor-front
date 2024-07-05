@@ -54,7 +54,7 @@ export const PATH_CUSTOMERS = {
     edit: (id) => path(ROOTS_CUSTOMERS, `/${id}/edit`),
     // --------------------- Customer Sites -----------------------
     sites: {
-      root: ( customerId ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites`),
+      list: ( customerId ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites`),
       new: ( customerId ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites/new`),
       view: ( customerId, id ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites/${id}/view`),
       edit: ( customerId, id ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites/${id}/edit`),

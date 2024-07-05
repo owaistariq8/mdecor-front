@@ -20,7 +20,6 @@ import {
 import ViewFormField from '../../../components/ViewForms/ViewFormField';
 import ViewFormAudit from '../../../components/ViewForms/ViewFormAudit';
 import { getCustomer , setCustomerDialog } from '../../../redux/slices/customer/customer';
-import ViewFormEditDeleteButtons from '../../../components/ViewForms/ViewFormEditDeleteButtons';
 import CustomerDialog from '../../../components/Dialog/CustomerDialog';
 
 // ----------------------------------------------------------------------
@@ -75,10 +74,10 @@ export default function UserProfile() {
     <>
       <Container maxWidth={false}>
         <Card sx={{ p: 3 }}>
-          <ViewFormEditDeleteButtons 
+          {/* <ViewFormEditDeleteButtons 
               status={defaultValues.status}
               handleEdit={handleEdit} 
-            />
+            /> */}
           <Grid container>
             <ViewFormField
               sm={6}

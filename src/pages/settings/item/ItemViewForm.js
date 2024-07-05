@@ -147,7 +147,7 @@ export default function RoleViewForm() {
   
   return (
     <Container maxWidth={false}>
-      <PageCover title={item?.name} handleBacklink={handleBacklink} backIcon setting /> 
+      <PageCover title={item?.name} handleBacklink={handleBacklink} setting /> 
       <Card sx={{ p: 2 }}>
         <Grid>
           <ViewFormTopBar isActive={defaultValues.isActive} onEdit={handleEdit} onDelete={onDelete} />
