@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Box, Card, Grid, Stack, Checkbox, Container } from '@mui/material';
+import { Box, Card, Grid, Stack, Checkbox, Container, CardContent } from '@mui/material';
 // routes
 import { PATH_SECURITY } from '../../../routes/paths';
 // components
@@ -19,6 +19,7 @@ import { addUserSchema } from '../../schemas/user';
 import AddFormButtons from '../../../components/DocumentForms/AddFormButtons';
 import { genderOptions, religionOptions, userStatusOptions } from '../../../utils/options';
 import PageCover from '../../../components/Defaults/PageCover';
+import { StyledCardHeader } from '../../../components/settings/styles';
 
 export default function UserAddForm() {
 
@@ -85,12 +86,13 @@ export default function UserAddForm() {
 
   return (
   <Container maxWidth={false}>
-    <PageCover title='New User' />
+    {/* <PageCover title='New User' /> */}
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
-          <Card sx={{ p: 3 }}>
-          <Stack spacing={2} >
+          <Card>
+          <StyledCardHeader title="New User" />
+          <CardContent>
             <Box rowGap={2} columnGap={2} display="grid" gridTemplateColumns={{ xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' }} >
               <RHFTextField name="firstName" label="First Name*" />
               <RHFTextField name="lastName" label="Last Name" />
@@ -130,8 +132,8 @@ export default function UserAddForm() {
               />
             
             </Box>
+          </CardContent>
             <AddFormButtons isActive isSubmitting={isSubmitting} toggleCancel={toggleCancel} />
-          </Stack>
           </Card>
         </Grid>
       </Grid>

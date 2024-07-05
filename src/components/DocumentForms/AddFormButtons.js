@@ -27,7 +27,7 @@ export default function AddFormButtons(
 ) {
   
   return (
-    <Box py={2}>
+    <Box py={2} px={4} sx={{borderTop:'1px solid lightgray'}}>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item display="flex">
           {isActive !==undefined && <RHFSwitch checked={isActive} name="isActive" label="Active" /> }

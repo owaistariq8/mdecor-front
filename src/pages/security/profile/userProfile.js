@@ -20,13 +20,8 @@ import {
 import ViewFormField from '../../../components/ViewForms/ViewFormField';
 import ViewFormAudit from '../../../components/ViewForms/ViewFormAudit';
 import { getCustomer , setCustomerDialog } from '../../../redux/slices/customer/customer';
-import { getContact , setContactDialog } from '../../../redux/slices/customer/contact';
-import { Cover } from '../../../components/Defaults/Cover';
-import LogoAvatar from '../../../components/logo-avatar/LogoAvatar';
-import CustomAvatar from '../../../components/custom-avatar/CustomAvatar';
 import ViewFormEditDeleteButtons from '../../../components/ViewForms/ViewFormEditDeleteButtons';
 import CustomerDialog from '../../../components/Dialog/CustomerDialog';
-import ContactDialog from '../../../components/Dialog/ContactDialog';
 
 // ----------------------------------------------------------------------
 
@@ -46,7 +41,6 @@ export default function UserProfile() {
 
   useEffect(() => {
     dispatch(setCustomerDialog(false));
-    dispatch(setContactDialog(false));
   }, [dispatch]);
 
   const handleCustomerDialog = (event) =>{
@@ -57,14 +51,7 @@ export default function UserProfile() {
     }
   }
 
-  const handleContactDialog = (event) =>{
-    event.preventDefault();
-    dispatch(setContactDialog(true))
-    if ( user?.contact?._id) {
-      dispatch(getContact(user?.customer?._id, user?.contact?._id));
-    }
-  }
-
+  
   const handleEdit = () => {
     navigate(PATH_SECURITY.user.editProfile);
   };
@@ -104,17 +91,6 @@ export default function UserProfile() {
                 )
               }
             />
-            <ViewFormField
-              sm={6}
-              heading="Contact"
-              node={
-                defaultValues?.contact && (
-                  <Link onClick={ handleContactDialog } href="#" underline="none">
-                    {defaultValues?.contact}
-                  </Link>
-                )
-              }
-            />
             <ViewFormField sm={6} heading="Full Name" param={`${defaultValues?.firstName} ${defaultValues?.lastName}`} />
             <ViewFormField sm={6} heading="Phone" param={defaultValues?.phone} />
             <ViewFormField sm={12} heading="email" param={defaultValues?.email} />
@@ -132,7 +108,6 @@ export default function UserProfile() {
       </Container>
 
       <CustomerDialog />
-      <ContactDialog />
 
     </>
   );

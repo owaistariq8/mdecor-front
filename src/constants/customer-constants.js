@@ -25,42 +25,24 @@ export const Snacks = {
 };
 
 export const FORMLABELS = {
-  SAME_AS: 'Same as billing contact',
-
-  // @root - CustomerEditForm
   CUSTOMER: {
     CODE: {
       label: 'Customer Code',
       name: 'code',
     },
-    NAME: {
-      label: 'Customer Name*',
+    FIRST_NAME: {
+      label: 'First Name*',
       name: 'name',
     },
-    TRADING_NAME: {
-      label: 'Trading Name / Alias',
-      name: 'tradingName',
+    LAST_NAME: {
+      label: 'Last Name',
+      name: 'lastName',
     },
-    MAINSITE: {
-      label: 'Main Site',
-      name: 'main Site',
-    },
-    FAX: 'Fax',
+    TYPE: 'Type',
     PHONE: 'Phone',
     EMAIL: 'Email',
     WEBSITE: 'Website',
-    BILLING_CONTACT: 'Primary Billing Contact',
-    TECHNICAL_CONTACT: 'Primary Technical Contact',
-    ACCOUNT: 'Account Manager',
-    PROJECT: 'Project Manager',
-    SUPPORT: 'Support Manager',
-    ADDCUSTOMER: 'Add Customer',
-    ADDRESSINFORMATION: 'Site Information',
-    EDITCUSTOMER: 'Edit Customer',
-    CUSTOMERADDRESS: 'Address Information',
-    BILLINGCONTACTINFORMATION: 'Billing Contact Information',
-    TECHNICALCONTACTINFORMATION: 'Technical Contact Information',
-    HOWICKRESOURCESS: 'Howick Recourses',
+    AGNET: 'Agent',
   },
 
   // @root - ContactAddForm

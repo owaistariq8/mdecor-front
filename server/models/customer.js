@@ -2,13 +2,16 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const customerSchema = new mongoose.Schema({
+    code: { type: String },
     firstName: { type: String , required: true },
     lastName: { type: String },
-    website: { type: String },
     type: { type: String },
+    phone: { type: String },
+    email: { type: String },
+    website: { type: String },
     sites: [{ type: mongoose.Schema.Types.ObjectId , ref: 'Site' }],
-    status: String,
     contact: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contact' }],
+    isActive: { type: Boolean, required: true, default: true },
     createdAt: { type: Date, required: true, default: Date.now },
     updatedAt: { type: Date, required: true, default: Date.now }, 
 }, {

@@ -38,16 +38,6 @@ import {
   // SITE REPORTS
   CustomerSiteList,
 
-  // CONTACT REPORTS
-  CustomerContactList,
-
-  // CUSTOMERS SITES
-  CustomerSiteDynamicList,
-
-  // CUSTOMERS CONTACTS
-  CustomerContactDynamicList,
-  
-
   //  SETTINGS
   Setting,
 
@@ -82,6 +72,7 @@ import {
   ItemCategoryAdd,
   ItemCategoryEdit,
   ItemCategoryView,
+
   ItemList,
   ItemAdd,
   ItemEdit,
@@ -164,40 +155,20 @@ export default function Router() {
     // --------------------- Customer -----------------------
 
     {
-      path: 'crm',
+      path: 'customers',
       element: (
         <AuthGuard>
           <DashboardLayout />
         </AuthGuard>
       ),
       children: [
-        { path: 'contacts', element: <CustomerContactList />},
-        { path: 'sites', element: <CustomerSiteList />},
-        { path: 'customers',
+        { path: 'list', element: <CustomerList />, index: true },
+        { path: 'new', element: <CustomerAdd /> },
+        { path: ':id/edit', element: <CustomerEdit />},
+        { path: ':id/view', element: <CustomerView />},
+        { path: ':id/sites',
           children: [
-            { element: <CustomerList />, index: true  },
-            { path: 'new', element: <CustomerAdd /> },
-            { path: ':customerId/edit', element: <CustomerEdit />},
-            { path: ':customerId/view', element: <CustomerView />},
-            { path: ':customerId/sites',
-            children: [
-                { element: <CustomerSiteDynamicList />, index: true  },
-                { path: 'new', element: <CustomerSiteDynamicList siteAddForm /> },
-                { path: ':id/edit', element: <CustomerSiteDynamicList siteEditForm />},
-                { path: ':id/view', element: <CustomerSiteDynamicList siteViewForm />}
-              ],
-            },
-            { path: ':customerId/contacts',
-              children: [
-                { element: <CustomerContactDynamicList />, index: true  },
-                { path: 'new', element: <CustomerContactDynamicList contactAddForm /> },
-                { path: ':id/edit', element: <CustomerContactDynamicList contactEditForm />},
-                { path: ':id/view', element: <CustomerContactDynamicList contactViewForm />},
-                { path: ':id/move', element: <CustomerContactDynamicList contactMoveForm />},
-              ],
-            },
-            { path: 'permission-denied', element: <PermissionDeniedPage /> },
-            { path: 'blank', element: <BlankPage /> },
+            { element: <CustomerSiteList />, index: true  },
           ]
         },
       ],

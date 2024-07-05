@@ -6,7 +6,7 @@ function path(root, sublink) {
 
 const ROOTS_AUTH = '/auth';
 const ROOTS_DASHBOARD = '/dashboard';
-const ROOTS_CRM = '/crm';
+const ROOTS_CUSTOMERS = '/customers';
 const ROOTS_SECURITY = '/security';
 const ROOTS_SETTING = '/settings';
 
@@ -46,34 +46,19 @@ export const PATH_DASHBOARD = {
 
 
 // --------------------- Customer -----------------------
-export const PATH_CRM = {
-  permissionDenied: path(ROOTS_CRM, '/permission-denied'),
-  // --------------------- Customers Sites Report -----------------------
-  sites: path(ROOTS_CRM, '/sites'),
-  // --------------------- Customers Contacts Report -----------------------
-  contacts: path(ROOTS_CRM, '/contacts'),
-  // --------------------- Customers -----------------------
+export const PATH_CUSTOMERS = {
   customers: {
-    list: path(ROOTS_CRM, '/customers'),
-    new: path(ROOTS_CRM, '/customers/new'),
-    view: (customerId) => path(ROOTS_CRM, `/customers/${customerId}/view`),
-    edit: (customerId) => path(ROOTS_CRM, `/customers/${customerId}/edit`),
+    list: path(ROOTS_CUSTOMERS, '/list'),
+    new: path(ROOTS_CUSTOMERS, '/new'),
+    view: (id) => path(ROOTS_CUSTOMERS, `/${id}/view`),
+    edit: (id) => path(ROOTS_CUSTOMERS, `/${id}/edit`),
     // --------------------- Customer Sites -----------------------
     sites: {
-      root: ( customerId ) => path(ROOTS_CRM, `/customers/${customerId}/sites`),
-      new: ( customerId ) => path(ROOTS_CRM, `/customers/${customerId}/sites/new`),
-      view: ( customerId, id ) => path(ROOTS_CRM, `/customers/${customerId}/sites/${id}/view`),
-      edit: ( customerId, id ) => path(ROOTS_CRM, `/customers/${customerId}/sites/${id}/edit`),
+      root: ( customerId ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites`),
+      new: ( customerId ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites/new`),
+      view: ( customerId, id ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites/${id}/view`),
+      edit: ( customerId, id ) => path(ROOTS_CUSTOMERS, `/${customerId}/sites/${id}/edit`),
     },
-    // --------------------- Customer Contacts -----------------------
-    contacts: {
-      root: ( customerId ) => path(ROOTS_CRM, `/customers/${customerId}/contacts`),
-      new: ( customerId ) => path(ROOTS_CRM, `/customers/${customerId}/contacts/new`),
-      view: ( customerId, id ) => path(ROOTS_CRM, `/customers/${customerId}/contacts/${id}/view`),
-      edit: ( customerId, id ) => path(ROOTS_CRM, `/customers/${customerId}/contacts/${id}/edit`),
-      move: ( customerId, id ) => path(ROOTS_CRM, `/customers/${customerId}/contacts/${id}/move`),
-    },
-    
   },
   
 };

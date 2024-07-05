@@ -48,22 +48,16 @@ export const Dashboard = Loadable(lazy(() => import('../pages/dashboard/Dashboar
 // ----------------------------------------------------------------
 
 // CUSTOMER
-export const CustomerList = Loadable(lazy(() => import('../pages/crm/reports/customers/CustomerList')));
-export const CustomerAdd = Loadable(lazy(() => import('../pages/crm/customers/CustomerAdd')));
-export const CustomerEdit = Loadable(lazy(() => import('../pages/crm/customers/CustomerEdit')));
-export const CustomerView = Loadable(lazy(() => import('../pages/crm/customers/CustomerView')));
+export const CustomerList = Loadable(lazy(() => import('../pages/customers/CustomerList')));
+export const CustomerAdd = Loadable(lazy(() => import('../pages/customers/CustomerAddForm')));
+export const CustomerEdit = Loadable(lazy(() => import('../pages/customers/CustomerEditForm')));
+export const CustomerView = Loadable(lazy(() => import('../pages/customers/CustomerViewForm')));
 
 // CUSTOMERS SITE REPORTS
-export const CustomerSiteList = Loadable(lazy(() => import('../pages/crm/reports/sites/CustomerSiteList')));
+export const CustomerSiteList = Loadable(lazy(() => import('../pages/customers/sites/CustomerSiteDynamicList')));
 
 // CUSTOMERS CONTACT REPORTS
-export const CustomerContactList = Loadable(lazy(() => import('../pages/crm/reports/contacts/CustomerContactList')));
-
-// CUSTOMER SITES
-export const CustomerSiteDynamicList = Loadable(lazy(() => import('../pages/crm/sites/CustomerSiteDynamicList')));
-
-// CUSTOMER CONTACTS
-export const CustomerContactDynamicList = Loadable(lazy(() => import('../pages/crm/contacts/CustomerContactDynamicList')));
+// export const CustomerContactList = Loadable(lazy(() => import('../pages/customers/contacts/CustomerContactList')));
 
 // ----------------------------------------------------------------
 

@@ -6,7 +6,7 @@ async function getCustomerById(req, res) {
 		const custID = req.params.id;
 
 		if(mongoose.Types.ObjectId.isValid(custID)) {
-        	const customer = await Customer.findById(custID).populate('sites');
+        	const customer = await Customer.findById(custID);
         	if(customer)
 	    		res.status(200).json(customer);
 	    	else 
