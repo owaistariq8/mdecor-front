@@ -67,7 +67,7 @@ export default function CustomerAddForm() {
       const response = await dispatch(addCustomer(data));
       reset();
       enqueueSnackbar('Customer added successfully!');
-      navigate(PATH_CUSTOMERS.customers.view(response.data.customer._id));
+      navigate(PATH_CUSTOMERS.customers.view(response.data._id));
     } catch (error) {
       enqueueSnackbar(error?.message, { variant: `error` });
     }
@@ -93,8 +93,8 @@ export default function CustomerAddForm() {
                 rowGap={2} columnGap={2} display="grid"
                 gridTemplateColumns={{ sm: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
               >
-                <RHFChipsInput name="lastName" label="Last Name"  />
-                <RHFChipsInput name="phone" label="Phone"  />
+                <RHFTextField name="lastName" label="Last Name"  />
+                <RHFTextField name="phone" label="Phone"  />
                 <RHFTextField name="email" label="Email" />
                 <RHFTextField name="website" label="Website" />
               </Box>  
