@@ -68,7 +68,8 @@ export function GalleryItem({ image, isLoading, onOpenLightbox, onOpenFile, onDo
                 >
                     
                 {fileType?.startsWith('image') ? (
-                    <Image alt="gallery" sx={{height:'100%'}} ratio="1/1" src={src} onClick={onOpenLightbox} />
+
+                    <Image alt="gallery" sx={{height:'100%'}} ratio="1/1" src={URL.createObjectURL(`data:image/jpeg;base64,${src}`)} onClick={onOpenLightbox} />
                 ):(
                     <CardMedia sx={{height:'90%', width:'100%', backgroundSize:'40%', backgroundPosition:'center 35%'}} image={fileThumb(extension?.toLowerCase())} onClick={()=> fileType?.startsWith('application/pdf')?onOpenFile():null} />
                 )}
